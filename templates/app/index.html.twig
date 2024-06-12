@@ -1,0 +1,99 @@
+{% extends 'default.html.twig' %}
+
+{% block title %}Signage Display{% endblock %}
+
+{% block body %}
+    <div class="row h-100 align-content-stretch">
+        <div class="col-2">
+            <div class="d-flex flex-column justify-content-between h-100">
+                <div class="card h-100 text-bg-primary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase">Aktivitäten</h5>
+                        <p class="card-text">
+                            - Arbeitsgemeinschaften, Workshops etc.<br>
+                            - Fotos und Hinweise zu Sozialarbeit, Vertrauenslehrkräfte
+                        </p>
+                    </div>
+                </div>
+                <div class="card text-bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase">Verkehrsmittel</h5>
+                        <p class="card-text">
+                            Abfahrten und Verkehrsmittel mit Echtzeitdaten
+                        </p>
+                    </div>
+                    <div class="list-group list-group-flush border-white">
+                        <div class="list-group-item fs-6 text-bg-primary">
+                            Bus 166 -> S Schöneweide 15:34
+                        </div>
+                        <div class="list-group-item fs-6 text-bg-primary">
+                            Bus 166 -> U Boddinstraße 15:42
+                        </div>
+                        <div class="list-group-item fs-6 text-bg-primary">
+                            S9 -> Spandau 15:52
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card text-bg-dark border-0">
+                <div class="card-body">
+                    <h5 class="card-title text-uppercase">Mitteilungen</h5>
+                    <p class="card-text">
+                        - Mitteilungen der Schulleitung<br>
+                        - Allgemeine Hinweise<br>
+                        - Infos der PäKo
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card h-100 text-bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title text-uppercase">Stundenplanänderungen</h5>
+                    <div class="row g-1 small">
+                        <div class="col-2">Schule</div>
+                        <div class="col-2">Stunde</div>
+                        <div class="col-3">Kurs</div>
+                        <div class="col-2">Lehrkraft</div>
+                        <div class="col-3 text-end">Hinweis</div>
+                    </div>
+                </div>
+                <div class="list-group list-group-flush border-white">
+                    <div class="list-group-item fs-6 text-bg-primary">
+                        <div class="row g-1">
+                            <div class="col-2 text-uppercase fw-bold">KOL</div>
+                            <div class="col-2 text-uppercase">1. Blk</div>
+                            <div class="col-3 text-uppercase">MA1</div>
+                            <div class="col-2 text-uppercase">ktw</div>
+                            <div class="col-3 text-uppercase fw-bold text-end">Aufgaben</div>
+                            <div class="col-12 fs-6">Aufgaben bis 26.04. erledigen und über Schulcloud abgeben.</div>
+                        </div>
+                    </div>
+                    <div class="list-group-item fs-6 text-bg-primary">
+                        <div class="row g-1">
+                            <div class="col-2 text-uppercase fw-bold">GYM</div>
+                            <div class="col-2 text-uppercase">4. Std</div>
+                            <div class="col-3 text-uppercase">Englisch</div>
+                            <div class="col-2 text-uppercase">cas</div>
+                            <div class="col-3 text-uppercase fw-bold text-end">Ausfall</div>
+                        </div>
+                    </div>
+                    <div class="list-group-item fs-6 text-bg-primary">
+                        <div class="row g-1">
+                            <div class="col-2 text-uppercase fw-bold">GYM</div>
+                            <div class="col-2 text-uppercase">5. Std</div>
+                            <div class="col-3 text-uppercase">Englisch</div>
+                            <div class="col-2 text-uppercase">cas</div>
+                            <div class="col-3 text-uppercase fw-bold text-end">Ausfall</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body h-100">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

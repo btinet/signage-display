@@ -1,0 +1,11 @@
+$red: #FB4040;
+$blue: #133B82;
+$yellow: #FFDA27;
+$white: #FFFFF7;
+$enable-rounded: false;
+
+@import '../../vendor/twbs/bootstrap/scss/bootstrap';
+
+body {
+    background-color: skyblue;
+}

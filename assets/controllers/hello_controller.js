@@ -10,7 +10,30 @@ import { Controller } from '@hotwired/stimulus';
  * Delete this file or adapt it for your use!
  */
 export default class extends Controller {
-    connect() {
-        this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
+
+    static _targets = [ "date", "time" ]
+
+
+    connect() {}
+
+    timeTargetConnected(element) {
+        let date;
+        function currentTime() {
+            date = new Date();
+            element.innerText = date.toLocaleString("de-DE", { timeZone: "Europe/Berlin", timeStyle: "short"});
+        }
+        currentTime();
+        setInterval(currentTime,1000);
     }
+
+    dateTargetConnected(element) {
+        let date;
+        function currentTime() {
+            date = new Date();
+            element.innerText = date.toLocaleString("de-DE", { timeZone: "Europe/Berlin", day:"2-digit",month:"2-digit",year:"numeric"});
+        }
+        currentTime();
+        setInterval(currentTime,1000*60);
+    }
+
 }
