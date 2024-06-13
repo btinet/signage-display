@@ -11,7 +11,7 @@ import { Controller } from '@hotwired/stimulus';
  */
 export default class extends Controller {
 
-    static _targets = [ "date", "time" ]
+    static _targets = [ "date", "time" ,"schedule"]
 
 
     connect() {}
@@ -34,6 +34,17 @@ export default class extends Controller {
         }
         currentTime();
         setInterval(currentTime,1000*60);
+    }
+
+    scheduleTargetConnected(element) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                element.innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "ajax_info.txt", true);
+        xhttp.send();
     }
 
 }

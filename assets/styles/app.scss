@@ -1,10 +1,29 @@
 $red: #FB4040;
 $blue: #133B82;
 $yellow: #FFDA27;
+$green: #008d4f;
+$purple: #a5027d;
 $white: #FFFFF7;
 $enable-rounded: false;
+$list-group-border-color:#000000;
 
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+.text-bg-bus{
+    background-color: $purple;
+    color: $white;
+}
+
+.text-bg-suburban{
+    background-color: $green;
+    color: $white;
+}
+
+.text-bg-tertiary{
+    background-color: darken($blue,7%);
+    color: $white;
+}
 
 body {
     background-color: skyblue;
