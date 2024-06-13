@@ -16,17 +16,20 @@ export default class extends Controller {
     }
 
     connect() {
-        console.log("LOS BVG");
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", this.urlValue,true);
-        xhr.send();
-        xhr.onload = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                this.element.innerHTML = xhr.responseText;
-            } else {
-                console.log(`Error: ${xhr.status}`);
-            }
-        };
+        function getData(url, element){
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url,true);
+            xhr.send();
+            xhr.onload = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    element.innerHTML = xhr.responseText;
+                } else {
+                    console.log(`Error: ${xhr.status}`);
+                }
+            };
+        }
+        getData(this.urlValue,this.element);
+        setInterval(getData,1000*60*2,this.urlValue,this.element);
     }
 
 }

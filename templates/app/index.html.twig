@@ -16,12 +16,13 @@
                     </div>
                 </div>
                 <div class="card text-bg-tertiary">
-                    <div class="list-group list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191508}) })}}></div>
+                    <div class="list-group list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191001,'query': 'bus=false' }) })}}></div>
+                    <div class="list-group list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191508,'query': 'bus=true' }) })}}></div>
                     <div class="list-group-item p3-"></div>
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-7">
             <div class="card text-bg-primary h-100 border-0">
                 <div class="card-body">
                     <h5 class="card-title text-uppercase">Mitteilungen</h5>
@@ -33,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="card h-100 text-bg-tertiary">
                 <div class="card-body">
                     <h5 class="card-title text-uppercase">Stundenplanänderungen</h5>
@@ -46,31 +47,31 @@
                     </div>
                 </div>
                 <div class="list-group list-group-flush">
-                    <div class="list-group-item fs-6 text-bg-primary">
+                    <div class="list-group-item small text-bg-primary">
                         <div class="row g-1">
                             <div class="col-2 text-uppercase fw-bold">KOL</div>
                             <div class="col-2 text-uppercase">1. Blk</div>
                             <div class="col-3 text-uppercase">MA1</div>
-                            <div class="col-2 text-uppercase">ktw</div>
+                            <div class="col-2 text-uppercase">abc</div>
                             <div class="col-3 text-uppercase text-warning fw-bold text-end">Aufgaben</div>
-                            <div class="col-12 fs-6">Aufgaben bis 26.04. erledigen und über Schulcloud abgeben.</div>
+                            <div class="col-12 small">Aufgaben bis 26.04. erledigen und über Schulcloud abgeben.</div>
                         </div>
                     </div>
-                    <div class="list-group-item fs-6 text-bg-tertiary">
+                    <div class="list-group-item small text-bg-tertiary">
                         <div class="row g-1">
                             <div class="col-2 text-uppercase fw-bold">GYM</div>
                             <div class="col-2 text-uppercase">4. Std</div>
                             <div class="col-3 text-uppercase">Englisch</div>
-                            <div class="col-2 text-uppercase">cas</div>
+                            <div class="col-2 text-uppercase">ghi</div>
                             <div class="col-3 text-uppercase text-danger fw-bold text-end">Ausfall</div>
                         </div>
                     </div>
-                    <div class="list-group-item fs-6 text-bg-primary">
+                    <div class="list-group-item small text-bg-primary">
                         <div class="row g-1">
                             <div class="col-2 text-uppercase fw-bold">GYM</div>
                             <div class="col-2 text-uppercase">5. Std</div>
                             <div class="col-3 text-uppercase">Englisch</div>
-                            <div class="col-2 text-uppercase">cas</div>
+                            <div class="col-2 text-uppercase">ghi</div>
                             <div class="col-3 text-uppercase text-danger fw-bold text-end">Ausfall</div>
                         </div>
                     </div>
