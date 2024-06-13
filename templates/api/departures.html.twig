@@ -1,0 +1,26 @@
+{% for departure in result.departures %}
+    <div class="list-group-item fs-6 text-bg-primary">
+        <div class="d-flex flex-column justify-content-between align-items-start">
+            <div class="d-flex align-items-center">
+                {% if departure.line.productName == 'Bus' %}
+                    <img src="{{ asset('images/bus.svg') }}" width="20" alt="Bus" class="me-1">
+                    <div class="badge text-bg-bus rounded rounded-1 px-1 me-1">{{ departure.line.id }}</div>
+                {% endif %}
+                {% if departure.line.productName == 'suburban' %}
+                    <img src="{{ asset('images/suburban.svg') }}" width="20" alt="S-Bahn" class="me-1">
+                    <div class="badge text-bg-suburban rounded rounded-1 px-1 me-1">{{ departure.line.id }}</div>
+                {% endif %}
+                <i class="bi bi-arrow-right me-1"></i>
+                <div>{{ departure.direction }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="fw-bold">Mosischstr.</div>
+                <div>{{ departure.when|date_modify("+2 hours")|date('H.i') }} Uhr</div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+
+

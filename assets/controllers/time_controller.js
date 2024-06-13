@@ -5,13 +5,13 @@ import { Controller } from '@hotwired/stimulus';
  *
  * Any element with a data-controller="hello" attribute will cause
  * this controller to be executed. The name "hello" comes from the filename:
- * hello_controller.js -> "hello"
+ * time_controller.js -> "hello"
  *
  * Delete this file or adapt it for your use!
  */
 export default class extends Controller {
 
-    static _targets = [ "date", "time" ,"schedule"]
+    static _targets = [ "date", "time"]
 
 
     connect() {}
@@ -34,17 +34,6 @@ export default class extends Controller {
         }
         currentTime();
         setInterval(currentTime,1000*60);
-    }
-
-    scheduleTargetConnected(element) {
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                element.innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("GET", "ajax_info.txt", true);
-        xhttp.send();
     }
 
 }

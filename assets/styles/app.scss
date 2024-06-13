@@ -6,6 +6,7 @@ $purple: #a5027d;
 $white: #FFFFF7;
 $enable-rounded: false;
 $list-group-border-color:#000000;
+$body-bg: #000000;
 
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
@@ -23,8 +24,4 @@ $list-group-border-color:#000000;
 .text-bg-tertiary{
     background-color: darken($blue,7%);
     color: $white;
-}
-
-body {
-    background-color: skyblue;
 }
