@@ -1,0 +1,73 @@
+ScheduleType: Ereignistyp
+Label: Bezeichnung
+Full Label: Bezeichnung/Schuljahr
+Description: Beschreibung
+Created At: Erstellt
+Updated At: Aktualisiert
+Color: Hinweisfarbe
+Teachers: Lehrkräfte
+Teacher: Lehrkraft
+Teacher Create: Lehrkraft erstellen
+Firstname: Vorname
+Lastname: Nachname
+Abbreviation: Kürzel
+ClassGroups: Klassen
+Class Groups: Klassen
+ClassGroup: Klasse
+ClassGroup Create: Klasse erstellen
+Events: Ereignisse
+Entry Date: Datum
+Entry Time: Stunde
+Planned Teacher: Lehrkraft
+Updated Teacher: Vertretung
+Planned Room: Unterrichtsraum
+Updated Room: Neuer Raum
+Message: Bemerkung
+Schedule Type: Art der Änderung
+Types All: Ereignistypen
+Type Create: Art hinzufügen
+SchoolSubjects: Schulfächer
+SchoolSubject: Schulfach
+general: Allgemein
+students: Lernende
+courses: Kurse
+courses attached: Zugeordnete Kurse
+Course: Kurs
+Courses: Kurse
+Course Events: Kursveranstaltungen
+course events: Stundenplan
+CourseEvent: Kursveranstaltung
+Course Entries: Stundenplanung
+CourseEntry: Stunde
+events: Ereignisse
+Subject: Schulfach
+Extended: Leistungskurs
+Class Group: Klasse
+Intern Label: Interne Bezeichnung
+Year: Schuljahr
+Start Date: gültig ab
+End Date: gültig bis
+Weekday: Wochentag
+MONDAY: montags
+TUESDAY: dienstags
+WEDNESDAY: mittwochs
+THURSDAY: donnerstags
+FRIDAY: freitags
+Class: Stunde
+One: 1. Stunde
+Two: 2. Stunde
+Three: 3. Stunde
+Four: 4. Stunde
+Five: 5. Stunde
+Six: 6. Stunde
+Seven: 7. Stunde
+Eight: 8. Stunde
+Nine: 9. Stunde
+Ten: 10. Stunde
+Suspensions: Abwesenheiten
+SuspensionEntry: Abwesenheit
+Mon: Montag
+Tue: Dienstag
+Wed: Mittwoch
+Thu: Donnerstag
+Fri: Freitag

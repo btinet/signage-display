@@ -1,0 +1,44 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% if ea.crud.currentAction == 'detail' %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Stunde</th>
+            <th class="text-center">Montag</th>
+            <th class="text-center">Dienstag</th>
+            <th class="text-center">Mittwoch</th>
+            <th class="text-center">Donnerstag</th>
+            <th class="text-center">Freitag</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for class in 1..10 %}
+            <tr>
+                <th>{{ class }}. Stunde</th>
+                {% for weekday in 1..5 %}
+                    <td class="text-center">
+                        {% for course in field.value %}
+                            {% for event in course.courseEvents %}
+                                {% if event.weekday.value == weekday and event.class.value == class  %}
+                                    <a href="{{ ea_url()
+                                        .setController('App\\Controller\\Admin\\CourseCrudController')
+                                        .setAction('detail')
+                                        .setEntityId(course.id)
+                                    }}" class="badge badge-primary">
+                                        {{ course.internLabel }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        <caption><b>{{ field.value.count }}</b> Kurs{% if field.value.count != 1 %}e{% endif %}</caption>
+    </table>
+{% else %}
+    {#  #}<span class="badge badge-secondary">{# field.formattedValue #}</span>
+{% endif %}

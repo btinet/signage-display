@@ -1,0 +1,49 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% if ea.crud.currentAction == 'detail' %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Kursname</th>
+            <th>Interne Bezeichnung</th>
+            <th>Schulfach</th>
+            <th>Leistungskurs</th>
+            <th>Lehrkraft</th>
+            <th>Kursbeginn</th>
+            <th>Kursende</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for value in field.value %}
+            <tr>
+                <td><a href="{{ ea_url()
+                        .setController('App\\Controller\\Admin\\CourseCrudController')
+                        .setAction('detail')
+                        .setEntityId(value.id)
+                    }}">{{ value.label }}
+                    </a>
+                </td>
+                <td>{{ value.internLabel }}</td>
+                <td>{{ value.subject }}</td>
+                <td>{{ value.isExtended ? 'ja' : 'nein' }}</td>
+                <td>{{ value.teacher }}</td>
+                <td>{{ value.startDate|date('d.m.Y') }}</td>
+                <td>{{ value.endDate|date('d.m.Y') }}</td>
+                <td class="text-end">
+                    <a href="{{ ea_url()
+                        .setController('App\\Controller\\Admin\\CourseCrudController')
+                        .setAction('detail')
+                        .setEntityId(value.id)
+                    }}">anzeigen
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <caption><b>{{ field.value.count }}</b> Ergebnis{% if field.value.count != 1 %}se{% endif %}</caption>
+    </table>
+{% else %}
+    {#  #}<span class="badge badge-secondary">{# field.formattedValue #}</span>
+{% endif %}
