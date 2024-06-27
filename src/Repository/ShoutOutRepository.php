@@ -22,7 +22,7 @@ class ShoutOutRepository extends ServiceEntityRepository
     public function findCurrentEntries(): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.disabled IS NOT NULL')
+            ->andWhere('c.disabled = 0')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()

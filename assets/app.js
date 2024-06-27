@@ -7,14 +7,9 @@ import {Carousel} from "./vendor/bootstrap/bootstrap.index.js";
  * which should already be in your base.html.twig.
  */
 
-const myCarouselElement = document.querySelector('#activities-slide')
+
 const shoutOutCarousel = document.querySelector('#shout-out-slide')
 const mainCarousel = document.querySelector('#main-slide')
-
-new Carousel(myCarouselElement, {
-    interval: 10000,
-    touch: true
-})
 
 new Carousel(shoutOutCarousel, {
     interval: 30000,

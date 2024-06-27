@@ -1,6 +1,6 @@
 {% for article in articles %}
     <div class="carousel-item h-100 p-2 {{ loop.index0 ? '' : 'active' }}">
-        <div class="d-flex h-100 align-items-start justify-content-center">
+        <div class="d-flex h-100 flex-column align-items-start justify-content-start">
             {{ include("blog/" ~ article.template.templateFile,{'article':article}) }}
         </div>
     </div>

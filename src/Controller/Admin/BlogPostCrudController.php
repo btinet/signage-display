@@ -6,6 +6,7 @@ use App\Entity\BlogPost;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -31,6 +32,10 @@ class BlogPostCrudController extends AbstractCrudController
             TextEditorField::new('content')
                 ->setColumns(12),
             BooleanField::new('contentVisible'),
+
+            CollectionField::new('list')
+                ->setEntryIsComplex(true)
+                ->useEntryCrudForm(ListEntryCrudController::class),
 
             ImageField::new('featuredImage')
                 ->setBasePath('posts/uploads')

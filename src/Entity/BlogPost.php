@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BlogPostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -45,6 +47,17 @@ class BlogPost
 
     #[ORM\ManyToOne(inversedBy: 'blogPosts')]
     private ?ImageGallery $gallery = null;
+
+    /**
+     * @var Collection<int, ListEntry>
+     */
+    #[ORM\ManyToMany(targetEntity: ListEntry::class, inversedBy: 'blogPosts', cascade: ["persist"])]
+    private Collection $list;
+
+    public function __construct()
+    {
+        $this->list = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -176,6 +189,30 @@ class BlogPost
     public function setGallery(?ImageGallery $gallery): static
     {
         $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ListEntry>
+     */
+    public function getList(): Collection
+    {
+        return $this->list;
+    }
+
+    public function addList(ListEntry $list): static
+    {
+        if (!$this->list->contains($list)) {
+            $this->list->add($list);
+        }
+
+        return $this;
+    }
+
+    public function removeList(ListEntry $list): static
+    {
+        $this->list->removeElement($list);
 
         return $this;
     }

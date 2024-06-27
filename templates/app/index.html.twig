@@ -10,37 +10,38 @@
 
 {% block body %}
     <div class="row h-100 g-1 align-content-stretch mx-0">
+        {#
         <div class="col-2">
-            <div class="d-flex flex-column justify-content-between h-100">
-                <div class="card border-0 text-bg-tertiary mb-3">
-                    <div id="activities-slide" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            {% for gallery in galleries %}
-                                    {% for image in gallery.images %}
-                                        {% if not image.disabled %}
-                                        <div class="carousel-item {{ loop.index0 ? '' : 'active' }}">
-                                            <img src="{{ asset(image.fileUrl) }}" class="d-block w-100" alt="{{ image.title }}">
-                                            {% if image.showCaption %}
-                                            <div class="carousel-caption blur d-none d-md-block">
-                                                {% if image.title %}<h5>{{ image.title }}</h5>{% endif %}
-                                                {% if image.description %}<p class="mb-0 text-uppercase">{{ image.description }}</p>{% endif %}
+                <div class="d-flex flex-column justify-content-between h-100">
+                    <div class="card border-0 text-bg-tertiary mb-3">
+                        <div id="activities-slide" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for gallery in galleries %}
+                                        {% for image in gallery.images %}
+                                            {% if not image.disabled %}
+                                            <div class="carousel-item {{ loop.index0 ? '' : 'active' }}">
+                                                <img src="{{ asset(image.fileUrl) }}" class="d-block w-100" alt="{{ image.title }}">
+                                                {% if image.showCaption %}
+                                                <div class="carousel-caption blur d-none d-md-block">
+                                                    {% if image.title %}<h5>{{ image.title }}</h5>{% endif %}
+                                                    {% if image.description %}<p class="mb-0 text-uppercase">{{ image.description }}</p>{% endif %}
+                                                </div>
+                                                {% endif %}
                                             </div>
                                             {% endif %}
-                                        </div>
-                                        {% endif %}
-                                    {% endfor %}
-                            {% endfor %}
+                                        {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card border-0 text-bg-tertiary">
-                   {# <div class="list-group list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191001,'query': 'bus=false' }) })}}></div> #}
-                    <div class="list-group list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191508,'query': 'bus=true' }) })}}></div>
-                    <div class="list-group-item p3-"></div>
-                </div>
+                    <div class="card border-0 text-bg-tertiary">
+
+                <div class="list-group-item p3-"></div>
             </div>
-        </div>
-        <div class="col-7">
+            </div>
+            </div>
+        #}
+        <div class="col-9">
             <div class="card text-bg-primary h-100 border-0">
                 <div id="main-slide" class="carousel slide carousel-fade h-100" data-bs-ride="carousel">
                     <div class="carousel-inner h-100" {{ stimulus_controller('main',{'url': url('api_main_content') })}}></div>
@@ -56,6 +57,14 @@
 
                 </div>
             </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div class="row g-1 mx-0">
+        <div class="col-12">
+            <div class="list-group list-group-horizontal list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191508,'query': 'bus=true' }) })}}></div>
         </div>
     </div>
 {% endblock %}

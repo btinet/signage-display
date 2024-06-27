@@ -1,20 +1,23 @@
-<div class="row row-cols-1 g-3 align-self-center">
+<div class="container">
+    <div class="row row-cols-1 g-3 mt-3 align-self-center">
 
-    {% if article.titleVisible %}
-        <div class="col text-center">
-            <div class="fw-bold display-4">{{ article.title }}</div>
-        </div>
-    {% endif %}
+        {% if article.titleVisible %}
+            <div class="col">
+                <div class="fw-bold display-4">{{ article.title }}</div>
+            </div>
+        {% endif %}
 
-    {% if article.featuredImageVisible %}
-        <div class="col text-center">
-            <img src="{{ asset(article.featuredImageUrl) }}" class="img-fluid" alt="{{ article.title }}" style="max-height: 400px">
-        </div>
-    {% endif %}
+        {% if article.featuredImageVisible %}
+            <div class="col">
+                <img src="{{ asset(article.featuredImageUrl) }}" class="img-fluid" alt="{{ article.title }}" style="max-height: 400px">
+            </div>
+        {% endif %}
 
-    {% if article.contentVisible %}
-        <div class="col fs-5 text-center">
-            {{ article.content|raw }}
-        </div>
-    {% endif %}
+        {% if article.contentVisible %}
+            <div class="col fs-4">
+                {{ article.content|raw }}
+            </div>
+        {% endif %}
+    </div>
 </div>
+

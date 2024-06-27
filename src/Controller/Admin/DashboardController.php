@@ -10,6 +10,7 @@ use App\Entity\CourseEntry;
 use App\Entity\CourseEvent;
 use App\Entity\Image;
 use App\Entity\ImageGallery;
+use App\Entity\ListEntry;
 use App\Entity\MessageType;
 use App\Entity\ScheduleType;
 use App\Entity\SchoolSubject;
@@ -67,17 +68,20 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Aushang');
         yield MenuItem::linkToCrud('BlogPosts','fa fa-pen-nib',BlogPost::class);
         yield MenuItem::linkToCrud('ShoutOuts','fa fa-bullhorn',ShoutOut::class);
-        yield MenuItem::linkToCrud('Images','fa fa-image',Image::class);
         yield MenuItem::linkToCrud('Galleries','fa fa-images',ImageGallery::class);
+        yield MenuItem::linkToCrud('Images','fa fa-image',Image::class);
 
-        yield MenuItem::section('Konfiguration');
-        yield MenuItem::linkToCrud('Types All','fa fa-fire',ScheduleType::class);
-        yield MenuItem::linkToCrud('MessageTypes','fa fa-bullhorn',MessageType::class);
+
+        yield MenuItem::section('Schulverwaltung');
         yield MenuItem::linkToCrud('Teachers','fa fa-users',Teacher::class);
         yield MenuItem::linkToCrud('ClassGroups','fa fa-university',ClassGroup::class);
         yield MenuItem::linkToCrud('courses','fa fa-university',Course::class);
         yield MenuItem::linkToCrud('Course Events','fa fa-fire',CourseEvent::class);
         yield MenuItem::linkToCrud('SchoolSubjects','fa fa-list',SchoolSubject::class);
+
+        yield MenuItem::section('Setup');
+        yield MenuItem::linkToCrud('Types All','fa fa-fire',ScheduleType::class);
+        yield MenuItem::linkToCrud('MessageTypes','fa fa-bullhorn',MessageType::class);
         yield MenuItem::linkToCrud('BlogPostTemplates','fa fa-swatchbook',BlogPostTemplate::class);
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);

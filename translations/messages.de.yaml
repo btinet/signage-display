@@ -80,3 +80,22 @@ ShoutOut: Ticker
 MessageTypes: Nachrichtentypen
 MessageType: Nachrichtentyp
 Css Class: CSS-Klasse
+BlogPost: Beitrag
+BlogPosts: Beiträge
+BlogPostTemplate: Vorlage
+BlogPostTemplates: Vorlagen
+Template: Vorlage
+Title: Titel
+Title Visible: Titel sichtbar
+Content: Inhalt
+Content Visible: Inhalt sichtbar
+Featured Image: Beitragsbild
+Featured Image Visible: Beitragsbild sichtbar
+Active: Aktiv
+Gallery: Galerie
+Type: Typ
+Disabled: Deaktiviert
+Template File: Datei
+ListEntries: Listeneinträge
+ListEntry: Listeneintrag
+
