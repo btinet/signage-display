@@ -16,20 +16,21 @@ class CourseEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, CourseEntry::class);
     }
 
-//    /**
-//     * @return CourseEntry[] Returns an array of CourseEntry objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return CourseEntry[] Returns an array of CourseEntry objects
+     */
+    public function findCurrentEntries(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.scheduleType IS NOT NULL')
+            ->andWhere('c.entryDate = :nowDate')
+            ->setParameter('nowDate', date('Y-m-d'))
+            ->orderBy('c.entryTime', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?CourseEntry
 //    {

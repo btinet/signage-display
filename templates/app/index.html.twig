@@ -2,26 +2,38 @@
 
 {% block title %}Signage Display{% endblock %}
 
+{% block aside %}
+    <div id="shout-out-slide" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner" {{ stimulus_controller('schedule',{'url': url('api_news_ticker') })}}></div>
+    </div>
+{% endblock %}
+
 {% block body %}
-    <div class="row h-100 align-content-stretch">
+    <div class="row h-100 g-1 align-content-stretch mx-0">
         <div class="col-2">
             <div class="d-flex flex-column justify-content-between h-100">
-                <div class="card text-bg-tertiary mb-3">
+                <div class="card border-0 text-bg-tertiary mb-3">
                     <div id="activities-slide" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://placehold.co/400x500" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placehold.co/400x500/orange/white" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placehold.co/400x500" class="d-block w-100" alt="...">
-                            </div>
+                            {% for gallery in galleries %}
+                                    {% for image in gallery.images %}
+                                        {% if not image.disabled %}
+                                        <div class="carousel-item {{ loop.index0 ? '' : 'active' }}">
+                                            <img src="{{ asset(image.fileUrl) }}" class="d-block w-100" alt="{{ image.title }}">
+                                            {% if image.showCaption %}
+                                            <div class="carousel-caption blur d-none d-md-block">
+                                                {% if image.title %}<h5>{{ image.title }}</h5>{% endif %}
+                                                {% if image.description %}<p class="mb-0 text-uppercase">{{ image.description }}</p>{% endif %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                <div class="card text-bg-tertiary">
+                <div class="card border-0 text-bg-tertiary">
                    {# <div class="list-group list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191001,'query': 'bus=false' }) })}}></div> #}
                     <div class="list-group list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191508,'query': 'bus=true' }) })}}></div>
                     <div class="list-group-item p3-"></div>
@@ -30,65 +42,18 @@
         </div>
         <div class="col-7">
             <div class="card text-bg-primary h-100 border-0">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">Mitteilungen</h5>
-                    <p class="card-text">
-                        - Mitteilungen der Schulleitung<br>
-                        - Allgemeine Hinweise<br>
-                        - Infos der PäKo
-                    </p>
-                    <p class="lead">
-                        Automatische Datenbank-basierte Slides
-                    </p>
+                <div id="main-slide" class="carousel slide carousel-fade h-100" data-bs-ride="carousel">
+                    <div class="carousel-inner h-100" {{ stimulus_controller('main',{'url': url('api_main_content') })}}></div>
                 </div>
             </div>
         </div>
         <div class="col-3">
-            <div class="card h-100 text-bg-tertiary">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">Stundenplanänderungen</h5>
-                    <div class="row g-1 small">
-                        <div class="col-2">Schule</div>
-                        <div class="col-2">Stunde</div>
-                        <div class="col-3">Kurs</div>
-                        <div class="col-2">Lehrkraft</div>
-                        <div class="col-3 text-end">Hinweis</div>
-                    </div>
-                </div>
-                <div class="list-group list-group-flush">
-                    <div class="list-group-item small text-bg-primary">
-                        <div class="row g-1">
-                            <div class="col-2 text-uppercase fw-bold">KOL</div>
-                            <div class="col-2 text-uppercase">1. Blk</div>
-                            <div class="col-3 text-uppercase">MA1</div>
-                            <div class="col-2 text-uppercase">abc</div>
-                            <div class="col-3 text-uppercase text-warning fw-bold text-end">Aufgaben</div>
-                            <div class="col-12 small">Aufgaben bis 26.04. erledigen und über Schulcloud abgeben.</div>
-                        </div>
-                    </div>
-                    <div class="list-group-item small text-bg-tertiary">
-                        <div class="row g-1">
-                            <div class="col-2 text-uppercase fw-bold">GYM</div>
-                            <div class="col-2 text-uppercase">4. Std</div>
-                            <div class="col-3 text-uppercase">Englisch</div>
-                            <div class="col-2 text-uppercase">ghi</div>
-                            <div class="col-3 text-uppercase text-danger fw-bold text-end">Ausfall</div>
-                        </div>
-                    </div>
-                    <div class="list-group-item small text-bg-primary">
-                        <div class="row g-1">
-                            <div class="col-2 text-uppercase fw-bold">GYM</div>
-                            <div class="col-2 text-uppercase">5. Std</div>
-                            <div class="col-3 text-uppercase">Englisch</div>
-                            <div class="col-2 text-uppercase">ghi</div>
-                            <div class="col-3 text-uppercase text-danger fw-bold text-end">Ausfall</div>
-                        </div>
-                    </div>
+            <div class="card border-0 h-100 text-bg-tertiary">
+                <div class="list-group list-group-flush" {{ stimulus_controller('schedule',{'url': url('api_schedule_today') })}}>
+
                 </div>
                 <div class="card-body h-100">
-                    <p class="lead">
-                        Automatische Synchronisierung der aktuellen Änderungen.
-                    </p>
+
                 </div>
             </div>
         </div>

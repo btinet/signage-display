@@ -8,9 +8,21 @@ import {Carousel} from "./vendor/bootstrap/bootstrap.index.js";
  */
 
 const myCarouselElement = document.querySelector('#activities-slide')
+const shoutOutCarousel = document.querySelector('#shout-out-slide')
+const mainCarousel = document.querySelector('#main-slide')
 
 new Carousel(myCarouselElement, {
     interval: 10000,
+    touch: true
+})
+
+new Carousel(shoutOutCarousel, {
+    interval: 30000,
+    touch: true
+})
+
+new Carousel(mainCarousel, {
+    interval: 60000,
     touch: true
 })
 

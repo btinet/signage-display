@@ -53,17 +53,17 @@ TUESDAY: dienstags
 WEDNESDAY: mittwochs
 THURSDAY: donnerstags
 FRIDAY: freitags
-Class: Stunde
-One: 1. Stunde
-Two: 2. Stunde
-Three: 3. Stunde
-Four: 4. Stunde
-Five: 5. Stunde
-Six: 6. Stunde
-Seven: 7. Stunde
-Eight: 8. Stunde
-Nine: 9. Stunde
-Ten: 10. Stunde
+Class: Std
+One: 1. Std
+Two: 2. Std
+Three: 3. Std
+Four: 4. Std
+Five: 5. Std
+Six: 6. Std
+Seven: 7. Std
+Eight: 8. Std
+Nine: 9. Std
+Ten: 10. Std
 Suspensions: Abwesenheiten
 SuspensionEntry: Abwesenheit
 Mon: Montag
@@ -71,3 +71,12 @@ Tue: Dienstag
 Wed: Mittwoch
 Thu: Donnerstag
 Fri: Freitag
+Images: Bilder
+Image: Bild
+Galleries: Galerien
+ImageGallery: Galerie
+ShoutOuts: Ticker
+ShoutOut: Ticker
+MessageTypes: Nachrichtentypen
+MessageType: Nachrichtentyp
+Css Class: CSS-Klasse

@@ -24,7 +24,17 @@
                         <td>{{ entry.entryDate|date('d.m.Y') }}</td>
                         <td>{{ entry.entryTime.name|trans }}</td>
                         <td>{{ course.teacher }}</td>
-                        <td></td>
+                        <td>
+                            {% if entry.scheduleType.slug == "neuer-raum" %}
+                                <span class="fa fa-fw fa-door-closed me-2"></span>{{ entry.plannedRoom }}<span class="fa fa-fw fa-chevron-right mx-2"></span>{{ entry.updatedRoom }}
+                            {% endif %}
+                            {% if entry.scheduleType.slug == "vertretung" %}
+                                <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}<span class="fa fa-fw fa-chevron-right mx-2"></span>{{ entry.updatedTeacher }}
+                            {% endif %}
+                            {% if entry.scheduleType.slug == "aufgaben" %}
+                                <span class="fa fa-fw fa-message me-2"></span>{{ entry.message }}
+                            {% endif %}
+                        </td>
                     </tr>
             {% endif %}
             {% endfor %}
@@ -55,7 +65,7 @@
                             <td>{{ entry.entryTime.name|trans }}</td>
                             <td>{{ course.teacher }}</td>
                             <td>
-                                {% if entry.scheduleType.slug == "raumanderung" %}
+                                {% if entry.scheduleType.slug == "neuer-raum" %}
                                     <span class="fa fa-fw fa-door-closed me-2"></span>{{ entry.plannedRoom }}<span class="fa fa-fw fa-chevron-right mx-2"></span>{{ entry.updatedRoom }}
                                 {% endif %}
                                 {% if entry.scheduleType.slug == "vertretung" %}

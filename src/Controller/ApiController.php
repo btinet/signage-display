@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\BlogPostRepository;
+use App\Repository\CourseEntryRepository;
+use App\Repository\ShoutOutRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,6 +12,34 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api', name: 'api_')]
 class ApiController extends AbstractController
 {
+    #[Route('/schedule/today', name: 'schedule_today')]
+    public function getSchedule(CourseEntryRepository $courseEntryRepository): Response
+    {
+        $courseEntries = $courseEntryRepository->findCurrentEntries();
+        return $this->render('api/schedule.html.twig', [
+            'courseEntries' => $courseEntries
+        ]);
+    }
+
+    #[Route('/ticker', name: 'news_ticker')]
+    public function getNewsTickerContent(ShoutOutRepository $repository): Response
+    {
+        $shoutOuts = $repository->findCurrentEntries();
+        return $this->render('api/news_ticker.html.twig', [
+            'shoutOuts' => $shoutOuts
+        ]);
+    }
+
+    #[Route('/main/content', name: 'main_content')]
+    public function getMainContent(BlogPostRepository $repository): Response
+    {
+        $articles = $repository->findBy([
+            'active' => true
+        ]);
+        return $this->render('api/main_content.html.twig', [
+            'articles' => $articles
+        ]);
+    }
 
     #[Route('/departures/{stationId}/{query}', name: 'departures')]
     public function getDepartures(string $stationId, string $query): Response
