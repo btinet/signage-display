@@ -65,10 +65,11 @@ class ClassGroupCrudController extends AbstractCrudController
             FormField::addFieldset('Allgemein'),
             TextField::new('fullLabel')->setColumns(6)->onlyOnIndex(),
             TextField::new('label')->setColumns(6)->hideOnIndex(),
-            AssociationField::new('teacher')->setColumns(6),
+            AssociationField::new('teacher')->setColumns(6)->autocomplete(),
             DateField::new('startDate')->setColumns(3)->setRequired(true),
             DateField::new('endDate')->setColumns(3)->setRequired(true),
             AssociationField::new('courses')
+                ->autocomplete()
                 ->hideOnDetail()
                 ->setQueryBuilder(function (QueryBuilder $qb) {
                     $qb
