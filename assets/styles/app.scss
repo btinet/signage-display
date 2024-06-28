@@ -1,5 +1,5 @@
 $red: #FB4040;
-$blue: #133B82;
+$blue: #1f1f1f;
 $yellow: #FFDA27;
 $green: #008d4f;
 $purple: #a5027d;
@@ -53,4 +53,8 @@ body{
   background-color: rgba(19,59,130, .4);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
+}
+
+.img-thumbnail{
+  border-color: #000000;
 }

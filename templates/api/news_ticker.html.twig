@@ -1,5 +1,5 @@
 {% for shoutOut in shoutOuts %}
-    <div class="carousel-item fs-4  fw-bold p-2 text-center {{ shoutOut.type.cssClass }} {{ loop.index0 ? '' : 'active' }}">
+    <div class="carousel-item fs-3  fw-bold p-2 text-center {{ shoutOut.type.cssClass }} {{ loop.index0 ? '' : 'active' }}">
         {{ shoutOut.message }}
     </div>
 {% endfor %}

@@ -41,15 +41,18 @@
             </div>
             </div>
         #}
-        <div class="col-9">
+        <div class="col-8">
             <div class="card text-bg-primary h-100 border-0">
                 <div id="main-slide" class="carousel slide carousel-fade h-100" data-bs-ride="carousel">
                     <div class="carousel-inner h-100" {{ stimulus_controller('main',{'url': url('api_main_content') })}}></div>
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-4">
             <div class="card border-0 h-100 text-bg-tertiary">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item fs-4 text-uppercase text-bg-dark">Heute</div>
+                </div>
                 <div class="list-group list-group-flush" {{ stimulus_controller('schedule',{'url': url('api_schedule_today') })}}>
 
                 </div>
