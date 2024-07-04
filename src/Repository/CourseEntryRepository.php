@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\CourseEntry;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,6 +31,25 @@ class CourseEntryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * @return CourseEntry[] Returns an array of CourseEntry objects
+     */
+    public function findEntriesAt(string $interval = "+1 day"): array
+    {
+        $date = new DateTime();
+        $date->modify($interval);
+
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.scheduleType IS NOT NULL')
+            ->andWhere('c.entryDate = :nowDate')
+            ->setParameter('nowDate', $date->format('Y-m-d'))
+            ->orderBy('c.entryTime', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 //    public function findOneBySomeField($value): ?CourseEntry

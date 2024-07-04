@@ -1,0 +1,36 @@
+<div class="list-group list-group-flush w-100">
+    <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">{{ article.title }}</div>
+</div>
+
+<ul class="list-group list-group-flush w-100 mb-auto">
+    {% for entry in courseEntries %}
+        <div class="list-group-item small text-bg-primary">
+            <div class="row g-1">
+                <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.entryTime.name|trans }}</div>
+                <div class="col-7 text-uppercase fw-bold fs-6">{{ entry.course.subject }} / {{ entry.course.internLabel }}</div>
+                <div class="col-2 text-uppercase fw-bold fs-6 text-end"><span class="fa fa-fw fa-location-dot"></span>{{ entry.plannedRoom }}</div>
+                <div class="col-3 text-uppercase" style="color: {{ entry.scheduleType.color ~ "!important" }}">
+                    {{ entry.scheduleType }}
+                </div>
+                <div class="col-9 text-uppercase" style="color: {{ entry.scheduleType.color ~ "!important" }}">
+                    <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher.abbreviation }}{% if entry.updatedTeacher %}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold">{{ entry.updatedTeacher.abbreviation }}</span>{% endif %}
+                    {% if entry.updatedRoom %}
+                        <span class="fa fa-fw fa-location-dot ms-2 me-1"></span>{{ entry.plannedRoom }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold">{{ entry.updatedRoom }}</span>
+
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    {% if entry.message %}
+                        <span class="fa fa-fw fa-message me-2"></span>{{ entry.message }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</ul>
+
+{% if article.contentVisible %}
+    <div class="align-self-center fs-4 mb-5">
+        {{ article.content|raw }}
+    </div>
+{% endif %}

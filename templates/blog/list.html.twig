@@ -1,10 +1,10 @@
-<div class="align-self-center">
-    <div class="fw-bold display-4 mb-5 pt-3">{{ article.title }}</div>
+<div class="list-group list-group-flush w-100">
+    <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">{{ article.title }}</div>
 </div>
 
 <ul class="list-group list-group-flush w-100 mb-auto">
     {% for listEntry in article.list %}
-        <li class="list-group-item d-flex justify-content-start align-items-center bg-primary text-white  fs-4">
+        <li class="list-group-item d-flex justify-content-start align-items-center bg-primary blur text-white  fs-4">
             <div style="width: 250px" class="me-3">{{ listEntry.description }}</div>
             <div>{{ listEntry.content }}</div>
         </li>

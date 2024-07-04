@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row h-100 g-1 align-content-stretch mx-0">
+    <div class="row h-100 g-0 align-content-stretch mx-0">
         {#
         <div class="col-2">
                 <div class="d-flex flex-column justify-content-between h-100">
@@ -42,16 +42,15 @@
             </div>
         #}
         <div class="col-8">
-            <div class="card text-bg-primary h-100 border-0">
-                <div id="main-slide" class="carousel slide carousel-fade h-100" data-bs-ride="carousel">
-                    <div class="carousel-inner h-100" {{ stimulus_controller('main',{'url': url('api_main_content') })}}></div>
+            <div class="card text-bg-tertiary h-100 border-0">
+                <div id="main-slide" class="carousel slide carousel-fade h-100" data-bs-ride="carousel" {{ stimulus_controller('main',{'url': url('api_main_content') })}}>
                 </div>
             </div>
         </div>
         <div class="col-4">
-            <div class="card border-0 h-100 text-bg-tertiary">
+            <div class="card border-0 h-100 text-bg-tertiary border-start border-black">
                 <div class="list-group list-group-flush">
-                    <div class="list-group-item fs-4 text-uppercase text-bg-dark">Heute</div>
+                    <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">Heute</div>
                 </div>
                 <div class="list-group list-group-flush" {{ stimulus_controller('schedule',{'url': url('api_schedule_today') })}}>
 
@@ -65,10 +64,10 @@
 {% endblock %}
 
 {% block footer %}
-    <div class="row g-1 mx-0">
+    <div class="row g-1 mx-0 text-bg-dark">
         <div class="col-12">
             <div class="d-flex justify-content-start align-items-center">
-                <div class="list-group list-group-horizontal list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191508,'query': 'bus=true' }),'offset':0 })}}></div>
+                <div class="list-group list-group-horizontal list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191508,'query': 'bus=true' }),'offset':5 })}}></div>
                 <div class="list-group list-group-horizontal list-group-flush" {{ stimulus_controller('bvg',{'url': url('api_departures',{'stationId':900191001,'query': 'bus=false'}), 'offset': 10 })}}></div>
             </div>
             </div>

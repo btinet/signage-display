@@ -31,13 +31,16 @@ class ApiController extends AbstractController
     }
 
     #[Route('/main/content', name: 'main_content')]
-    public function getMainContent(BlogPostRepository $repository): Response
+    public function getMainContent(BlogPostRepository $repository, CourseEntryRepository $courseEntryRepository): Response
     {
+
+        $courseEntries = $courseEntryRepository->findEntriesAt();
         $articles = $repository->findBy([
             'active' => true
         ]);
         return $this->render('api/main_content.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'courseEntries' => $courseEntries
         ]);
     }
 

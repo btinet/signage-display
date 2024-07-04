@@ -1,7 +1,20 @@
-{% for article in articles %}
-    <div class="carousel-item h-100 p-2 {{ loop.index0 ? '' : 'active' }}">
-        <div class="d-flex h-100 flex-column align-items-start justify-content-start">
-            {{ include("blog/" ~ article.template.templateFile,{'article':article}) }}
+{#
+<div class="carousel-indicators">
+    {% for article in articles %}
+        <button type="button" data-bs-target="#main-slide" data-bs-slide-to="{{ loop.index0 }}" {{ loop.index0 ? '' : 'class="active"' }} aria-label="Slide {{ loop.index }}"></button>
+    {% endfor %}
+</div>
+#}
+
+<div class="carousel-inner h-100" >
+    {% for article in articles %}
+        <div class="carousel-item h-100  {{ loop.index0 ? '' : 'active' }}">
+            <div class="d-flex h-100 flex-column align-items-start justify-content-start">
+                {{ include("blog/" ~ article.template.templateFile,{'article':article}) }}
+            </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+</div>
+
+
+

@@ -1,5 +1,5 @@
 $red: #FB4040;
-$blue: #1f1f1f;
+$blue: #255372;
 $yellow: #FFDA27;
 $green: #008d4f;
 $purple: #a5027d;
@@ -29,6 +29,9 @@ body{
   font-optical-sizing: auto;
   font-style: normal;
   font-variation-settings: "slnt" 0;
+
+  background-image: url('../images/wallpaper-3.jpg');
+  background-size: cover;
 }
 
 .text-bg-bus{
@@ -53,6 +56,18 @@ body{
   background-color: rgba(19,59,130, .4);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
+}
+
+.blur{
+  background-color: rgba(52,52,57, .4)!important;
+  -webkit-backdrop-filter: saturate(180%) blur(40px);
+  backdrop-filter: saturate(180%) blur(40px);
+}
+
+.blur-dark{
+  background-color: rgba(5,5,9, .5)!important;
+  -webkit-backdrop-filter: saturate(180%) blur(40px);
+  backdrop-filter: saturate(180%) blur(40px);
 }
 
 .img-thumbnail{
