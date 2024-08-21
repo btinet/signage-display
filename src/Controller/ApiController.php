@@ -65,8 +65,8 @@ class ApiController extends AbstractController
         if($query) {
             $query = "&$query";
         }
-        // $ch = curl_init("https://v6.bvg.transport.rest/locations?poi=false&addresses=false&query=$stop$query");
-        $ch = curl_init("https://v6.bvg.transport.rest/stops/$stationId/departures?duration20&results=3$query");
+        // $ch = curl_init("https://v6.vbb.transport.rest/locations?poi=false&addresses=false&query=$stop$query");
+        $ch = curl_init("https://v6.vbb.transport.rest/stops/$stationId/departures?duration20&results=3$query");
 
         curl_setopt_array($ch, array(
             CURLOPT_POST => FALSE,
@@ -89,7 +89,7 @@ class ApiController extends AbstractController
     private function getStops(string $query) {
 
         // $ch = curl_init("https://v6.bvg.transport.rest/locations?poi=false&addresses=false&query=$stop");
-        $ch = curl_init("https://v6.bvg.transport.rest/stops?query=$query");
+        $ch = curl_init("https://v6.vbb.transport.rest/stops?query=$query");
 
         curl_setopt_array($ch, array(
             CURLOPT_POST => FALSE,

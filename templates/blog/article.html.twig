@@ -1,8 +1,9 @@
 <div class="list-group list-group-flush w-100">
     <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">{{ article.title }}</div>
 </div>
-<div class="p-3">
+
     {% if article.featuredImageVisible %}
+<div class="p-3 my-auto">
         <div class="row g-3">
             <div class="col-4">
                 <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 600px">
@@ -24,13 +25,15 @@
                 {% endif %}
             </div>
         </div>
+</div>
     {% else %}
 
         {% if article.contentVisible %}
-            <div class="col-12 fs-4" style="text-align: justify!important;">
-                {{ article.content|raw }}
+            <div class="mx-auto my-auto p-3 pt-0">
+                <div class="fs-4">
+                    {{ article.content|raw }}
+                </div>
             </div>
         {% endif %}
     {% endif %}
-</div>
 

@@ -30,7 +30,7 @@ class ImageCrudController extends AbstractCrudController
             ImageField::new('file')
                 ->setBasePath('images/uploads')
                 ->setUploadDir('public/images/uploads')
-                ->setFileConstraints(new ImageConstraint(maxSize: '2048k', maxRatio: 0.67, minRatio: 0.66))
+                ->setFileConstraints(new ImageConstraint( maxRatio: 1.5, minRatio: 0.66))
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
             BooleanField::new('disabled')
         ];

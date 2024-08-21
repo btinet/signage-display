@@ -17,7 +17,7 @@ new Carousel(shoutOutCarousel, {
 })
 
 new Carousel(mainCarousel, {
-    interval: 60000,
+    interval: 40000,
     touch: true
 })
 

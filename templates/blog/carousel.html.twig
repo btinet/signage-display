@@ -1,0 +1,13 @@
+<div class="list-group list-group-flush w-100">
+    <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">{{ article.title }}</div>
+</div>
+
+    <div class="main-carousel w-100" {{ stimulus_controller('gallery') }}>
+        {% for image in article.gallery.images %}
+            <img src="{{ asset(image.fileUrl)|imagine_filter('gallery') }}" class="d-block" style="height: 740px; max-height: 740px"  alt="{{ image }}">
+        {% endfor %}
+    </div>
+
+
+
+
