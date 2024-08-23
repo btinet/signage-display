@@ -1,13 +1,6 @@
 
 
 {% for entry in courseEntries %}
-    {% if loop.index0 == 0 %}
-        <div class="carousel-item h-100 active" data-bs-interval="15000">
-    {% endif %}
-    {% if loop.index0 != 0 and loop.index0 is divisible by(10) %}
-        </div>
-        <div class="carousel-item h-100" data-bs-interval="15000">
-    {% endif %}
     <div class="list-group-item border-0 border-bottom border-dark small text-bg-primary" style="background-color: {{ entry.scheduleType.color ~ "20!important" }}">
         <div class="row g-1">
             <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.entryTime.name|trans }}</div>
@@ -33,7 +26,4 @@
             </div>
         </div>
     </div>
-    {% if loop.last %}
-        </div>
-    {% endif %}
 {% endfor %}

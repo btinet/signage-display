@@ -52,8 +52,11 @@
                 <div class="list-group list-group-flush">
                     <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">Heute</div>
                 </div>
-                <div class="list-group list-group-flush" {{ stimulus_controller('schedule',{'url': url('api_schedule_today') })}}>
-
+                <div class="list-group list-group-flush">
+                    <div id="schedule-slide" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner h-100"  {{ stimulus_controller('schedule',{'url': url('api_schedule_today') })}}>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body h-100">
 

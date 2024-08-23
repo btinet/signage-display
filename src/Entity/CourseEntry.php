@@ -14,8 +14,8 @@ class CourseEntry
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'courseEntries')]
-    private ?Course $course = null;
+    #[ORM\Column(length: 255)]
+    private ?string $course = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $entryDate = null;
@@ -32,14 +32,20 @@ class CourseEntry
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $updatedRoom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'courseEntries')]
-    private ?Teacher $plannedTeacher = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $plannedTeacher = null;
 
-    #[ORM\ManyToOne(inversedBy: 'courseEntriesStandIn')]
-    private ?Teacher $updatedTeacher = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $updatedTeacher = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $message = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $plannedSubject = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $updatedSubject = null;
 
     public function __toString(): string
     {
@@ -51,12 +57,12 @@ class CourseEntry
         return $this->id;
     }
 
-    public function getCourse(): ?Course
+    public function getCourse(): ?string
     {
         return $this->course;
     }
 
-    public function setCourse(?Course $course): static
+    public function setCourse(?string $course): static
     {
         $this->course = $course;
 
@@ -123,24 +129,24 @@ class CourseEntry
         return $this;
     }
 
-    public function getPlannedTeacher(): ?Teacher
+    public function getPlannedTeacher(): ?string
     {
         return $this->plannedTeacher;
     }
 
-    public function setPlannedTeacher(?Teacher $plannedTeacher): static
+    public function setPlannedTeacher(?string $plannedTeacher): static
     {
         $this->plannedTeacher = $plannedTeacher;
 
         return $this;
     }
 
-    public function getUpdatedTeacher(): ?Teacher
+    public function getUpdatedTeacher(): ?string
     {
         return $this->updatedTeacher;
     }
 
-    public function setUpdatedTeacher(?Teacher $updatedTeacher): static
+    public function setUpdatedTeacher(?string $updatedTeacher): static
     {
         $this->updatedTeacher = $updatedTeacher;
 
@@ -155,6 +161,30 @@ class CourseEntry
     public function setMessage(?string $message): static
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getPlannedSubject(): ?string
+    {
+        return $this->plannedSubject;
+    }
+
+    public function setPlannedSubject(?string $plannedSubject): static
+    {
+        $this->plannedSubject = $plannedSubject;
+
+        return $this;
+    }
+
+    public function getUpdatedSubject(): ?string
+    {
+        return $this->updatedSubject;
+    }
+
+    public function setUpdatedSubject(?string $updatedSubject): static
+    {
+        $this->updatedSubject = $updatedSubject;
 
         return $this;
     }

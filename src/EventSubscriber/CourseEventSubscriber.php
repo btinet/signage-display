@@ -28,30 +28,27 @@ class CourseEventSubscriber implements EventSubscriberInterface
 
         $entity = $event->getEntityInstance();
 
-        if (!($entity instanceof CourseEvent)) {
-            return;
-        }
-
-        $course = $entity->getCourse();
-        $plannedRoom = $entity->getPlannedRoom();
-        $startDate = $entity->getCourse()->getStartDate();
-        $endDate = $entity->getCourse()->getEndDate();
-        $teacher = $entity->getCourse()->getTeacher();
-        $entryDay = $entity->getWeekday();
-        $entryTime = $entity->getClass();
-        $dateInterval = $startDate->diff($endDate);
-
-        for ($i = 1 ;$i <= $dateInterval->days;$i++) {
-            $currentDate = date_add($startDate,date_interval_create_from_date_string("1 day"));
-            if($entryDay->value == $currentDate->format("w")) {
-                $courseEntry = new CourseEntry();
-                $courseEntry->setEntryDate($currentDate);
-                $courseEntry->setEntryTime($entryTime);
-                $courseEntry->setCourse($course);
-                $courseEntry->setPlannedRoom($plannedRoom);
-                $courseEntry->setPlannedTeacher($teacher);
-                $this->entityManager->persist($courseEntry);
-                $this->entityManager->flush();
+        if ($entity instanceof CourseEvent) {
+            $course = $entity->getCourse();
+            $plannedRoom = $entity->getPlannedRoom();
+            $startDate = $entity->getCourse()->getStartDate();
+            $endDate = $entity->getCourse()->getEndDate();
+            $teacher = $entity->getCourse()->getTeacher();
+            $entryDay = $entity->getWeekday();
+            $entryTime = $entity->getClass();
+            $dateInterval = $startDate->diff($endDate);
+            for ($i = 1; $i <= $dateInterval->days; $i++) {
+                $currentDate = date_add($startDate, date_interval_create_from_date_string("1 day"));
+                if ($entryDay->value == $currentDate->format("w")) {
+                    $courseEntry = new CourseEntry();
+                    $courseEntry->setEntryDate($currentDate);
+                    $courseEntry->setEntryTime($entryTime);
+                    $courseEntry->setCourse($course);
+                    $courseEntry->setPlannedRoom($plannedRoom);
+                    $courseEntry->setPlannedTeacher($teacher);
+                    $this->entityManager->persist($courseEntry);
+                    $this->entityManager->flush();
+                }
             }
         }
 

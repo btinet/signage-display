@@ -17,6 +17,7 @@ use App\Entity\SchoolSubject;
 use App\Entity\ShoutOut;
 use App\Entity\SuspensionEntry;
 use App\Entity\Teacher;
+use App\Entity\UntisImport;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -62,6 +63,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Übersicht', 'fa fa-home');
 
         yield MenuItem::section('Stundenplan');
+        yield MenuItem::linkToCrud('GPU Upload','fa fa-file',UntisImport::class)->setAction('new');
         yield MenuItem::linkToCrud('Course Entries','fa fa-list',CourseEntry::class);
         yield MenuItem::linkToCrud('Suspensions','fa fa-users',SuspensionEntry::class);
 

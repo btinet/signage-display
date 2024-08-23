@@ -69,7 +69,6 @@ class ClassGroupCrudController extends AbstractCrudController
             DateField::new('startDate')->setColumns(3)->setRequired(true),
             DateField::new('endDate')->setColumns(3)->setRequired(true),
             AssociationField::new('courses')
-                ->autocomplete()
                 ->hideOnDetail()
                 ->setQueryBuilder(function (QueryBuilder $qb) {
                     $qb

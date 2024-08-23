@@ -49,13 +49,13 @@ class CourseEntryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('course')->autocomplete(),
+            TextField::new('course'),
             DateField::new('entryDate')->setFormat('dd.MM.yyyy'),
             ChoiceField::new('entryTime'),
-            AssociationField::new('plannedTeacher')->autocomplete(),
+            TextField::new('plannedTeacher'),
             TextField::new('plannedRoom'),
             AssociationField::new('scheduleType')->autocomplete(),
-            AssociationField::new('updatedTeacher')->autocomplete(),
+            TextField::new('updatedTeacher'),
             TextField::new('updatedRoom')->formatValue(fn ($value) => $value == null ?'-': $value),
             TextareaField::new('message')->formatValue(fn ($value) => $value == null ?'-': $value)
 

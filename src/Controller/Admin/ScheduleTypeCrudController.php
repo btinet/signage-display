@@ -40,6 +40,7 @@ class ScheduleTypeCrudController extends AbstractCrudController
     {
         return [
             TextField::new('label'),
+            TextField::new('code'),
             ColorField::new('color')->setEmptyData('#000000'),
             TextareaField::new('description'),
             DateTimeField::new('created_at')->onlyOnIndex(),
