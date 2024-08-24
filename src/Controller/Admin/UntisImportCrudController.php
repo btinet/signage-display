@@ -70,6 +70,9 @@ class UntisImportCrudController extends AbstractCrudController
         ];
 
         $file = $entityInstance->getFilename();
+        if(!mb_detect_encoding($file, 'UTF-8', true)) {
+            $this->addFlash("warning","Datei ist nicht UTF-8-formatiert. Der Import wurde mit ISO-8859-1 versucht.");
+        }
 
         if (($handle = fopen($this->getParameter('upload_directory') . '/' . $file, "r")) !== FALSE) {
             try {
@@ -77,10 +80,21 @@ class UntisImportCrudController extends AbstractCrudController
                     $date = new DateTimeImmutable($data[1]);
                     $entry = new CourseEntry();
                     $courses = str_replace("~", ", ",$data[14]);
+                    $plannedRooms = str_replace("~", ", ",$data[11]);
+                    $updatedRooms = str_replace("~", ", ",$data[12]);
                     $entry->setCourse($courses);
-                    $entry->setMessage(iconv('ISO-8859-1', 'UTF-8', $data[16]));
-                    $entry->setPlannedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[5]));
-                    $entry->setUpdatedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[6]));
+
+                    if(mb_detect_encoding($file, 'UTF-8', true)) {
+                        $entry->setMessage($data[16]);
+                        $entry->setPlannedTeacher($data[5]);
+                        $entry->setUpdatedTeacher( $data[6]);
+                    } else {
+                        $entry->setMessage(iconv('ISO-8859-1', 'UTF-8', $data[16]));
+                        $entry->setPlannedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[5]));
+                        $entry->setUpdatedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[6]));
+                    }
+
+
 
                     $code = $data[17];
                     //if($code == "2") $code = 1;
@@ -94,8 +108,8 @@ class UntisImportCrudController extends AbstractCrudController
 
                     $entry->setEntryDate($date);
                     $entry->setEntryTime(Block::tryFrom($data[2]));
-                    $entry->setPlannedRoom($data[11]);
-                    $entry->setUpdatedRoom($data[12]);
+                    $entry->setPlannedRoom($plannedRooms);
+                    $entry->setUpdatedRoom($updatedRooms);
                     $entry->setPlannedSubject($data[7]);
                     $entry->setUpdatedSubject($data[9]);
 

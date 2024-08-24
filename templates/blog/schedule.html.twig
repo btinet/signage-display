@@ -3,26 +3,54 @@
 </div>
 
 <ul class="list-group list-group-flush w-100 mb-auto">
+    <div class="list-group-item small text-bg-tertiary">
+        <div class="row g-3">
+            <div class="col-6">
+                <div class="row g-1">
+                    <div class="col-2 text-uppercase">Stunde</div>
+                    <div class="col-3 text-uppercase">Klasse</div>
+                    <div class="col-3 text-uppercase">Fach</div>
+                    <div class="col-4 text-uppercase"><span class="fa fa-fw fa-location-dot"></span>Raum</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row h-100">
+                    <div class="col-3 align-self-center text-uppercase">
+                        Typ
+                    </div>
+                    <div class="col-9 align-self-center text-uppercase">
+                        Änderungen
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% for entry in courseEntries %}
-        <div class="list-group-item small text-bg-primary">
-            <div class="row g-1">
-                <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.entryTime.name|trans }}</div>
-                <div class="col-7 text-uppercase fw-bold fs-6">{{ entry.course }} / {{ entry.plannedSubject }}</div>
-                <div class="col-2 text-uppercase fw-bold fs-6 text-end"><span class="fa fa-fw fa-location-dot"></span>{{ entry.plannedRoom }}</div>
-                <div class="col-3 text-uppercase" style="color: {{ entry.scheduleType.color ~ "!important" }}">
-                    {{ entry.scheduleType }}
+        <div class="list-group-item small text-bg-primary" style="background-color: {{ entry.scheduleType.color ~ "20!important" }}">
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="row g-1">
+                        <div class="col-2 text-uppercase fw-bold fs-6">{{ entry.entryTime.name|trans }}</div>
+                        <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.course }}</div>
+                        <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.plannedSubject }}</div>
+                        <div class="col-4 text-uppercase fw-bold fs-6"><span class="fa fa-fw fa-location-dot"></span>{{ entry.plannedRoom }}</div>
+                    </div>
                 </div>
-                <div class="col-9 text-uppercase" style="color: {{ entry.scheduleType.color ~ "!important" }}">
-                    <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}{% if entry.updatedTeacher %}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold">{{ entry.updatedTeacher }}</span>{% endif %}
-                    {% if entry.updatedRoom %}
-                        <span class="fa fa-fw fa-location-dot ms-2 me-1"></span>{{ entry.plannedRoom }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold">{{ entry.updatedRoom }}</span>
-
-                    {% endif %}
-                </div>
-                <div class="col-12">
-                    {% if entry.message %}
-                        <span class="fa fa-fw fa-message me-2"></span>{{ entry.message }}
-                    {% endif %}
+                <div class="col-6">
+                    <div class="row h-100">
+                        <div class="col-3 align-self-center text-uppercase" style="color: {{ entry.scheduleType.color ~ "!important" }}">
+                            {{ entry.scheduleType }}
+                        </div>
+                        <div class="col-9 align-self-center text-uppercase">
+                            <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}{% if entry.updatedTeacher %}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedTeacher }}</span>{% endif %}
+                            {% if entry.updatedRoom %}
+                                <span class="fa fa-fw fa-location-dot ms-2 me-1"></span>{{ entry.plannedRoom }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedRoom }}</span>
+                            {% endif %}
+                            {% if entry.updatedSubject %}
+                                <span class="fa fa-fw fa-book ms-2 me-1"></span>{{ entry.plannedSubject }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedSubject }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
