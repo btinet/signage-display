@@ -18,10 +18,10 @@
             </div>
             <div class="col-9 text-uppercase">
                 <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}{% if entry.updatedTeacher %}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedTeacher }}</span>{% endif %}
-                {% if entry.updatedRoom %}
+                {% if entry.updatedRoom != null and entry.updatedRoom != entry.plannedRoom %}
                         <span class="fa fa-fw fa-location-dot ms-2 me-1"></span>{{ entry.plannedRoom }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedRoom }}</span>
                 {% endif %}
-                {% if entry.updatedSubject %}
+                {% if entry.updatedSubject != null %}
                     <span class="fa fa-fw fa-book ms-2 me-1"></span>{{ entry.plannedSubject }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedSubject }}</span>
                 {% endif %}
             </div>

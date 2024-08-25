@@ -143,7 +143,7 @@ class CourseEntry
 
     public function getUpdatedTeacher(): ?string
     {
-        return $this->updatedTeacher;
+        return  $this->updatedTeacher;
     }
 
     public function setUpdatedTeacher(?string $updatedTeacher): static
