@@ -53,6 +53,19 @@
                     <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">Änderungen für heute</div>
                 </div>
                 <div class="list-group list-group-flush">
+                    <div class="list-group-item border-0 border-bottom border-dark small text-bg-tertiary" >
+                        <div class="row g-1">
+                            <div class="col-3 text-uppercase fw-bold fs-6">Stunde</div>
+                            <div class="col-5 text-uppercase fw-bold fs-6">Klasse / Fach</div>
+                            <div class="col-4 text-uppercase fw-bold fs-6 text-end">Raum</div>
+                            <div class="col-3 text-uppercase">
+                                Typ
+                            </div>
+                            <div class="col-9 text-uppercase">
+                                Änderungen
+                            </div>
+                        </div>
+                    </div>
                     <div id="schedule-slide" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner h-100"  {{ stimulus_controller('schedule',{'url': url('api_schedule_today') })}}>
                         </div>

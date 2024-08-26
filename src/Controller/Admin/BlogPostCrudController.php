@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Validator\Constraints\Image as ImageConstraint;
@@ -26,6 +27,9 @@ class BlogPostCrudController extends AbstractCrudController
     {
         return [
             FormField::addTab('Allgemein')->onlyOnForms(),
+            BooleanField::new('active'),
+            IntegerField::new('duration')
+            ->setHelp("Beitragsdauer in Sekunden."),
             IdField::new('id')->hideOnForm(),
             AssociationField::new('template')->setRequired(true)->setColumns(3),
             TextField::new('title')->setColumns(9),
@@ -39,7 +43,6 @@ class BlogPostCrudController extends AbstractCrudController
                 ->setFileConstraints(new ImageConstraint(maxSize: '2048k'))
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
             BooleanField::new('featuredImageVisible'),
-
             FormField::addTab('Listen')->onlyOnForms(),
             CollectionField::new('list')
                 ->setEntryIsComplex(true)
@@ -49,7 +52,6 @@ class BlogPostCrudController extends AbstractCrudController
             AssociationField::new('gallery')->setFormTypeOptions([
                 'expanded' => true
             ]),
-            BooleanField::new('active'),
             FormField::addTab('Vertretungsplan')->onlyOnForms(),
         ];
     }

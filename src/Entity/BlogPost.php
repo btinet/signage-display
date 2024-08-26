@@ -54,6 +54,9 @@ class BlogPost
     #[ORM\ManyToMany(targetEntity: ListEntry::class, inversedBy: 'blogPosts', cascade: ["persist"])]
     private Collection $list;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $duration = null;
+
     public function __construct()
     {
         $this->list = new ArrayCollection();
@@ -213,6 +216,18 @@ class BlogPost
     public function removeList(ListEntry $list): static
     {
         $this->list->removeElement($list);
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): static
+    {
+        $this->duration = $duration;
 
         return $this;
     }

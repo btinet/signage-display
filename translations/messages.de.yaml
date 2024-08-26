@@ -41,6 +41,7 @@ Course Entries: Vertretungsplanung
 CourseEntry: Stunde
 events: Ereignisse
 Subject: Schulfach
+Duration: Anzeigedauer
 Extended: Leistungskurs
 Class Group: Klasse
 Intern Label: Interne Bezeichnung

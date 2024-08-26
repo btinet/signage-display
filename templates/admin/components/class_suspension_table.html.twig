@@ -16,28 +16,7 @@
         </thead>
         <tbody>
         {% for course in field.value %}
-            {% for entry in course.courseEntries %}
-                {% if entry.scheduleType and entry.entryDate|date('Y-m-d') <=> "now"|date('Y-m-d') == 0 %}
-                    <tr style="border-left: 4px solid {{ entry.scheduleType.color ~ "!important" }}">
-                        <td>{{ entry.scheduleType }}</td>
-                        <td>{{ entry.course.label }}</td>
-                        <td>{{ entry.entryDate|date('d.m.Y') }}</td>
-                        <td>{{ entry.entryTime.name|trans }}</td>
-                        <td>{{ course.teacher }}</td>
-                        <td>
-                            {% if entry.scheduleType.slug == "neuer-raum" %}
-                                <span class="fa fa-fw fa-door-closed me-2"></span>{{ entry.plannedRoom }}<span class="fa fa-fw fa-chevron-right mx-2"></span>{{ entry.updatedRoom }}
-                            {% endif %}
-                            {% if entry.scheduleType.slug == "vertretung" %}
-                                <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}<span class="fa fa-fw fa-chevron-right mx-2"></span>{{ entry.updatedTeacher }}
-                            {% endif %}
-                            {% if entry.scheduleType.slug == "aufgaben" %}
-                                <span class="fa fa-fw fa-message me-2"></span>{{ entry.message }}
-                            {% endif %}
-                        </td>
-                    </tr>
-            {% endif %}
-            {% endfor %}
+
         {% endfor %}
         </tbody>
     </table>
@@ -56,28 +35,7 @@
         </thead>
         <tbody>
             {% for course in field.value %}
-                {% for entry in course.courseEntries %}
-                    {% if entry.scheduleType and entry.entryDate|date('Y-m-d') <=> "now"|date('Y-m-d') == 1 %}
-                        <tr style="border-left: 4px solid {{ entry.scheduleType.color ~ "!important" }}">
-                            <td>{{ entry.scheduleType }}</td>
-                            <td>{{ entry.course.label }}</td>
-                            <td>{{ entry.entryDate|date('d.m.Y') }}</td>
-                            <td>{{ entry.entryTime.name|trans }}</td>
-                            <td>{{ course.teacher }}</td>
-                            <td>
-                                {% if entry.scheduleType.slug == "neuer-raum" %}
-                                    <span class="fa fa-fw fa-door-closed me-2"></span>{{ entry.plannedRoom }}<span class="fa fa-fw fa-chevron-right mx-2"></span>{{ entry.updatedRoom }}
-                                {% endif %}
-                                {% if entry.scheduleType.slug == "vertretung" %}
-                                    <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}<span class="fa fa-fw fa-chevron-right mx-2"></span>{{ entry.updatedTeacher }}
-                                {% endif %}
-                                {% if entry.scheduleType.slug == "aufgaben" %}
-                                    <span class="fa fa-fw fa-message me-2"></span>{{ entry.message }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
+
             {% endfor %}
         </tbody>
     </table>

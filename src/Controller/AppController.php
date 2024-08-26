@@ -14,6 +14,7 @@ class AppController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(ImageGalleryRepository $imageGalleryRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $galleries = $imageGalleryRepository->findActiveEntries();
         return $this->render('app/index.html.twig', [
             'galleries' => $galleries

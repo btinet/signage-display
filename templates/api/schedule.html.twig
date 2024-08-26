@@ -36,4 +36,10 @@
     {% if loop.last %}
         </div>
     {% endif %}
+{% else %}
+    <div class="carousel-item h-100 active" data-bs-interval="15000">
+        <div class="list-group-item border-0 small text-bg-primary">
+            Keine Einträge für heute vorhanden.
+        </div>
+    </div>
 {% endfor %}
