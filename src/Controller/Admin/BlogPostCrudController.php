@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -53,6 +54,7 @@ class BlogPostCrudController extends AbstractCrudController
                 'expanded' => true
             ]),
             FormField::addTab('Vertretungsplan')->onlyOnForms(),
+            TextField::new('scheduleOffset')->setHelp('z.B. "+1 day" oder "+2 days"'),
         ];
     }
 

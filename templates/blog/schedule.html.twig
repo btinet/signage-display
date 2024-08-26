@@ -1,5 +1,11 @@
 <div class="list-group list-group-flush w-100">
-    <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">{{ article.title }}</div>
+    <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">
+        {% if article.scheduleDate %}
+            Änderungen für den {{ article.scheduleDate|date('d.m.Y') }}
+        {% else %}
+            Änderungen für morgen
+        {% endif %}
+    </div>
 </div>
 
 <ul class="list-group list-group-flush w-100 mb-auto">

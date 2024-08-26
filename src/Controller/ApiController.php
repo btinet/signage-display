@@ -34,6 +34,7 @@ class ApiController extends AbstractController
     public function getMainContent(BlogPostRepository $repository, CourseEntryRepository $courseEntryRepository): Response
     {
 
+        // TODO: Auslagern in extra Methode, damit Artikel eigene Eintröge holen können.
         $courseEntries = $courseEntryRepository->findEntriesAt();
         $articles = $repository->findBy([
             'active' => true

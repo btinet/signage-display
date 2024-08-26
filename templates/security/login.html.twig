@@ -1,58 +1,61 @@
-<!DOCTYPE html>
-<html class="h-100" lang="de" data-bs-theme="light">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Digital Signage Display Software">
-    <meta name="author" content="Benjamin Wagner">
-    <title></title>
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-</head>
-<body>
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
-
-        <h1 class="h3 mb-3 font-weight-normal">Bitte anmelden</h1>
-        <label for="username">Username</label>
-        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-
-        {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <input type="checkbox" name="_remember_me" id="_remember_me">
-            <label for="_remember_me">Remember me</label>
-        </div>
-        #}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
-</body>
-</html>
-
+{% extends 'base.html.twig' %}
 {% block content %}
+    <div class="container">
+        <div class="row row-cols-1 g-3">
+            <div class="col">
+                <div class="card card-body text-bg-primary shadow">
+                    <div class="d-flex flex-wrap align-items-center justify-content-start text-white">
+                        <a class="navbar-brand d-flex align-items-center" href="/">
+                            <img src="{{ asset('images/tk_logo.svg') }}" class="me-2" height="48" alt="TK Logo">
+                        </a>
+                        <div class="fs-2 py-3">
+                            Signage-Display
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-body text-bg-tertiary shadow">
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
 
+                        {% if app.user %}
+                            <div class="mb-3">
+                                Sie sind eingeloggt als {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="link-light">Logout</a>
+                            </div>
+                        {% endif %}
+
+
+                        <label for="username">Kennung</label>
+                        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control mb-3 bg-light" autocomplete="username" required autofocus>
+                        <label for="password">Passwort</label>
+                        <input type="password" name="_password" id="password" class="form-control bg-light" autocomplete="current-password" required>
+
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
+
+                        <div class="checkbox mb-3">
+                            <input type="checkbox" name="_remember_me" id="_remember_me">
+                            <label for="_remember_me">Remember me</label>
+                        </div>
+                        #}
+
+                        <button class="btn btn-primary mt-3" type="submit">
+                            Einloggen
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+
