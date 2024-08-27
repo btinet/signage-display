@@ -54,6 +54,10 @@ TUESDAY: dienstags
 WEDNESDAY: mittwochs
 THURSDAY: donnerstags
 FRIDAY: freitags
+User: Konto
+Users: Konten
+Username: Kennung
+Roles: Rollen
 Class: Std
 One: 1. Std
 Two: 2. Std
@@ -99,4 +103,8 @@ Disabled: Deaktiviert
 Template File: Datei
 ListEntries: Listeneinträge
 ListEntry: Listeneintrag
+ROLE_USER: Standardkonto
+ROLE_ADMIN: Administrator
+Password: Passwort
+(Repeat): Wiederholung
 

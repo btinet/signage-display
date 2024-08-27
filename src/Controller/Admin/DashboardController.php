@@ -18,6 +18,7 @@ use App\Entity\ShoutOut;
 use App\Entity\SuspensionEntry;
 use App\Entity\Teacher;
 use App\Entity\UntisImport;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -75,16 +76,18 @@ class DashboardController extends AbstractDashboardController
 
 
         yield MenuItem::section('Schulverwaltung');
+        yield MenuItem::linkToCrud('SchoolSubjects','fa fa-list',SchoolSubject::class);
         yield MenuItem::linkToCrud('Teachers','fa fa-users',Teacher::class);
         yield MenuItem::linkToCrud('ClassGroups','fa fa-university',ClassGroup::class);
         yield MenuItem::linkToCrud('courses','fa fa-university',Course::class);
         yield MenuItem::linkToCrud('Course Events','fa fa-fire',CourseEvent::class);
-        yield MenuItem::linkToCrud('SchoolSubjects','fa fa-list',SchoolSubject::class);
 
         yield MenuItem::section('Setup');
         yield MenuItem::linkToCrud('Types All','fa fa-fire',ScheduleType::class);
         yield MenuItem::linkToCrud('MessageTypes','fa fa-bullhorn',MessageType::class);
         yield MenuItem::linkToCrud('BlogPostTemplates','fa fa-swatchbook',BlogPostTemplate::class);
+        yield MenuItem::linkToCrud('Users','fa fa-users',User::class);
+
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
