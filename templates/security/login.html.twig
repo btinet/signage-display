@@ -58,7 +58,7 @@
 
                                 <div class="text-center">
                                     <img src="{{ asset('images/mstile-144x144.png') }}" class="" height="128" alt="TK Logo">
-                                    <h4 class="mt-1 mb-5 pb-1">Signage Display</h4>
+                                    <h4 class="mt-1 mb-5 pb-1">Signage Display Control</h4>
                                 </div>
 
                                 {% if error %}
@@ -66,8 +66,8 @@
                                 {% endif %}
 
                                 {% if app.user %}
-                                    <div class="mb-3 text-center">
-                                        Sie sind eingeloggt als {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                    <div class="mb-5 text-center">
+                                        Sie sind eingeloggt als {{ app.user.userIdentifier }}. <a href="{{ path('app_logout') }}">Logout</a>
                                     </div>
                                 {% else %}
                                     <form method="post">
@@ -95,6 +95,7 @@
 
                                     </form>
                                 {% endif %}
+                                <p class="small text-muted mb-0">&copy;2024 Benjamin Wagner<br><i>nur für den internen Gebrauch</i></p>
                             </div>
                         </div>
                         <div class="col-lg-6 d-flex align-items-center text-bg-light">
