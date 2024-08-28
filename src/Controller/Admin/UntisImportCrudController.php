@@ -113,7 +113,7 @@ class UntisImportCrudController extends AbstractCrudController
                         $entry = new CourseEntry();
                         $entry->setCourse($courses);
 
-                        /*if(mb_detect_encoding($file, 'UTF-8', true)) {
+                        if(mb_detect_encoding($file, 'UTF-8', true)) {
                             $entry->setMessage($data[16]);
                             $entry->setPlannedTeacher($data[5]);
                             $entry->setUpdatedTeacher( $data[6]);
@@ -121,11 +121,8 @@ class UntisImportCrudController extends AbstractCrudController
                             $entry->setMessage(iconv('ISO-8859-1', 'UTF-8', $data[16]));
                             $entry->setPlannedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[5]));
                             $entry->setUpdatedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[6]));
-                        }*/
+                        }
 
-                        $entry->setMessage(iconv('ISO-8859-1', 'UTF-8', $data[16]));
-                        $entry->setPlannedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[5]));
-                        $entry->setUpdatedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[6]));
 
                         $code = $data[17];
                         //if($code == "2") $code = 1;
