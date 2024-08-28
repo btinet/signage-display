@@ -66,6 +66,7 @@ class UntisImportCrudController extends AbstractCrudController
                 ->setHelp("Nach upload werden alte Datensätze entfernt. (Dateiname wird im Formular nicht angezeigt, nicht verwirren lassen.)"),
             TextareaField::new('info')
             ->setRequired(false)
+            ->setFormTypeOption("mapped",false)
         ];
     }
 
