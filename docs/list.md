@@ -26,3 +26,7 @@ Fügen sie einige Listeneinträge hinzu:
 ## Schritt 4
 
 Speichern Sie Ihre Arbeit durch Klicken auf "Erstellen"
+
+## Ergebnis
+
+![img_6.png](img_6.png)
