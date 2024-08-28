@@ -44,4 +44,13 @@ class UntisImport
 
         return $this;
     }
+
+    public function getInfo(): string
+    {
+        return <<<DATA
+        Klassen/Kurse, die den Schlüsselwörtern der Ausschlussliste
+        entsprechen, werden beim Import ignoriert.
+        DATA;
+    }
+
 }

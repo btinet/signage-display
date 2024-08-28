@@ -7,6 +7,7 @@ use App\Entity\BlogPostTemplate;
 use App\Entity\ClassGroup;
 use App\Entity\Course;
 use App\Entity\CourseEntry;
+use App\Entity\CourseEntryFilter;
 use App\Entity\CourseEvent;
 use App\Entity\Image;
 use App\Entity\ImageGallery;
@@ -61,12 +62,10 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToUrl('Display zeigen','fa fa-display',$this->generateUrl('app_index'));
-        yield MenuItem::linkToDashboard('Übersicht', 'fa fa-home');
 
         yield MenuItem::section('Stundenplan');
         yield MenuItem::linkToCrud('GPU Upload','fa fa-file',UntisImport::class)->setAction('new');
         yield MenuItem::linkToCrud('Course Entries','fa fa-list',CourseEntry::class);
-        yield MenuItem::linkToCrud('Suspensions','fa fa-users',SuspensionEntry::class);
 
         yield MenuItem::section('Aushang');
         yield MenuItem::linkToCrud('BlogPosts','fa fa-pen-nib',BlogPost::class);
@@ -74,15 +73,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Galleries','fa fa-images',ImageGallery::class);
         yield MenuItem::linkToCrud('Images','fa fa-image',Image::class);
 
-
-        yield MenuItem::section('Schulverwaltung');
-        yield MenuItem::linkToCrud('SchoolSubjects','fa fa-list',SchoolSubject::class);
-        yield MenuItem::linkToCrud('Teachers','fa fa-users',Teacher::class);
-        yield MenuItem::linkToCrud('ClassGroups','fa fa-university',ClassGroup::class);
-        yield MenuItem::linkToCrud('courses','fa fa-university',Course::class);
-        yield MenuItem::linkToCrud('Course Events','fa fa-fire',CourseEvent::class);
-
         yield MenuItem::section('Setup');
+        yield MenuItem::linkToCrud('Course Keywords','fa fa-list',CourseEntryFilter::class);
         yield MenuItem::linkToCrud('Types All','fa fa-fire',ScheduleType::class);
         yield MenuItem::linkToCrud('MessageTypes','fa fa-bullhorn',MessageType::class);
         yield MenuItem::linkToCrud('BlogPostTemplates','fa fa-swatchbook',BlogPostTemplate::class);

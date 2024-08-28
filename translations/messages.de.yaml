@@ -107,4 +107,7 @@ ROLE_USER: Standardkonto
 ROLE_ADMIN: Administrator
 Password: Passwort
 (Repeat): Wiederholung
+Course Keywords: Ausschlussliste
+CourseEntryFilter: Ausschlussfilter
+Keyword: Schlüsselwort
 
