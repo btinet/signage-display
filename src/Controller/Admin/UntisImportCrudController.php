@@ -55,6 +55,11 @@ class UntisImportCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
 
+        $value = <<<DATA
+        Klassen/Kurse, die den Schlüsselwörtern der Ausschlussliste
+        entsprechen, werden beim Import ignoriert.
+        DATA;
+
         return [
             TextField::new('filename','GPUxxx.txt aus DIP-Export')
                 ->setFormType(FileUploadType::class)
@@ -66,7 +71,6 @@ class UntisImportCrudController extends AbstractCrudController
                 ->setHelp("Nach upload werden alte Datensätze entfernt. (Dateiname wird im Formular nicht angezeigt, nicht verwirren lassen.)"),
             TextareaField::new('info')
             ->setRequired(false)
-            ->setFormTypeOption("mapped",false)
         ];
     }
 

@@ -53,4 +53,9 @@ class UntisImport
         DATA;
     }
 
+    public function setInfo(string $info): static
+    {
+        return $this;
+    }
+
 }
