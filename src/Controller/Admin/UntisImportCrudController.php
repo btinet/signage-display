@@ -61,7 +61,7 @@ class UntisImportCrudController extends AbstractCrudController
         DATA;
 
         return [
-            TextField::new('filename','GPUxxx.txt aus DIP-Export')
+            TextField::new('filename','GPUxxx.txt aus DIF-Export')
                 ->setFormType(FileUploadType::class)
                 ->setFormTypeOptions([
                 ])
