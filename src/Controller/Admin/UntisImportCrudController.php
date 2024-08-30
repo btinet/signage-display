@@ -12,6 +12,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -22,6 +23,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\DomCrawler\Field\FileFormField;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Validator\Constraints\File;
 
 class UntisImportCrudController extends AbstractCrudController
 {
@@ -42,6 +44,8 @@ class UntisImportCrudController extends AbstractCrudController
         return UntisImport::class;
     }
 
+
+
     public function configureActions(Actions $actions): Actions
     {
         return $actions
@@ -49,6 +53,16 @@ class UntisImportCrudController extends AbstractCrudController
             // this will forbid to create or delete entities in the backend
             ->disable(Action::SAVE_AND_ADD_ANOTHER, Action::EDIT)
             ;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setHelp('new', 'Klassen/Kurse, die den Schlüsselwörtern der Ausschlussliste entsprechen, werden beim Import ignoriert.')
+            ->overrideTemplates([
+                'crud/new' => 'admin/pages/edit.html.twig',
+            ])
+        ;
     }
 
 
@@ -61,16 +75,30 @@ class UntisImportCrudController extends AbstractCrudController
         DATA;
 
         return [
-            TextField::new('filename','GPUxxx.txt aus DIF-Export')
+            ImageField::new('filename','GPUxxx.txt aus DIF-Export')
                 ->setFormType(FileUploadType::class)
                 ->setFormTypeOptions([
                 ])
                 ->setCustomOption('basePath', 'uploads/files')
                 ->setCustomOption('uploadDir', 'public/uploads/files')
+                ->setFormTypeOptions(['attr' => [
+                    'accept' => 'text/plain'
+                ]
+
+                ])
+                ->setFileConstraints(new File([
+                    'mimeTypes' => [
+                        'text/plain',
+                        'text/x-csv',
+                        'text/csv',
+                        'application/vnd.ms-excel',
+                        'application/csv',
+                        'application/x-csv',
+                    ]
+                    ])
+                )
                 ->setRequired(true)
-                ->setHelp("Nach upload werden alte Datensätze entfernt. (Dateiname wird im Formular nicht angezeigt, nicht verwirren lassen.)"),
-            TextareaField::new('info')
-            ->setRequired(false)
+                ->setHelp("Nach upload werden alte Datensätze entfernt."),
         ];
     }
 

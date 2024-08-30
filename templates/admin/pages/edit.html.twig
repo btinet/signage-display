@@ -1,0 +1,22 @@
+{% extends '@EasyAdmin/crud/new.html.twig' %}
+
+
+{% block main %}
+    {% block new_form %}
+        {{ form(new_form) }}
+    {% endblock new_form %}
+    <h3 class="title">Hinweise zum Export aus Untis</h3>
+    <p>
+        Achten Sie beim Export der DIF-Datei darauf, dass Sie das <b>Komma</b> als Trennzeichen und <b>UTF-8</b> als Encoding verwenden.
+    </p>
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <img src="{{ asset('images/uploads/img_7.png') }}" class="img-thumbnail" alt="Export">
+        </div>
+        <div class="col-12 col-md-4">
+            <img src="{{ asset('images/uploads/img_9.png') }}" class="img-thumbnail" alt="Export">
+        </div>
+    </div>
+
+
+{% endblock %}

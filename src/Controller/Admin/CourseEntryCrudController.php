@@ -26,6 +26,9 @@ class CourseEntryCrudController extends AbstractCrudController
     {
         return $crud
             ->setPageTitle('detail', fn (CourseEntry $entity) => "%entity_label_plural% $entity")
+            ->setDefaultSort([
+                'entryDate' => 'DESC',
+            ])
             ;
     }
 
@@ -49,9 +52,9 @@ class CourseEntryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('course'),
             DateField::new('entryDate')->setFormat('dd.MM.yyyy'),
             ChoiceField::new('entryTime'),
+            TextField::new('course'),
             TextField::new('plannedTeacher'),
             TextField::new('plannedRoom'),
             AssociationField::new('scheduleType')->autocomplete(),
