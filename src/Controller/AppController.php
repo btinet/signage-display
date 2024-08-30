@@ -20,4 +20,17 @@ class AppController extends AbstractController
             'galleries' => $galleries
         ]);
     }
+
+    #[Route('/privacy', name: 'privacy')]
+    public function privacyPolicy(): Response
+    {
+        return $this->render('app/privacy.html.twig');
+    }
+
+    #[Route('/imprint', name: 'imprint')]
+    public function imprint(): Response
+    {
+        return $this->render('app/imprint.html.twig');
+    }
+
 }
