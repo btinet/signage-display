@@ -88,6 +88,11 @@
                                                value="{{ csrf_token('authenticate') }}"
                                         >
 
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            <input type="checkbox" id="remember" name="_remember_me" checked>
+                                            <label for="remember">Angemeldet bleiben</label>
+                                        </div>
+
                                         <div class="text-center pt-1 mb-5 pb-1">
                                             <button  data-mdb-ripple-init class="btn btn-primary btn-block fa-lg mb-3" type="submit">Log
                                                 in</button>
