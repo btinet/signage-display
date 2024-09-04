@@ -21,17 +21,17 @@
                 {% if entry.updatedRoom != null and entry.updatedRoom != entry.plannedRoom %}
                         <span class="fa fa-fw fa-location-dot ms-2 me-1"></span>{{ entry.plannedRoom }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedRoom }}</span>
                 {% endif %}
-                {% if entry.updatedSubject != null %}
+                {% if entry.updatedSubject != null and entry.plannedSubject != entry.updatedSubject %}
                     <span class="fa fa-fw fa-book ms-2 me-1"></span>{{ entry.plannedSubject }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedSubject }}</span>
                 {% endif %}
             </div>
             <div class="col-12">
-                {#
-                {% if entry.message and entry.scheduleType.code != 1 %}
+
+                {% if entry.message and entry.showComment %}
                     <span class="fa fa-fw fa-message me-2"></span>
                     <span>{{ entry.message }}</span>
                 {% endif %}
-                #}
+
             </div>
         </div>
     </div>

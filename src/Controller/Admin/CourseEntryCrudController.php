@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -56,10 +57,13 @@ class CourseEntryCrudController extends AbstractCrudController
             ChoiceField::new('entryTime'),
             TextField::new('course'),
             TextField::new('plannedTeacher'),
+            TextField::new('plannedSubject'),
             TextField::new('plannedRoom'),
             AssociationField::new('scheduleType')->autocomplete(),
             TextField::new('updatedTeacher'),
+            TextField::new('updatedSubject'),
             TextField::new('updatedRoom')->formatValue(fn ($value) => $value == null ?'-': $value),
+            BooleanField::new('showComment')->renderAsSwitch(),
             TextareaField::new('message')->formatValue(fn ($value) => $value == null ?'-': $value)
 
         ];

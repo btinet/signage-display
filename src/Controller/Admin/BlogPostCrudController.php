@@ -30,7 +30,7 @@ class BlogPostCrudController extends AbstractCrudController
             FormField::addTab('Allgemein')->onlyOnForms(),
             BooleanField::new('active'),
             IntegerField::new('duration')
-            ->setHelp("Beitragsdauer in Sekunden."),
+            ->setHelp("Beitragsdauer in Sekunden (Standard sind 10 Sekunden)."),
             IdField::new('id')->hideOnForm(),
             AssociationField::new('template')->setRequired(true)->setColumns(3),
             TextField::new('title')->setColumns(9),
@@ -46,6 +46,7 @@ class BlogPostCrudController extends AbstractCrudController
             BooleanField::new('featuredImageVisible'),
             FormField::addTab('Listen')->onlyOnForms(),
             CollectionField::new('list')
+                ->setHelp("Titel erzeugt Teilüberschrift. Dazu nur erstes Feld ausfüllen.<br>Listen werden tabellarisch dargestellt.")
                 ->setEntryIsComplex(true)
                 ->useEntryCrudForm(ListEntryCrudController::class),
 
@@ -54,7 +55,7 @@ class BlogPostCrudController extends AbstractCrudController
                 'expanded' => true
             ]),
             FormField::addTab('Vertretungsplan')->onlyOnForms(),
-            TextField::new('scheduleOffset')->setHelp('z.B. "+1 day" oder "+2 days"'),
+            TextField::new('scheduleOffset')->setHelp('z.B. "+1 day" oder "+2 days"<br>(Funktion wird bei Bedarf implementiert.)'),
         ];
     }
 
