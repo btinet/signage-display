@@ -15,10 +15,13 @@ class ListEntry
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(nullable: true)]
+    private ?bool $title = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $content = null;
 
     /**
@@ -47,7 +50,7 @@ class ListEntry
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -59,9 +62,21 @@ class ListEntry
         return $this->content;
     }
 
-    public function setContent(string $content): static
+    public function setContent(?string $content): static
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function isTitle(): ?bool
+    {
+        return $this->title;
+    }
+
+    public function setTitle(bool $active): static
+    {
+        $this->title = $active;
 
         return $this;
     }

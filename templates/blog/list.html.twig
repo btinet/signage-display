@@ -2,12 +2,20 @@
     <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">{{ article.title }}</div>
 </div>
 
-<ul class="list-group list-group-flush w-100 mb-auto">
+<ul class="list-group list-group-flush w-100 mb-auto border-0">
     {% for listEntry in article.list %}
-        <li class="list-group-item d-flex justify-content-start align-items-center bg-primary blur text-white  fs-4">
-            <div style="width: 250px" class="me-3">{{ listEntry.description }}</div>
-            <div>{{ listEntry.content }}</div>
-        </li>
+        {% if listEntry.title %}
+            {% if loop.index0 != 0 %}{% set margin = "mt-3" %}{% endif %}
+            <li class="list-group-item d-flex justify-content-start align-items-center border-0 {{ margin ?? '' }} blur text-white fw-bold  fs-5" style="background-color: #255372!important">
+                {{ listEntry.description }}
+            </li>
+        {% else %}
+            <li class="list-group-item d-flex justify-content-start align-items-center border-0 border-top blur text-white fs-5" style="border-color: #255372!important">
+                <div style="width: 250px" class="me-3">{{ listEntry.description }}</div>
+                <div>{{ listEntry.content }}</div>
+            </li>
+        {% endif %}
+
     {% endfor %}
 </ul>
 
