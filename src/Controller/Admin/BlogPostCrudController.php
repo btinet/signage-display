@@ -31,7 +31,6 @@ class BlogPostCrudController extends AbstractCrudController
             BooleanField::new('active'),
             IntegerField::new('duration')
             ->setHelp("Beitragsdauer in Sekunden (Standard sind 10 Sekunden)."),
-            IdField::new('id')->hideOnForm(),
             AssociationField::new('template')->setRequired(true)->setColumns(3),
             TextField::new('title')->setColumns(9),
             BooleanField::new('titleVisible'),

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 //use App\Entity\Image;
 use App\Entity\Image;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -32,6 +33,7 @@ class ImageCrudController extends AbstractCrudController
                 ->setUploadDir('public/images/uploads')
                 ->setFileConstraints(new ImageConstraint( maxRatio: 1.5, minRatio: 0.66))
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
+            AssociationField::new('gallery'),
             BooleanField::new('disabled')
         ];
     }
