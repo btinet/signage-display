@@ -63,6 +63,12 @@ class BlogPost
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $scheduleOffset = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $startDate = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $endDate = null;
+
     public function __construct()
     {
         $this->list = new ArrayCollection();
@@ -258,6 +264,30 @@ class BlogPost
     public function setScheduleOffset(?string $scheduleOffset): static
     {
         $this->scheduleOffset = $scheduleOffset;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?\DateTimeInterface $startDate): static
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(?\DateTimeInterface $endDate): static
+    {
+        $this->endDate = $endDate;
 
         return $this;
     }
