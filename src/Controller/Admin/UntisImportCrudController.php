@@ -162,7 +162,7 @@ class UntisImportCrudController extends AbstractCrudController
                         if($code == "1048577") $code = 1;
                         if($code == "1") $code = 1;
                         if($entry->getUpdatedTeacher()) $code = 0;
-                        if($entry->getPlannedTeacher() == $entry->getUpdatedTeacher()) $code = 302;
+                        if($entry->getPlannedTeacher() == $entry->getUpdatedTeacher() && $plannedRooms != $updatedRooms) $code = 302;
 
                         $type = $this->typeRepository->findOneBy(['code' => $code]);
                         $entry->setScheduleType($type);
