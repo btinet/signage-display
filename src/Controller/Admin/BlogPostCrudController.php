@@ -36,30 +36,41 @@ class BlogPostCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            BooleanField::new('active')->onlyOnIndex(),
+            TextField::new('title')->onlyOnIndex(),
+            DateField::new('startDate')->onlyOnIndex(),
+            DateField::new('endDate')->onlyOnIndex(),
+            AssociationField::new('template')->onlyOnIndex(),
+
             FormField::addTab('Allgemein')->onlyOnForms(),
-            BooleanField::new('active'),
-            DateField::new('startDate')->setColumns(2),
-            DateField::new('endDate')->setColumns(2),
-            IntegerField::new('duration')->setColumns(8)->onlyOnForms()
-            ->setHelp("Beitragsdauer in Sekunden (Standard sind 10 Sekunden)."),
-            AssociationField::new('template')->setRequired(true)->setColumns(3),
-            TextField::new('title')->setColumns(9),
-            BooleanField::new('titleVisible')->onlyOnForms(),
+
+            AssociationField::new('template')->setRequired(true)->setColumns(6)->onlyOnForms(),
+            DateField::new('startDate')->setColumns(2)->onlyOnForms()->setHelp("ohne Angabe dauerhaft gültig"),
+            DateField::new('endDate')->setColumns(2)->onlyOnForms()->setHelp("frei lassen, wenn kein Zeitintervall benötigt"),
+            IntegerField::new('duration')->setColumns(2)->onlyOnForms()
+                ->setHelp("Beitragsdauer in Sekunden (Standard sind 10 Sekunden)."),
+            BooleanField::new('active')->setColumns(2)->onlyOnForms(),
+            BooleanField::new('titleVisible')->onlyOnForms()->setColumns(2),
+            BooleanField::new('contentVisible')->onlyOnForms()->setColumns(2),
+            BooleanField::new('featuredImageVisible')->onlyOnForms()->setColumns(6),
+
+            FormField::addPanel("Beitragsinhalt"),
+            TextField::new('title')->setColumns(9)->onlyOnForms(),
+
             TextEditorField::new('content')->onlyOnForms()
                 ->setColumns(12),
-            BooleanField::new('contentVisible')->onlyOnForms(),
+
             ImageField::new('featuredImage')->onlyOnForms()
                 ->setBasePath('posts/uploads')
                 ->setUploadDir('public/posts/uploads')
                 ->setFileConstraints(new ImageConstraint(maxSize: '2048k'))
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
-            BooleanField::new('featuredImageVisible')->onlyOnForms(),
+
             FormField::addTab('Listen')->onlyOnForms(),
             CollectionField::new('list')->onlyOnForms()
                 ->setHelp("Titel erzeugt Teilüberschrift. Dazu nur erstes Feld ausfüllen.<br>Listen werden tabellarisch dargestellt.")
                 ->setEntryIsComplex(true)
                 ->useEntryCrudForm(ListEntryCrudController::class),
-
             FormField::addTab('Bildergalerie')->onlyOnForms(),
             AssociationField::new('gallery')->setFormTypeOptions([
                 'expanded' => true

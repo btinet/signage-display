@@ -36,9 +36,11 @@ class ApiController extends AbstractController
 
         // TODO: Auslagern in extra Methode, damit Artikel eigene Eintröge holen können.
         $courseEntries = $courseEntryRepository->findEntriesAt();
-        $articles = $repository->findBy([
-            'active' => true
-        ]);
+        $currentPosts = $repository->findCurrentBlogPosts();
+        $currentIntervalPosts = $repository->findCurrentIntervalBlogPosts();
+        $currentDatePosts = $repository->findCurrentDateBlogPosts();
+
+        $articles = array_merge($currentPosts, $currentIntervalPosts,$currentDatePosts);
         return $this->render('api/main_content.html.twig', [
             'articles' => $articles,
             'courseEntries' => $courseEntries
