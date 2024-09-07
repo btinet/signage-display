@@ -75,7 +75,7 @@
         </tr>
         <tr>
             <td colspan="24" class="p-0 bg-transparent"><div style="background-color: #2553722D!important; height: 50px"></div></td>
-            <td class="p-0 pe-1 bg-transparent"><div class="d-flex flex-column justify-content-center align-items-center mb-1 text-bg-primary">
+            <td colspan="1" class="p-0 pe-1 bg-transparent"><div class="d-flex flex-column justify-content-center align-items-center mb-1 text-bg-primary">
                     <span>A218</span>
                     <small>VL</small></div>
             </td>
@@ -271,8 +271,3 @@
     </table>
 </div>
 
-{% if article.contentVisible %}
-    <div class="align-self-center small mb-5">
-        {{ article.content|raw }}
-    </div>
-{% endif %}
