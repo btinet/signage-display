@@ -43,7 +43,7 @@ class BlogPostCrudController extends AbstractCrudController
             AssociationField::new('template')->onlyOnIndex(),
 
             FormField::addTab('Allgemein')->onlyOnForms(),
-
+            FormField::addPanel("Einstellungen"),
             AssociationField::new('template')->setRequired(true)->setColumns(6)->onlyOnForms(),
             DateField::new('startDate')->setColumns(2)->onlyOnForms()->setHelp("ohne Angabe dauerhaft gültig"),
             DateField::new('endDate')->setColumns(2)->onlyOnForms()->setHelp("frei lassen, wenn kein Zeitintervall benötigt"),
