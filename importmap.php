@@ -16,6 +16,10 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'admin' => [
+        'path' => './assets/admin.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
@@ -34,5 +38,137 @@ return [
     'bootstrap/dist/css/bootstrap.min.css' => [
         'version' => '5.3.3',
         'type' => 'css',
+    ],
+    'webuntis' => [
+        'version' => '2.2.1',
+    ],
+    'axios' => [
+        'version' => '1.7.7',
+    ],
+    'date-fns' => [
+        'version' => '3.6.0',
+    ],
+    'otplib' => [
+        'version' => '12.0.1',
+    ],
+    '@otplib/preset-default' => [
+        'version' => '12.0.1',
+    ],
+    '@otplib/plugin-crypto' => [
+        'version' => '12.0.1',
+    ],
+    '@otplib/plugin-thirty-two' => [
+        'version' => '12.0.1',
+    ],
+    '@otplib/core' => [
+        'version' => '12.0.1',
+    ],
+    'thirty-two' => [
+        'version' => '1.0.2',
+    ],
+    'url' => [
+        'version' => '0.11.4',
+    ],
+    'punycode' => [
+        'version' => '1.4.1',
+    ],
+    'qs' => [
+        'version' => '6.12.3',
+    ],
+    'side-channel' => [
+        'version' => '1.0.6',
+    ],
+    'get-intrinsic' => [
+        'version' => '1.2.4',
+    ],
+    'call-bind/callBound' => [
+        'version' => '1.0.7',
+    ],
+    'object-inspect' => [
+        'version' => '1.13.1',
+    ],
+    'es-errors/type' => [
+        'version' => '1.3.0',
+    ],
+    'es-errors' => [
+        'version' => '1.3.0',
+    ],
+    'es-errors/eval' => [
+        'version' => '1.3.0',
+    ],
+    'es-errors/range' => [
+        'version' => '1.3.0',
+    ],
+    'es-errors/ref' => [
+        'version' => '1.3.0',
+    ],
+    'es-errors/syntax' => [
+        'version' => '1.3.0',
+    ],
+    'es-errors/uri' => [
+        'version' => '1.3.0',
+    ],
+    'has-symbols' => [
+        'version' => '1.0.3',
+    ],
+    'has-proto' => [
+        'version' => '1.0.1',
+    ],
+    'function-bind' => [
+        'version' => '1.1.2',
+    ],
+    'hasown' => [
+        'version' => '2.0.0',
+    ],
+    'set-function-length' => [
+        'version' => '1.2.1',
+    ],
+    'es-define-property' => [
+        'version' => '1.0.0',
+    ],
+    'define-data-property' => [
+        'version' => '1.1.2',
+    ],
+    'has-property-descriptors' => [
+        'version' => '1.0.1',
+    ],
+    'gopd' => [
+        'version' => '1.0.1',
+    ],
+    '@otplib/preset-v11' => [
+        'version' => '12.0.1',
+    ],
+    'untis-node' => [
+        'version' => '1.0.4',
+    ],
+    'node-webuntis' => [
+        'version' => '2.0.1',
+    ],
+    'node-fetch' => [
+        'version' => '2.7.0',
+    ],
+    'colors/safe' => [
+        'version' => '1.4.0',
+    ],
+    'dateformat' => [
+        'version' => '3.0.3',
+    ],
+    'whatwg-url' => [
+        'version' => '5.0.0',
+    ],
+    'webidl-conversions' => [
+        'version' => '3.0.1',
+    ],
+    'tr46' => [
+        'version' => '0.0.3',
+    ],
+    'untis-api' => [
+        'version' => '0.1.3',
+    ],
+    'moment' => [
+        'version' => '2.30.1',
+    ],
+    'lodash' => [
+        'version' => '4.17.21',
     ],
 ];

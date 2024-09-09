@@ -65,6 +65,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Stundenplan');
         yield MenuItem::linkToCrud('GPU Upload','fa fa-file',UntisImport::class)->setAction('new');
+        yield MenuItem::linkToRoute('WebUntis',"fa fa-clock",'admin_untis_index');
         yield MenuItem::linkToCrud('Course Entries','fa fa-list',CourseEntry::class);
 
         yield MenuItem::section('Aushang');

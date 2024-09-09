@@ -1,0 +1,25 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}
+    WebUntis-Modul
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-4">
+            <h5>Operationen</h5>
+            <div class="row row-cols-1 g-3">
+                <a href="#" class="btn btn-primary">Vertretungen importieren</a>
+                <hr>
+                <a href="#" class="btn btn-secondary">Lehrkräfte importieren</a>
+                <a href="#" class="btn btn-secondary">Fächer importieren</a>
+            </div>
+
+        </div>
+        <div class="col-8">
+            <h5>Authentifikation</h5>
+            {{ dump(query) }}
+        </div>
+    </div>
+{% endblock %}

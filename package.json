@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@otplib/preset-v11": "^12.0.1",
+    "webuntis": "^2.2.1"
+  }
+}

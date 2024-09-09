@@ -49,6 +49,7 @@
         "symfony/web-link": "7.1.*",
         "symfony/yaml": "7.1.*",
         "symfonycasts/sass-bundle": "^0.7.0",
+        "treptowkolleg/webuntis": "dev-master",
         "twbs/bootstrap": "^5.3",
         "twbs/bootstrap-icons": "^1.11",
         "twig/extra-bundle": "^2.12|^3.0",
