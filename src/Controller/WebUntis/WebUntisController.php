@@ -21,7 +21,7 @@ class WebUntisController extends AbstractController
     public function index(): Response
     {
         $untis = new WebUntis();
-        $auth = $untis->auth("samos.webuntis.com","Wagner Pictures School of Photography","admin","Camilla@23");
+        $auth = $untis->auth("samos.webuntis.com","Wagner Pictures School of Photography","admin","");
         $subjects   = $untis->getSubjects();
         return $this->render('admin/untis/index.html.twig', [
             'query' => $auth,
