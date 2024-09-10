@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class WebUntisServerCrudController extends AbstractCrudController
 {
@@ -23,7 +24,7 @@ class WebUntisServerCrudController extends AbstractCrudController
             TextField::new('schoolName')->setRequired(true)->setHelp("Wie in WebUntis angegeben"),
             TextField::new('server')->setRequired(true)->setHelp("samos, thalia, kos, erato, ..."),
             TextField::new('username')->setRequired(true)->setHelp("Ihr WebUntis-Login"),
-            TextField::new('password')->setRequired(true)->setHelp("Ihr WebUntis-Passwort"),
+            TextField::new('password')->setRequired(true)->setHelp("Ihr WebUntis-Passwort")->setFormType(PasswordType::class)->onlyOnForms(),
         ];
     }
 
