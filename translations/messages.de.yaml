@@ -47,7 +47,14 @@ Class Group: Klasse
 Intern Label: Interne Bezeichnung
 Year: Schuljahr
 Start Date: gültig ab/am
+Start date: von
 End Date: gültig bis einschließlich
+End date: bis einschließlich
+Schedule Grid: Zeitraster
+ScheduleGrid: Stunde
+Hour: Stunde
+Start Time: Beginn
+End Time: Ende
 Weekday: Wochentag
 MONDAY: montags
 TUESDAY: dienstags
@@ -56,19 +63,26 @@ THURSDAY: donnerstags
 FRIDAY: freitags
 User: Konto
 Users: Konten
+WebUntisServer: Server-Daten
+UntisUser: WebUntis-Konto
+UntisUsers: WebUntis-Konten
 Username: Kennung
 Roles: Rollen
 Class: Std
-One: 1. Std
-Two: 2. Std
-Three: 3. Std
-Four: 4. Std
-Five: 5. Std
-Six: 6. Std
-Seven: 7. Std
-Eight: 8. Std
-Nine: 9. Std
-Ten: 10. Std
+Zero: 0.
+One: 1.
+Two: 2.
+Three: 3.
+Four: 4.
+Five: 5.
+Six: 6.
+Seven: 7.
+Eight: 8.
+Nine: 9.
+Ten: 10.
+subst: Vertretung
+cancel: Ausfall
+rmch: Raumänderung
 Suspensions: Abwesenheiten
 SuspensionEntry: Abwesenheit
 Mon: Montag

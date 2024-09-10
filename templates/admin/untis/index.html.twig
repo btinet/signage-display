@@ -7,17 +7,73 @@
 {% block page_content %}
 
     <div class="row">
-        <div class="col-4">
-            <h5>Operationen</h5>
-            <div class="row row-cols-1 g-3">
-                <a href="#" class="btn btn-primary">Vertretungen importieren</a>
-                <hr>
-                <a href="#" class="btn btn-secondary">Lehrkräfte importieren</a>
-                <a href="#" class="btn btn-secondary">Fächer importieren</a>
-            </div>
-
+        <div class="col-12 col-xl-3">
+            <h5>Vertretungen importieren</h5>
+            {{ form(form) }}
         </div>
-        <div class="col-8">
+        <div class="col-12 col-xl-9">
+            <h5 class="mb-0">Ergebnis</h5>
+            <p class="fst-italic">Simulationsvorschau</p>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-2 fw-bold">Typ</div>
+                        <div class="col-2 fw-bold">Datum</div>
+                        <div class="col-1 fw-bold">von</div>
+                        <div class="col-1 fw-bold">bis</div>
+                        <div class="col-6 fw-bold">Änderungen</div>
+                    </div>
+                </li>
+                {% for result in response %}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-2 text-danger fw-bold">{{ result.type|trans }}</div>
+                            <div class="col-2">{{ result.date|slice(6, 2) }}.{{ result.date|slice(4, 2) }}.{{ result.date|slice(0, 4) }}</div>
+                            <div class="col-1">{{ result.startTime|slice(0, 2) }}:{{ result.startTime|slice(2, 2) }}</div>
+                            <div class="col-1">{{ result.endTime|slice(0, 2) }}:{{ result.endTime|slice(2, 2) }}</div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <span class="me-1 fw-bold">Lehrkraft:</span>
+                                        {% if result.te.0.orgname is defined %}
+                                        {{ result.te.0.orgname }} <i class="fa fa-arrow-right"></i> {{ result.te.0.name }}
+                                        {% else %}
+                                            {{ result.te.0.name }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="me-1 fw-bold">Fach:</span>
+                                        {% if result.su.0.orgname is defined %}
+                                        {{ result.su.0.orgname }} <i class="fa fa-arrow-right"></i> {{ result.su.0.name }}
+                                        {% else %}
+                                            {{ result.su.0.name }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="me-1 fw-bold">Raum:</span>
+                                        {% if result.ro.0.orgname is defined %}
+                                            {{ result.ro.0.orgname }} <i class="fa fa-arrow-right"></i> {{ result.ro.0.name }}
+                                        {% else %}
+                                            {{ result.ro.0.name }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-start align-items-center">
+                                            <div class="me-1 fw-bold">Klassen:</div>
+                                            {% for klasse in result.kl %}
+                                                <div class="ms-2">{{ klasse.name }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="list-group-item">Keine Ergebnisse</li>
+                {% endfor %}
+            </ul>
+
         </div>
     </div>
 {% endblock %}

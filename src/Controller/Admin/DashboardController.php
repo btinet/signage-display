@@ -13,6 +13,7 @@ use App\Entity\Image;
 use App\Entity\ImageGallery;
 use App\Entity\ListEntry;
 use App\Entity\MessageType;
+use App\Entity\ScheduleGrid;
 use App\Entity\ScheduleType;
 use App\Entity\SchoolSubject;
 use App\Entity\ShoutOut;
@@ -20,6 +21,7 @@ use App\Entity\SuspensionEntry;
 use App\Entity\Teacher;
 use App\Entity\UntisImport;
 use App\Entity\User;
+use App\Entity\WebUntisServer;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -65,7 +67,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Stundenplan');
         yield MenuItem::linkToCrud('GPU Upload','fa fa-file',UntisImport::class)->setAction('new');
-        yield MenuItem::linkToRoute('WebUntis',"fa fa-clock",'admin_untis_index');
+        yield MenuItem::linkToRoute('WebUntis',"fa fa-clock",'admin_untis_index')->setBadge("dev","danger");
         yield MenuItem::linkToCrud('Course Entries','fa fa-list',CourseEntry::class);
 
         yield MenuItem::section('Aushang');
@@ -80,6 +82,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('MessageTypes','fa fa-bullhorn',MessageType::class);
         yield MenuItem::linkToCrud('BlogPostTemplates','fa fa-swatchbook',BlogPostTemplate::class);
         yield MenuItem::linkToCrud('Users','fa fa-users',User::class);
+        yield MenuItem::linkToCrud('Schedule Grid','fa fa-table-cells-large',ScheduleGrid::class);
+        yield MenuItem::linkToCrud('UntisUsers','fa fa-users',WebUntisServer::class);
 
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);

@@ -87,6 +87,9 @@ class ScheduleType
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $code = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $webUntisType = null;
+
     public function __construct()
     {
         $this->courseEntries = new ArrayCollection();
@@ -152,6 +155,18 @@ class ScheduleType
     public function setCode(?string $code): static
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getWebUntisType(): ?string
+    {
+        return $this->webUntisType;
+    }
+
+    public function setWebUntisType(?string $webUntisType): static
+    {
+        $this->webUntisType = $webUntisType;
 
         return $this;
     }
