@@ -53,6 +53,8 @@ class WebUntisController extends AbstractController
             ->generateUrl();
         ;
         $substitutions = ['result' => null];
+        $timeGrid = [];
+
         $untis = new WebUntis($client,$serverRepository);
         $form = $this->createForm(SubstitutionsType::class);
 
@@ -67,6 +69,7 @@ class WebUntisController extends AbstractController
 
             if($untis->auth()) {
                 $substitutions = $untis->getSubstitutions($startDate->format('Ymd'),$endDate->format('Ymd'));
+                $timeGrid = $untis->getTimetable(1,WebUntis::KLASSE);
                 $untis->logout();
                 if(array_key_exists('result', $substitutions) and !$simulate) {
 
@@ -171,7 +174,8 @@ class WebUntisController extends AbstractController
             'response' => $substitutions['result'],
             'form' => $form->createView(),
             'setup_info' => $setupInfo,
-            'edit_url' => $editUrl
+            'edit_url' => $editUrl,
+            'grid' => $timeGrid
         ]);
     }
 

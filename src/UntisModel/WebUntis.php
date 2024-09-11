@@ -27,6 +27,12 @@ class WebUntis
     private string $method;
     private array $params;
 
+    public const KLASSE = 1;
+    public const TEACHER = 2;
+    public const SUBJECT = 3;
+    public const ROOM = 4;
+    public const STUDENT = 5;
+
     public function __construct(HttpClientInterface $client, WebUntisServerRepository $serverRepository)
     {
         // create ID
@@ -98,8 +104,146 @@ class WebUntis
         return null;
     }
 
-    // Utility-Methods
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getStatusData(){
+        if($this->sessionId) {
+            $this
+                ->setMethod('getStatusData')
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getTimeGrid(): ?array
+    {
+        if($this->sessionId) {
+            $this
+                ->setMethod('getTimegridUnits')
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getSubjects(){
+        if($this->sessionId) {
+            $this
+                ->setMethod('getSubjects')
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getTeachers(){
+        if($this->sessionId) {
+            $this
+                ->setMethod('getTeachers')
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getKlassen(){
+        if($this->sessionId) {
+            $this
+                ->setMethod('getKlassen')
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getRooms(){
+        if($this->sessionId) {
+            $this
+                ->setMethod('getRooms')
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getHolidays(){
+        if($this->sessionId) {
+            $this
+                ->setMethod('getHolidays')
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getCurrentSchoolYear(){
+        if($this->sessionId) {
+            $this
+                ->setMethod('getCurrentSchoolyear')
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function getTimetable($id, $type){
+        if($this->sessionId) {
+            $this
+                ->setMethod('getTimetable')
+                ->addParam('id',$id)
+                ->addParam('type',$type)
+                ->setSessionCookie()
+                ->buildQuery()
+            ;
+            if($response = $this->execute()) return $response['result'];
+        }
+        return null;
+    }
+
+
+    // Utility-Methods
     private function setMethod(string $method): self
     {
         $this->method = $method;
@@ -157,106 +301,6 @@ class WebUntis
 
         }
         return null;
-    }
-
-    // Alte Methoden
-
-
-
-    public static function getTimegrid(){
-        $json = array(
-            "id" => self::id(),
-            "method" => "getTimegridUnits",
-            "params" => array(
-            ),
-            "jsonrpc" => "2.0"
-        );
-        $json = json_encode($json, true);
-        return self::request($json);
-    }
-
-    public static function getTimetable(){
-        $json = array(
-            "id" => self::id(),
-            "method" => "getTimetable",
-            "params" => array(
-                "id" => self::$studentid,
-                "type" => self::$type
-            ),
-            "jsonrpc" => "2.0"
-        );
-        $json = json_encode($json, true);
-        return self::request($json);
-    }
-
-    public static function getSubjects(){
-        $json = array(
-            "id" => self::id(),
-            "method" => "getSubjects",
-            "params" => array(
-            ),
-            "jsonrpc" => "2.0"
-        );
-        $json = json_encode($json, true);
-        return self::request($json);
-    }
-
-    public static function getTeachers(){
-        $json = array(
-            "id" => self::id(),
-            "method" => "getTeachers",
-            "params" => array(
-            ),
-            "jsonrpc" => "2.0"
-        );
-        $json = json_encode($json, true);
-        return self::request($json);
-    }
-
-    public static function getKlassen(){
-        $json = array(
-            "id" => self::id(),
-            "method" => "getKlassen",
-            "params" => array(
-            ),
-            "jsonrpc" => "2.0"
-        );
-        $json = json_encode($json, true);
-        return self::request($json);
-    }
-
-    public static function getRooms(){
-        $json = array(
-            "id" => self::id(),
-            "method" => "getRooms",
-            "params" => array(
-            ),
-            "jsonrpc" => "2.0"
-        );
-        $json = json_encode($json, true);
-        return self::request($json);
-    }
-    public static function getHolidays(){
-        $json = array(
-            "id" => self::id(),
-            "method" => "getHolidays",
-            "params" => array(
-            ),
-            "jsonrpc" => "2.0"
-        );
-        $json = json_encode($json, true);
-        return self::request($json);
-    }
-    public static function getCurrentSchoolyear(){
-        $json = array(
-            "id" => self::id(),
-            "method" => "getCurrentSchoolyear",
-            "params" => array(
-            ),
-            "jsonrpc" => "2.0"
-        );
-        $json = json_encode($json, true);
-        return self::request($json);
     }
 
 }
