@@ -17,6 +17,9 @@ class WebUntis
 
     private string $id;
     private string $sessionId;
+
+    private ?int $personType;
+    private ?int $personId;
     private HttpClientInterface $httpClient;
     private string $serverDomain = 'webuntis.com';
     private string $serverScript = '/WebUntis/jsonrpc.do';
@@ -60,6 +63,8 @@ class WebUntis
 
             if (is_array($response) && array_key_exists('result', $response)) {
                 $this->sessionId = $response['result']['sessionId'];
+                $this->personType = $response['result']['personType'];
+                $this->personId = $response['result']['personId'];
                 return true;
             }
         } catch (\Error|ClientExceptionInterface $e) {
@@ -114,7 +119,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -130,7 +135,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -145,7 +150,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -160,7 +165,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -175,7 +180,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -190,7 +195,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -205,7 +210,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -220,7 +225,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -237,7 +242,7 @@ class WebUntis
                 ->setSessionCookie()
                 ->buildQuery()
             ;
-            if($response = $this->execute()) return $response['result'];
+            if($response = $this->execute()) return $response['result'] ?? [];
         }
         return null;
     }
@@ -301,6 +306,18 @@ class WebUntis
 
         }
         return null;
+    }
+
+    // Getters & Setters
+
+    public function getPersonType(): ?int
+    {
+        return $this->personType;
+    }
+
+    public function getPersonId(): ?int
+    {
+        return $this->personId;
     }
 
 }
