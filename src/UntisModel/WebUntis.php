@@ -4,6 +4,7 @@ namespace App\UntisModel;
 
 use App\Entity\WebUntisServer;
 use App\Repository\WebUntisServerRepository;
+use PHPUnit\Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -19,7 +20,7 @@ class WebUntis
     private HttpClientInterface $httpClient;
     private string $serverDomain = 'webuntis.com';
     private string $serverScript = '/WebUntis/jsonrpc.do';
-    private WebUntisServer $serverObject;
+    private ?WebUntisServer $serverObject;
     private array $header;
     private string $apiVersion = '2.0';
     private ?string $body;
@@ -41,19 +42,22 @@ class WebUntis
      */
     public function auth(): bool
     {
-        $this
-            ->setMethod('authenticate')
-            ->addParam('user',$this->serverObject->getUsername())
-            ->addParam('password',$this->serverObject->getPassword())
-            ->addParam('client','web')
-            ->buildQuery()
-        ;
+        try {
+            $this
+                ->setMethod('authenticate')
+                ->addParam('user', $this->serverObject->getUsername())
+                ->addParam('password', $this->serverObject->getPassword())
+                ->addParam('client', 'web')
+                ->buildQuery();
 
-        $response = $this->execute();
+            $response = $this->execute();
 
-        if(is_array($response) && array_key_exists('result', $response)) {
-            $this->sessionId = $response['result']['sessionId'];
-            return true;
+            if (is_array($response) && array_key_exists('result', $response)) {
+                $this->sessionId = $response['result']['sessionId'];
+                return true;
+            }
+        } catch (\Error|ClientExceptionInterface $e) {
+
         }
         return false;
     }

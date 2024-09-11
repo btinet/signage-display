@@ -2,9 +2,11 @@
 
 namespace App\Controller\WebUntis;
 
+use App\Controller\Admin\WebUntisServerCrudController;
 use App\Entity\Block;
 use App\Entity\CourseEntry;
 use App\Form\SubstitutionsType;
+use App\Repository\CourseEntryFilterRepository;
 use App\Repository\CourseEntryRepository;
 use App\Repository\ScheduleGridRepository;
 use App\Repository\ScheduleTypeRepository;
@@ -12,6 +14,8 @@ use App\Repository\WebUntisServerRepository;
 use App\UntisModel\WebUntis;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,9 +41,17 @@ class WebUntisController extends AbstractController
         WebUntisServerRepository $serverRepository,
         ScheduleTypeRepository $scheduleType,
         ScheduleGridRepository $scheduleGrid,
-        CourseEntryRepository $courseEntries
+        CourseEntryRepository $courseEntries,
+        CourseEntryFilterRepository $courseEntriesFilters,
+        AdminUrlGenerator $adminUrlGenerator
     ): Response
     {
+        $setupInfo = false;
+        $editUrl = $adminUrlGenerator
+            ->setController(WebUntisServerCrudController::class)
+            ->setAction(Action::INDEX)
+            ->generateUrl();
+        ;
         $substitutions = ['result' => null];
         $untis = new WebUntis($client,$serverRepository);
         $form = $this->createForm(SubstitutionsType::class);
@@ -51,6 +63,7 @@ class WebUntisController extends AbstractController
             $endDate = $form->get('endDate')->getData();
             $simulate = $form->get('simulate')->getData();
             $deleteOldEntries = $form->get('delete_old_entries')->getData();
+            $useEntryFilters = $form->get('use_black_list')->getData();
 
             if($untis->auth()) {
                 $substitutions = $untis->getSubstitutions($startDate->format('Ymd'),$endDate->format('Ymd'));
@@ -90,13 +103,19 @@ class WebUntisController extends AbstractController
                                 $plannedTeacherArray[] = $teacher['name'];
                             }
                         }
-                        $courseEntry->setPlannedTeacher(implode(',', $plannedTeacherArray));
-                        $courseEntry->setUpdatedTeacher(implode(',', $updatedTeacherArray));
+                        $courseEntry->setPlannedTeacher(implode(', ', $plannedTeacherArray));
+                        $courseEntry->setUpdatedTeacher(implode(', ', $updatedTeacherArray));
 
                         // Klassen
                         $klassenArray = [];
                         foreach ($entry['kl'] as $klasse) {
-                            $klassenArray[] = $klasse['name'];
+                            if($useEntryFilters) {
+                                if(!$courseEntriesFilters->findOneBy(['keyword' => $klasse['name']])) {
+                                    $klassenArray[] = $klasse['name'];
+                                }
+                            } else {
+                                $klassenArray[] = $klasse['name'];
+                            }
                         }
                         $courseEntry->setCourse(implode(',', $klassenArray));
 
@@ -111,8 +130,8 @@ class WebUntisController extends AbstractController
                                 $plannedSubjectArray[] = $subject['name'];
                             }
                         }
-                        $courseEntry->setPlannedSubject(implode(',', $plannedSubjectArray));
-                        $courseEntry->setUpdatedSubject(implode(',', $updatedSubjectArray));
+                        $courseEntry->setPlannedSubject(implode(', ', $plannedSubjectArray));
+                        $courseEntry->setUpdatedSubject(implode(', ', $updatedSubjectArray));
 
                         // Room
                         $plannedRoomArray = [];
@@ -125,8 +144,8 @@ class WebUntisController extends AbstractController
                                 $plannedRoomArray[] = $room['name'];
                             }
                         }
-                        $courseEntry->setPlannedRoom(implode(',', $plannedRoomArray));
-                        $courseEntry->setUpdatedRoom(implode(',', $updatedRoomArray));
+                        $courseEntry->setPlannedRoom(implode(', ', $plannedRoomArray));
+                        $courseEntry->setUpdatedRoom(implode(', ', $updatedRoomArray));
 
                         // Extra Text
                         if(isset($entry['txt'])) {
@@ -139,10 +158,11 @@ class WebUntisController extends AbstractController
                         $entityManager->persist($courseEntry);
                     }
                     $entityManager->flush();
-                    $this->addFlash('warning','Daten wurden importiert.');
+                    $this->addFlash('success','Daten wurden importiert.');
                 }
             } else {
                 $this->addFlash('danger','Verbindung zu WebUntis fehlgeschlagen.');
+                $setupInfo = true;
             }
         }
 
@@ -150,6 +170,8 @@ class WebUntisController extends AbstractController
         return $this->render('admin/untis/index.html.twig', [
             'response' => $substitutions['result'],
             'form' => $form->createView(),
+            'setup_info' => $setupInfo,
+            'edit_url' => $editUrl
         ]);
     }
 

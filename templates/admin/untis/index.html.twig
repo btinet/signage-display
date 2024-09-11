@@ -6,7 +6,15 @@
 
 {% block page_content %}
 
-    <div class="row">
+    <div class="row g-3">
+        <div class="col-12 col-8">
+            {% if setup_info %}
+                <div class="alert alert-warning">
+                    <p>Überprüfen Sie die Konfiguration und aktivieren Sie mindestens einen Server-Datensatz.</p>
+                    <a href="{{ edit_url }}" class="btn btn-secondary">WebUntis-Server einrichten</a>
+                </div>
+            {% endif %}
+        </div>
         <div class="col-12 col-xl-3">
             <h5>Vertretungen importieren</h5>
             {{ form(form) }}

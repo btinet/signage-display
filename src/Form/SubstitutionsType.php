@@ -31,17 +31,26 @@ class SubstitutionsType extends AbstractType
             ->add('simulate',CheckboxType::class,[
                 'required' => false,
                 'label' => 'Import simulieren?',
-                'data' => true
+                'data' => true,
+                'label_attr' => [
+                    'class' => 'checkbox-inline checkbox-switch',
+                ],
             ])
             ->add('delete_old_entries',CheckboxType::class,[
                 'required' => false,
                 'label' => 'vorherigen Import entfernen?',
-                'data' => true
+                'data' => true,
+                'label_attr' => [
+                    'class' => 'checkbox-inline checkbox-switch',
+                ],
             ])
             ->add('use_black_list',CheckboxType::class,[
                 'required' => false,
                 'label' => 'Ausschlussliste beachten?',
-                'data' => true
+                'data' => true,
+                'label_attr' => [
+                    'class' => 'checkbox-inline checkbox-switch',
+                ],
             ])
             ->add('submit',SubmitType::class,[
                 'label' => 'Daten holen',
