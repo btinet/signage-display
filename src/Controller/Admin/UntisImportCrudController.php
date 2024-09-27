@@ -169,7 +169,11 @@ class UntisImportCrudController extends AbstractCrudController
                         $type = $this->typeRepository->findOneBy(['code' => $code]);
                         $entry->setScheduleType($type);
 
-                        $entry->setShowComment(false);
+                        if($entry->getMessage())
+                            $entry->setShowComment(true);
+                        else
+                            $entry->setShowComment(false);
+
                         $entry->setEntryDate($date);
                         $entry->setEntryTime(Block::tryFrom($data[2]));
                         $entry->setPlannedRoom($plannedRooms);
