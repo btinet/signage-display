@@ -68,6 +68,7 @@
                                 {% if app.user %}
                                     <div class="mb-5 text-center">
                                         Sie sind eingeloggt als {{ app.user.userIdentifier }}. <a href="{{ path('app_logout') }}">Logout</a>
+                                        <a href="{{ route('app_index') }}" class="btn btn-primary mt-3">Zur Startseite</a>
                                     </div>
                                 {% else %}
                                     <form method="post">
