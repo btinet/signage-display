@@ -122,10 +122,8 @@ class UntisImportCrudController extends AbstractCrudController
         ];
 
         $file = $entityInstance->getFilename();
-        if($isAnsi = mb_detect_encoding($file, 'UTF-8', true)) {
+        if($isANSI = mb_detect_encoding($file, 'ANSI_X3.4-1986', true)) {
             $this->addFlash("warning","Datei ist nicht UTF-8-formatiert. Der Import wurde mit ISO-8859-1 versucht.");
-        } else {
-            $this->addFlash("success","Datei ist UTF-8-formatiert. Prima.");
         }
 
         if (($handle = fopen($this->getParameter('upload_directory') . '/' . $file, "r")) !== FALSE) {
@@ -147,7 +145,7 @@ class UntisImportCrudController extends AbstractCrudController
                         $entry = new CourseEntry();
                         $entry->setCourse($courses);
 
-                        if(!$isAnsi) {
+                        if(!$isANSI) {
                             $entry->setMessage($data[16]);
                             $entry->setPlannedTeacher($data[5]);
                             $entry->setUpdatedTeacher( $data[6]);
