@@ -2,7 +2,17 @@
     <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">{{ article.title }}</div>
 </div>
 
-    {% if article.featuredImageVisible %}
+    {% if article.featuredImageVisible and not article.contentVisible %}
+    <div class="p-3 my-auto">
+        <div class="row g-3">
+            <div class="col-12">
+                <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 800px">
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if article.featuredImageVisible and article.contentVisible %}
 <div class="p-3 my-auto">
         <div class="row g-3">
             <div class="col-4">
@@ -18,11 +28,11 @@
                 #}
 
 
-                {% if article.contentVisible %}
-                    <div class="col fs-4" style="text-align: justify!important;">
-                        {{ article.content|raw }}
-                    </div>
-                {% endif %}
+
+                <div class="col fs-4" style="text-align: justify!important;">
+                    {{ article.content|raw }}
+                </div>
+
             </div>
         </div>
 </div>
