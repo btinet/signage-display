@@ -5,9 +5,18 @@
     {% if article.featuredImageVisible and not article.contentVisible %}
     <div class="p-3 my-auto">
         <div class="row g-3">
+            {% if article.gallery %}
             <div class="col-12">
-                <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 800px">
+                <img src="{{ asset(article.gallery.images.0.fileUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 800px">
             </div>
+            <div class="col-12">
+                <img src="{{ asset(article.gallery.images.1.fileUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 800px">
+            </div>
+            {% else %}
+                <div class="col-12">
+                    <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 800px">
+                </div>
+            {% endif %}
         </div>
     </div>
     {% endif %}
@@ -15,10 +24,10 @@
     {% if article.featuredImageVisible and article.contentVisible %}
 <div class="p-3 my-auto">
         <div class="row g-3">
-            <div class="col-4">
+            <div class="col-6">
                 <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 600px">
             </div>
-            <div class="col-7">
+            <div class="col-6">
                 {#
                 {% if article.titleVisible %}
                 <div class="col">
