@@ -6,10 +6,10 @@
     <div class="p-3 my-auto">
         <div class="row g-3">
             {% if article.gallery %}
-            <div class="col-12">
+            <div class="col-6">
                 <img src="{{ asset(article.gallery.images.0.fileUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 800px">
             </div>
-            <div class="col-12">
+            <div class="col-6">
                 <img src="{{ asset(article.gallery.images.1.fileUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 800px">
             </div>
             {% else %}
