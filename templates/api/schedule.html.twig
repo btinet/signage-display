@@ -27,7 +27,7 @@
             </div>
             <div class="col-12">
 
-                {% if entry.message and entry.showComment %}
+                {% if entry.message and entry.showComment and not ('Ausfall' in entry.message or 'Entfall' in entry.message) %}
                     <span>{{ entry.message }}</span>
                 {% endif %}
 

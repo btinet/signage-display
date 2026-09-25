@@ -27,7 +27,7 @@ class CourseEntryRepository extends ServiceEntityRepository
             ->andWhere('c.entryDate = :nowDate')
             ->setParameter('nowDate', date('Y-m-d'))
             ->orderBy('c.entryTime', 'ASC')
-            ->setMaxResults(20)
+            ->setMaxResults(24)
             ->getQuery()
             ->getResult()
         ;
@@ -46,7 +46,7 @@ class CourseEntryRepository extends ServiceEntityRepository
             ->andWhere('c.entryDate = :nowDate')
             ->setParameter('nowDate', $date->format('Y-m-d'))
             ->orderBy('c.entryTime', 'ASC')
-            ->setMaxResults(20)
+            ->setMaxResults(24)
             ->getQuery()
             ->getResult()
             ;

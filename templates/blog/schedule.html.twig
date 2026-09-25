@@ -37,7 +37,7 @@
         {% if loop.index0 == 0 %}
             <div class="col-6">
         {% endif %}
-        {% if loop.index0 != 0 and loop.index0 is divisible by(10) %}
+        {% if loop.index0 != 0 and loop.index0 is divisible by(12) %}
             </div>
             <div class="col-6">
         {% endif %}
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-12">
 
-                    {% if entry.message and entry.showComment %}
+                    {% if entry.message and entry.showComment and not ('Ausfall' in entry.message or 'Entfall' in entry.message or 'aaa' in entry.message) %}
 
                         <span>{{ entry.message }}</span>
                     {% endif %}
