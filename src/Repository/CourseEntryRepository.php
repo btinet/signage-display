@@ -43,6 +43,9 @@ class CourseEntryRepository extends ServiceEntityRepository
         if ($date->format('w') == 5) {
             $interval = "+3 day";
         }
+        if ($date->format('w') == 6) {
+            $interval = "+2 day";
+        }
         $date->modify($interval);
 
         return $this->createQueryBuilder('c')
