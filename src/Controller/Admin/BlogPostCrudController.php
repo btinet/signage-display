@@ -69,7 +69,7 @@ class BlogPostCrudController extends AbstractCrudController
 
             FormField::addTab('Listen')->onlyOnForms(),
             CollectionField::new('list')->onlyOnForms()
-                ->setHelp("Titel erzeugt Teilüberschrift. Dazu nur erstes Feld ausfüllen.<br>Listen werden tabellarisch dargestellt.")
+                ->setHelp("Titel erzeugt Teilüberschrift.<br>Listen werden tabellarisch dargestellt.")
                 ->setEntryIsComplex(true)
                 ->useEntryCrudForm(ListEntryCrudController::class),
             FormField::addTab('Bildergalerie')->onlyOnForms(),

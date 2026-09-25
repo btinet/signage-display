@@ -23,6 +23,9 @@ class ListEntryCrudController extends AbstractCrudController
             BooleanField::new('title')->setColumns(1),
             TextField::new('description')->setColumns(5)->setLabel(""),
             TextField::new('content')->setColumns(6)->setLabel(""),
+            TextField::new('room')->setColumns(4)->setLabel(""),
+            TextField::new('time')->setColumns(4)->setLabel(""),
+            TextField::new('contact')->setColumns(4)->setLabel(""),
         ];
     }
 
