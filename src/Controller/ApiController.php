@@ -30,6 +30,14 @@ class ApiController extends AbstractController
         ]);
     }
 
+    #[Route('/side/content', name: 'side_content')]
+    public function getSideContent(): Response
+    {
+        return $this->render('api/side_content.html.twig', [
+            'x' => 0
+        ]);
+    }
+
     #[Route('/main/content', name: 'main_content')]
     public function getMainContent(BlogPostRepository $repository, CourseEntryRepository $courseEntryRepository): Response
     {

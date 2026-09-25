@@ -28,6 +28,7 @@ export default class extends Controller {
                 }
             };
         }
+
         getData(this.urlValue,this.element);
         setInterval(getData,1000*60*20,this.urlValue,this.element);
     }

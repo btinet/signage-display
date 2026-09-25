@@ -77,6 +77,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Images','fa fa-image',Image::class);
 
         yield MenuItem::section('Setup');
+        yield MenuItem::linkToRoute('Infoscreen-Einstellungen', 'fa fa-tv', 'admin_infoscreen_settings');
         yield MenuItem::linkToCrud('Course Keywords','fa fa-list',CourseEntryFilter::class);
         yield MenuItem::linkToCrud('Types All','fa fa-fire',ScheduleType::class);
         yield MenuItem::linkToCrud('MessageTypes','fa fa-bullhorn',MessageType::class);
