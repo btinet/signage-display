@@ -151,8 +151,9 @@ class UntisImportCrudController extends AbstractCrudController
                             $entry->setUpdatedTeacher( $data[6]);
                         } else {
                             $entry->setMessage(iconv('ISO-8859-1', 'UTF-8', $data[16]));
-                            $entry->setPlannedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[5]));
-                            $entry->setUpdatedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[6]));
+                            //$entry->setPlannedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[5]));
+                            $entry->setPlannedTeacher($data[5]);
+                            $entry->setUpdatedTeacher($data[6]);
                         }
 
 
