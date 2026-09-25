@@ -30,6 +30,18 @@ class ListEntry
     #[ORM\ManyToMany(targetEntity: BlogPost::class, mappedBy: 'list', cascade: ["persist"])]
     private Collection $blogPosts;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $room = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $day = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $time = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $contact = null;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -104,6 +116,54 @@ class ListEntry
         if ($this->blogPosts->removeElement($blogPost)) {
             $blogPost->removeList($this);
         }
+
+        return $this;
+    }
+
+    public function getRoom(): ?string
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?string $room): static
+    {
+        $this->room = $room;
+
+        return $this;
+    }
+
+    public function getDay(): ?string
+    {
+        return $this->day;
+    }
+
+    public function setDay(?string $day): static
+    {
+        $this->day = $day;
+
+        return $this;
+    }
+
+    public function getTime(): ?string
+    {
+        return $this->time;
+    }
+
+    public function setTime(?string $time): static
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    public function getContact(): ?string
+    {
+        return $this->contact;
+    }
+
+    public function setContact(?string $contact): static
+    {
+        $this->contact = $contact;
 
         return $this;
     }

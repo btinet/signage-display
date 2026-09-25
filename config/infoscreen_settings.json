@@ -1,4 +1,4 @@
 {
-    "reload_interval": 30,
-    "show_schedule_column": false
+    "reload_interval": 1800,
+    "show_schedule_column": true
 }
