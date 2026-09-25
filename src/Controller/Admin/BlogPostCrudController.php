@@ -65,6 +65,7 @@ class BlogPostCrudController extends AbstractCrudController
                 ->setUploadDir('public/posts/uploads')
                 ->setFileConstraints(new ImageConstraint(maxSize: '2048k'))
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
+            BooleanField::new('isLandscape')->onlyOnForms(),
 
             FormField::addTab('Listen')->onlyOnForms(),
             CollectionField::new('list')->onlyOnForms()

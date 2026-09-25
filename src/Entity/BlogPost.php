@@ -69,6 +69,9 @@ class BlogPost
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $endDate = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isLandscape = null;
+
     public function __construct()
     {
         $this->list = new ArrayCollection();
@@ -288,6 +291,18 @@ class BlogPost
     public function setEndDate(?\DateTimeInterface $endDate): static
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getIsLandscape(): ?bool
+    {
+        return $this->isLandscape;
+    }
+
+    public function setIsLandscape(?bool $isLandscape): static
+    {
+        $this->isLandscape = $isLandscape;
 
         return $this;
     }
