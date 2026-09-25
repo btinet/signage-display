@@ -60,7 +60,7 @@ class BlogPostCrudController extends AbstractCrudController
             TextEditorField::new('content')->onlyOnForms()
                 ->setColumns(12),
 
-            ImageField::new('featuredImage')->onlyOnForms()
+            ImageField::new('featuredImage')->onlyOnForms()->setHelp('Nur für Artikel möglich!')
                 ->setBasePath('posts/uploads')
                 ->setUploadDir('public/posts/uploads')
                 ->setFileConstraints(new ImageConstraint(maxSize: '2048k'))
