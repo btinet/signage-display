@@ -2,8 +2,10 @@
     <div class="list-group-item fs-4 text-uppercase text-bg-dark blur-dark">
         {% if article.scheduleDate %}
             Änderungen für den {{ article.scheduleDate|date('d.m.Y') }}
+        {% elseif "now"|date('w') == 5 %}
+            Änderungen für <b>Montag</b>
         {% else %}
-            Änderungen für morgen
+            Änderungen für <b>{{ "+ 1 day"|date('w')|trans }}</b>
         {% endif %}
     </div>
 </div>
@@ -72,9 +74,9 @@
             </div>
         {% endif %}
     {% else %}
-        <div class="carousel-item h-100 active" data-bs-interval="15000">
-            <div class="list-group-item border-0 small text-bg-primary">
-                Keine Einträge für heute vorhanden.
+        <div class="col-12">
+            <div class="p-3 border-0 small text-bg-primary">
+                Keine Einträge vorhanden.
             </div>
         </div>
     {% endfor %}

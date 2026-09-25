@@ -39,6 +39,10 @@ class CourseEntryRepository extends ServiceEntityRepository
     public function findEntriesAt(string $interval = "+1 day"): array
     {
         $date = new DateTime();
+        // falls heute Freitag ist, dann Daten für Montag holen
+        if ($date->format('w') == 5) {
+            $interval = "+3 day";
+        }
         $date->modify($interval);
 
         return $this->createQueryBuilder('c')
