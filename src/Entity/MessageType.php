@@ -27,6 +27,12 @@ class MessageType
     #[ORM\OneToMany(targetEntity: ShoutOut::class, mappedBy: 'type')]
     private Collection $shoutOuts;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $color = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $useColor = null;
+
     public function __construct()
     {
         $this->shoutOuts = new ArrayCollection();
@@ -92,6 +98,30 @@ class MessageType
                 $shoutOut->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function isUseColor(): ?bool
+    {
+        return $this->useColor;
+    }
+
+    public function setUseColor(?bool $useColor): static
+    {
+        $this->useColor = $useColor;
 
         return $this;
     }

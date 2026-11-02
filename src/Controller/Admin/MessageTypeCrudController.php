@@ -9,9 +9,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use PHPUnit\Util\Color;
 
 class MessageTypeCrudController extends AbstractCrudController
 {
@@ -43,6 +46,8 @@ class MessageTypeCrudController extends AbstractCrudController
         return [
             TextField::new('label'),
             TextField::new('cssClass'),
+            BooleanField::new('useColor'),
+            ColorField::new('color'),
         ];
     }
 

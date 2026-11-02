@@ -22,6 +22,9 @@ class ShoutOut
     #[ORM\ManyToOne(inversedBy: 'shoutOuts')]
     private ?MessageType $type = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cssClass = null;
+
     public function __toString(): string
     {
         return $this->message;
@@ -64,6 +67,18 @@ class ShoutOut
     public function setType(?MessageType $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getCssClass(): ?string
+    {
+        return $this->cssClass;
+    }
+
+    public function setCssClass(?string $cssClass): static
+    {
+        $this->cssClass = $cssClass;
 
         return $this;
     }
