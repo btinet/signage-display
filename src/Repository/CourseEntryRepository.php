@@ -37,6 +37,26 @@ class CourseEntryRepository extends ServiceEntityRepository
             $grouped[$entry->getCourse()][] = $entry;
         }
 
+        // 3. Natürliche Sortierung der Klassen
+        uksort($grouped, function($a, $b) {
+            // Extrahiere Zahl und Rest (z.B. "10A" → [10, "A"], "7.1" → [7, ".1"])
+            preg_match('/^(\d+)(.*)$/', $a, $matchA);
+            preg_match('/^(\d+)(.*)$/', $b, $matchB);
+
+            $numA = (int)($matchA[1] ?? 0);
+            $numB = (int)($matchB[1] ?? 0);
+            $restA = $matchA[2] ?? '';
+            $restB = $matchB[2] ?? '';
+
+            // Zuerst nach Klassenstufe sortieren
+            if ($numA !== $numB) {
+                return $numA <=> $numB;
+            }
+
+            // Dann nach Buchstabe/Rest sortieren
+            return strcmp($restA, $restB);
+        });
+
         return $grouped;
     }
 
@@ -74,6 +94,26 @@ class CourseEntryRepository extends ServiceEntityRepository
             // Füge den Entry dem Array unter dem Klassennamen hinzu
             $grouped[$courseName][] = $entry;
         }
+
+        // 3. Natürliche Sortierung der Klassen
+        uksort($grouped, function($a, $b) {
+            // Extrahiere Zahl und Rest (z.B. "10A" → [10, "A"], "7.1" → [7, ".1"])
+            preg_match('/^(\d+)(.*)$/', $a, $matchA);
+            preg_match('/^(\d+)(.*)$/', $b, $matchB);
+
+            $numA = (int)($matchA[1] ?? 0);
+            $numB = (int)($matchB[1] ?? 0);
+            $restA = $matchA[2] ?? '';
+            $restB = $matchB[2] ?? '';
+
+            // Zuerst nach Klassenstufe sortieren
+            if ($numA !== $numB) {
+                return $numA <=> $numB;
+            }
+
+            // Dann nach Buchstabe/Rest sortieren
+            return strcmp($restA, $restB);
+        });
 
         return $grouped;
     }
