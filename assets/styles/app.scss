@@ -11,6 +11,40 @@ $body-bg: #000000;
 // <uniquifier>: Use a unique and descriptive class name
 // <weight>: Use a value from 300 to 800
 
+/* Standard Fade (Bootstrap Default) */
+.carousel-item {
+  transition: opacity 0.6s ease-in-out;
+}
+
+/* Schneller Fade */
+.carousel-item.fade-fast {
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Horizontal Slide statt Fade */
+.carousel-item.slide-horizontal {
+  transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out!important;
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.carousel-item.slide-horizontal.active {
+  opacity: 1;
+  transform: translateX(0)!important;
+}
+
+/* Zoom-Effekt */
+.carousel-item.fade-zoom {
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.carousel-item.fade-zoom.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .open-sans-normal {
                 font-family: "Open Sans", sans-serif;
                 font-optical-sizing: auto;
