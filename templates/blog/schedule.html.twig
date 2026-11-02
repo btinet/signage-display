@@ -50,7 +50,7 @@
         </div>
     <div class="list-group-item px-3 py-2 border-0 border-bottom border-dark fw-bold fs-5 text-bg-primary text-uppercase text-warning"><span class="text-white">Klasse</span> {{ entry.course }}</div>
     {% endif %}
-    {% if loop.index0 != 0 and (loop.index0 is divisible by(10) or current_course != entry.course) %}
+    {% if loop.index0 != 0 and (loop.index0 is divisible by(8) or current_course != entry.course) %}
     {% set current_course = entry.course %}
         </div>
         <div class="carousel-item h-100" data-bs-interval="8000">
