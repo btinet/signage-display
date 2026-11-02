@@ -120,7 +120,7 @@ class UntisImportCrudController extends AbstractCrudController
             'application/x-csv',
         ];
 
-        $file = strtolower($entityInstance->getFilename());
+        $file = $entityInstance->getFilename();
         if ($isANSI = mb_detect_encoding($file, 'ANSI_X3.4-1986', true)) {
             $this->addFlash("warning", "Datei ist nicht UTF-8-formatiert. Der Import wurde mit ISO-8859-1 versucht.");
         }
