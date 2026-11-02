@@ -1,49 +1,55 @@
-{% set current_course = '' %}
-{% for entry in courseEntries %}
-    {% if loop.index0 == 0  %}
-        {% set current_course = entry.course %}
-        <div class="carousel-item h-100 active" data-bs-interval="8000">
-        <div class="list-group-item border-0 border-bottom border-dark fw-bold fs-5 text-bg-primary text-warning text-uppercase"><span class="text-white">Klasse</span> {{ entry.course }}</div>
-    {% endif %}
-
-    {% if loop.index0 != 0 and (loop.index0 is divisible by(8) or current_course != entry.course) %}
-        {% set current_course = entry.course %}
-        </div>
-        <div class="carousel-item h-100" data-bs-interval="8000">
-        <div class="list-group-item border-0 border-bottom border-dark fw-bold fs-5 text-bg-primary text-warning text-uppercase"><span class="text-white">Klasse</span> {{ entry.course }}</div>
-    {% endif %}
-    <div class="list-group-item border-0 border-bottom border-dark small text-bg-primary" style="background-color: {{ entry.scheduleType.color ~ "20!important" }}">
-        <div class="row g-1">
-            <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.entryTime.name|trans }}</div>
-            <div class="col-5 text-uppercase fw-bold fs-6"><span class="fa fa-fw fa-book me-1"></span>{{ entry.plannedSubject }}</div>
-            <div class="col-4 text-uppercase fw-bold fs-6 text-end"><span class="fa fa-fw fa-location-dot"></span>{{ entry.plannedRoom }}</div>
-            <div class="col-3 text-uppercase" style="color: {{ entry.scheduleType.color ~ "!important" }}">
-                    {{ entry.scheduleType }}
+{% for course, entries in courseEntries %}
+    {% set main_loop = loop.index0 %}
+    {% for chunk in entries|batch(8) %}
+        <div class="carousel-item h-100 {{ main_loop == 0 and loop.first ? 'active' : '' }}" data-bs-interval="8000">
+            <div class="list-group-item border-0 border-bottom border-dark fw-bold fs-5 text-bg-primary text-warning text-uppercase">
+                <span class="text-white">Klasse</span> {{ course }}
             </div>
-            <div class="col-9 text-uppercase">
-                <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}{% if entry.updatedTeacher %}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedTeacher }}</span>{% endif %}
-                {% if entry.updatedRoom != null and entry.updatedRoom != entry.plannedRoom %}
-                        <span class="fa fa-fw fa-location-dot ms-2 me-1"></span>{{ entry.plannedRoom }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedRoom }}</span>
-                {% endif %}
-                {% if entry.updatedSubject != null and entry.plannedSubject != entry.updatedSubject %}
-                    <span class="fa fa-fw fa-book ms-2 me-1"></span>{{ entry.plannedSubject }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedSubject }}</span>
-                {% endif %}
-                {% if entry.updatedCourse != null and entry.course != entry.updatedCourse %}
-                    <span class="fa fa-fw fa-users ms-4 me-1"></span>{{ entry.course }}<span class="fa mx-1 fa-fw fa-angle-double-right"></span><span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedCourse }}</span>
-                {% endif %}
-            </div>
-            <div class="col-12">
 
-                {% if entry.message and entry.showComment and not ('Ausfall' in entry.message or 'Entfall' in entry.message) %}
-                    <span>{{ entry.message }}</span>
-                {% endif %}
+            {% for entry in chunk %}
+                <div class="list-group-item border-0 border-bottom border-dark small text-bg-primary" style="background-color: {{ entry.scheduleType.color ~ "20!important" }}">
+                    <div class="row g-1">
+                        <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.entryTime.name|trans }}</div>
+                        <div class="col-5 text-uppercase fw-bold fs-6"><span class="fa fa-fw fa-book me-1"></span>{{ entry.plannedSubject }}</div>
+                        <div class="col-4 text-uppercase fw-bold fs-6 text-end"><span class="fa fa-fw fa-location-dot"></span>{{ entry.plannedRoom }}</div>
+                        <div class="col-3 text-uppercase" style="color: {{ entry.scheduleType.color ~ "!important" }}">
+                            {{ entry.scheduleType }}
+                        </div>
+                        <div class="col-9 text-uppercase">
+                            <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}
+                            {% if entry.updatedTeacher %}
+                                <span class="fa mx-1 fa-fw fa-angle-double-right"></span>
+                                <span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedTeacher }}</span>
+                            {% endif %}
 
-            </div>
+                            {% if entry.updatedRoom != null and entry.updatedRoom != entry.plannedRoom %}
+                                <span class="fa fa-fw fa-location-dot ms-2 me-1"></span>{{ entry.plannedRoom }}
+                                <span class="fa mx-1 fa-fw fa-angle-double-right"></span>
+                                <span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedRoom }}</span>
+                            {% endif %}
+
+                            {% if entry.updatedSubject != null and entry.plannedSubject != entry.updatedSubject %}
+                                <span class="fa fa-fw fa-book ms-2 me-1"></span>{{ entry.plannedSubject }}
+                                <span class="fa mx-1 fa-fw fa-angle-double-right"></span>
+                                <span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedSubject }}</span>
+                            {% endif %}
+
+                            {% if entry.updatedCourse != null and entry.course != entry.updatedCourse %}
+                                <span class="fa fa-fw fa-users ms-4 me-1"></span>{{ entry.course }}
+                                <span class="fa mx-1 fa-fw fa-angle-double-right"></span>
+                                <span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedCourse }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="col-12">
+                            {% if entry.message and entry.showComment and not ('Ausfall' in entry.message or 'Entfall' in entry.message) %}
+                                <span>{{ entry.message }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    </div>
-    {% if loop.last %}
-        </div>
-    {% endif %}
+    {% endfor %}
 {% else %}
     <div class="carousel-item h-100 active" data-bs-interval="15000">
         <div class="list-group-item border-0 small text-bg-primary">

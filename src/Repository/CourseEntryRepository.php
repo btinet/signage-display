@@ -17,12 +17,10 @@ class CourseEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, CourseEntry::class);
     }
 
-    /**
-     * @return CourseEntry[] Returns an array of CourseEntry objects
-     */
     public function findCurrentEntries(): array
     {
-        return $this->createQueryBuilder('c')
+        // 1. Query ausführen
+        $results = $this->createQueryBuilder('c')
             ->andWhere('c.scheduleType IS NOT NULL')
             ->andWhere('c.entryDate = :nowDate')
             ->setParameter('nowDate', date('Y-m-d'))
@@ -30,26 +28,34 @@ class CourseEntryRepository extends ServiceEntityRepository
             ->addOrderBy('c.entryTime', 'ASC')
             ->setMaxResults(24)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+
+        // 2. Gruppieren nach Klasse (Course)
+        $grouped = [];
+        foreach ($results as $entry) {
+            // Annahme: Der Getter heißt getCourse()
+            $grouped[$entry->getCourse()][] = $entry;
+        }
+
+        return $grouped;
     }
 
-    /**
-     * @return CourseEntry[] Returns an array of CourseEntry objects
-     */
     public function findEntriesAt(string $interval = "+1 day"): array
     {
-        $date = new DateTime();
-        // falls heute Freitag ist, dann Daten für Montag holen
+        $date = new \DateTime();
+
+        // Falls heute Freitag ist, dann Daten für Montag holen
         if ($date->format('w') == 5) {
             $interval = "+3 day";
         }
+        // Falls heute Samstag ist, dann Daten für Montag holen
         if ($date->format('w') == 6) {
             $interval = "+2 day";
         }
         $date->modify($interval);
 
-        return $this->createQueryBuilder('c')
+        // 1. Die flache Liste aus der Datenbank holen
+        $results = $this->createQueryBuilder('c')
             ->andWhere('c.scheduleType IS NOT NULL')
             ->andWhere('c.entryDate = :nowDate')
             ->setParameter('nowDate', $date->format('Y-m-d'))
@@ -57,8 +63,19 @@ class CourseEntryRepository extends ServiceEntityRepository
             ->addOrderBy('c.entryTime', 'ASC')
             ->setMaxResults(48)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
+
+        // 2. Ergebnisse nach Klasse (course) gruppieren
+        $grouped = [];
+        foreach ($results as $entry) {
+            // Annahme: Der Getter in deiner Entity heißt getCourse()
+            $courseName = $entry->getCourse();
+
+            // Füge den Entry dem Array unter dem Klassennamen hinzu
+            $grouped[$courseName][] = $entry;
+        }
+
+        return $grouped;
     }
 
 //    public function findOneBySomeField($value): ?CourseEntry
