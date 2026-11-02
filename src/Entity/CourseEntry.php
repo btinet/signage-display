@@ -50,6 +50,9 @@ class CourseEntry
     #[ORM\Column(nullable: true)]
     private ?bool $showComment = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $updatedCourse = null;
+
     public function __toString(): string
     {
         return $this->id;
@@ -200,6 +203,18 @@ class CourseEntry
     public function setShowComment(?bool $showComment): static
     {
         $this->showComment = $showComment;
+
+        return $this;
+    }
+
+    public function getUpdatedCourse(): ?string
+    {
+        return $this->updatedCourse;
+    }
+
+    public function setUpdatedCourse(?string $updatedCourse): static
+    {
+        $this->updatedCourse = $updatedCourse;
 
         return $this;
     }

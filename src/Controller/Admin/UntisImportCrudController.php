@@ -45,14 +45,12 @@ class UntisImportCrudController extends AbstractCrudController
     }
 
 
-
     public function configureActions(Actions $actions): Actions
     {
         return $actions
             // ...
             // this will forbid to create or delete entities in the backend
-            ->disable(Action::SAVE_AND_ADD_ANOTHER, Action::EDIT)
-            ;
+            ->disable(Action::SAVE_AND_ADD_ANOTHER, Action::EDIT);
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -61,8 +59,7 @@ class UntisImportCrudController extends AbstractCrudController
             ->setHelp('new', 'Klassen/Kurse, die den Schlüsselwörtern der Ausschlussliste entsprechen, werden beim Import ignoriert.')
             ->overrideTemplates([
                 'crud/new' => 'admin/pages/edit.html.twig',
-            ])
-        ;
+            ]);
     }
 
 
@@ -75,7 +72,7 @@ class UntisImportCrudController extends AbstractCrudController
         DATA;
 
         return [
-            ImageField::new('filename','GPUxxx.txt aus DIF-Export')
+            ImageField::new('filename', 'GPUxxx.txt aus DIF-Export')
                 ->setFormType(FileUploadType::class)
                 ->setFormTypeOptions([
                 ])
@@ -87,14 +84,14 @@ class UntisImportCrudController extends AbstractCrudController
 
                 ])
                 ->setFileConstraints(new File([
-                    'mimeTypes' => [
-                        'text/plain',
-                        'text/x-csv',
-                        'text/csv',
-                        'application/vnd.ms-excel',
-                        'application/csv',
-                        'application/x-csv',
-                    ]
+                        'mimeTypes' => [
+                            'text/plain',
+                            'text/x-csv',
+                            'text/csv',
+                            'application/vnd.ms-excel',
+                            'application/csv',
+                            'application/x-csv',
+                        ]
                     ])
                 )
                 ->setRequired(true)
@@ -107,7 +104,7 @@ class UntisImportCrudController extends AbstractCrudController
 
         $filters = $this->filterRepository->findAll();
 
-        foreach($this->courseEntryRepository->findAll() as $courseEntry) {
+        foreach ($this->courseEntryRepository->findAll() as $courseEntry) {
             $entityManager->remove($courseEntry);
         }
         $entityManager->flush();;
@@ -122,72 +119,82 @@ class UntisImportCrudController extends AbstractCrudController
         ];
 
         $file = $entityInstance->getFilename();
-        if($isANSI = mb_detect_encoding($file, 'ANSI_X3.4-1986', true)) {
-            $this->addFlash("warning","Datei ist nicht UTF-8-formatiert. Der Import wurde mit ISO-8859-1 versucht.");
+        if ($isANSI = mb_detect_encoding($file, 'ANSI_X3.4-1986', true)) {
+            $this->addFlash("warning", "Datei ist nicht UTF-8-formatiert. Der Import wurde mit ISO-8859-1 versucht.");
         }
 
         if (($handle = fopen($this->getParameter('upload_directory') . '/' . $file, "r")) !== FALSE) {
             try {
                 while (($data = fgetcsv($handle, 10000, ",")) !== FALSE) {
                     $isNotFiltered = true;
-                    $date = new DateTimeImmutable($data[1]);
-                    $courses = str_replace("~", ", ",$data[14]);
-                    $plannedRooms = str_replace("~", ", ",$data[11]);
-                    $updatedRooms = str_replace("~", ", ",$data[12]);
+                    $untisId = trim($data[0]);
+                    $dateString = trim($data[1]);
+                    $date = new DateTimeImmutable($dateString);
+                    $courseHour = (int)trim($data[2]);
+                    $absenceId = (int)trim($data[3]);
+                    $courseId = (int)trim($data[4]);
+                    $plannedTeacher = trim($data[5]);
+                    $updatedTeacher = trim($data[6]);
+                    $plannedSubject = trim($data[7]);
+                    $plannedSubjectComment = trim($data[8]);
+                    $updatedSubject = trim($data[9]);
+                    $updatedSubjectComment = trim($data[10]);
+                    $plannedRoom = str_replace('~', ', ', trim($data[11]));
+                    $updatedRoom = str_replace('~', ', ', trim($data[12]));
+                    $statistics = trim($data[13]);
+                    $classes = str_replace('~', ', ', trim($data[14]));
+                    $absenceReason = trim($data[15]);
+                    $message = trim($data[16]);
+                    $bit = trim($data[17]);
+                    $updatedClasses = trim($data[18]);
+                    $type = trim($data[19]);
 
                     foreach ($filters as $filter) {
-                        if(str_contains($courses, $filter->getKeyword()) || empty($courses)) {
+                        if (str_contains($classes, $filter->getKeyword()) || empty($classes)) {
                             $isNotFiltered = false;
                             break;
                         }
                     }
-                    if($isNotFiltered) {
+                    if ($isNotFiltered) {
                         $entry = new CourseEntry();
-                        $entry->setCourse($courses);
-
-                        if(!$isANSI) {
-                            $entry->setMessage($data[16]);
-                            $entry->setPlannedTeacher($data[5]);
-                            $entry->setUpdatedTeacher( $data[6]);
-                        } else {
-                            $entry->setMessage(iconv('ISO-8859-1', 'UTF-8', $data[16]));
-                            //$entry->setPlannedTeacher(iconv('ISO-8859-1', 'UTF-8', $data[5]));
-                            $entry->setPlannedTeacher($data[5]);
-                            $entry->setUpdatedTeacher($data[6]);
+                        $entry->setCourse($classes);
+                        $entry->setUpdatedCourse($updatedClasses);
+                        $entry->setMessage($message);
+                        $entry->setPlannedTeacher($plannedTeacher);
+                        $entry->setUpdatedTeacher($updatedTeacher);
+                        $code = 1;
+                        $isSubstitution = (trim($type) === 'S' || (trim($type) === '' and $updatedTeacher !== '') || trim($type) === '~') ||
+                            trim($type) === 'A' && ($plannedTeacher !== '' and $updatedTeacher !== '' and $plannedTeacher !== $updatedTeacher and $updatedSubject !== ''); // Substitution
+                        $isCancellation = trim($type) === 'C' || (trim($type) === '' and $updatedTeacher === '');; // Cancellation
+                        $isPropagation  = trim($type) === 'P';
+                        if ($isSubstitution || $isPropagation) {
+                            $code = 0;
                         }
-
-
-                        $code = $data[17];
-                        //if($code == "2") $code = 1;
-                        if($code == "1048576") $code = 0;
-                        if($code == "1048577") $code = 1;
-                        if($code == "2097153") $code = 1;
-                        if($code == "1") $code = 1;
-                        if($entry->getUpdatedTeacher()) $code = 0;
-                        if($entry->getPlannedTeacher() == $entry->getUpdatedTeacher() && $plannedRooms != $updatedRooms) $code = 302;
-                        if(str_contains($entry->getMessage(),"usfall")) $code = 1;
+                        if ($isCancellation) {
+                            $code = 1;
+                        }
+                        if (str_contains($entry->getMessage(), "usfall")) $code = 1;
+                        if (str_contains($entry->getMessage(), "entfall")) $code = 1;
 
                         $type = $this->typeRepository->findOneBy(['code' => $code]);
                         $entry->setScheduleType($type);
 
-                        if($entry->getMessage())
+                        if ($entry->getMessage())
                             $entry->setShowComment(true);
                         else
                             $entry->setShowComment(false);
-
                         $entry->setEntryDate($date);
-                        $entry->setEntryTime(Block::tryFrom($data[2]));
-                        $entry->setPlannedRoom($plannedRooms);
-                        $entry->setUpdatedRoom($updatedRooms);
-                        $entry->setPlannedSubject($data[7]);
-                        $entry->setUpdatedSubject($data[9]);
-
+                        $entry->setEntryTime(Block::tryFrom($courseHour));
+                        $entry->setPlannedRoom($plannedRoom);
+                        $entry->setUpdatedRoom($updatedRoom);
+                        $entry->setPlannedSubject($plannedSubject);
+                        $entry->setUpdatedSubject($updatedSubject);
                         $entityManager->persist($entry);
                     }
 
                 }
                 $entityManager->flush();
-                $this->addFlash("success","Die Stundenplanung wurde erfolgreich aktualisiert.");
+                $this->addFlash("success", "Die Stundenplanung wurde erfolgreich aktualisiert.");
             } catch (\Exception $exception) {
             }
         }
@@ -200,13 +207,12 @@ class UntisImportCrudController extends AbstractCrudController
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 
 
-            $url = $adminUrlGenerator
-                ->setController(CourseEntryCrudController::class)
-                ->setAction(Action::INDEX)
-                ->generateUrl()
-            ;
+        $url = $adminUrlGenerator
+            ->setController(CourseEntryCrudController::class)
+            ->setAction(Action::INDEX)
+            ->generateUrl();
 
-            return $this->redirect($url);
+        return $this->redirect($url);
     }
 
 }
