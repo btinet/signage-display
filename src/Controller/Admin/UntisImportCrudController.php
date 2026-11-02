@@ -146,7 +146,7 @@ class UntisImportCrudController extends AbstractCrudController
                     $absenceReason = trim($data[15]);
                     $message = trim($data[16]);
                     $bit = trim($data[17]);
-                    $updatedClasses = trim($data[18]);
+                    $updatedClasses = str_replace('~', ', ', trim($data[18]));
                     $type = trim($data[19]);
 
                     foreach ($filters as $filter) {
