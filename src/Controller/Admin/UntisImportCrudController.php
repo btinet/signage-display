@@ -74,7 +74,7 @@ class UntisImportCrudController extends AbstractCrudController
         DATA;
 
         return [
-            ImageField::new('filename', 'GPUxxx.txt aus DIF-Export')
+            ImageField::new('filename', 'GPUxxx.txt aus DIF-Export') // TODO: soll vor der Weiterverarbeitung in lowerCases() sein. also: gpu014.txt
                 ->setFormType(FileUploadType::class)
                 ->setFormTypeOptions([
                 ])
@@ -85,6 +85,7 @@ class UntisImportCrudController extends AbstractCrudController
                 ]
 
                 ])
+                ->setUploadedFileNamePattern('gpu014.txt') // TODO: soll immer "gpu014.txt" sein
                 ->setFileConstraints(new File([
                         'mimeTypes' => [
                             'text/plain',
@@ -100,6 +101,7 @@ class UntisImportCrudController extends AbstractCrudController
                 ->setHelp("Nach upload werden alte Datensätze entfernt."),
         ];
     }
+
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
@@ -128,6 +130,23 @@ class UntisImportCrudController extends AbstractCrudController
         if (($handle = fopen($this->getParameter('upload_directory') . '/' . $file, "r")) !== FALSE) {
             try {
                 while (($data = fgetcsv($handle, 10000, ",")) !== FALSE) {
+
+                    $toUtf8 = function (?string $value): string {
+                        if ($value === null || $value === '') {
+                            return '';
+                        }
+
+                        $trimmed = trim($value);
+
+                        // Prüfen: Ist der String bereits valides UTF-8?
+                        if (mb_check_encoding($trimmed, 'UTF-8')) {
+                            return $trimmed; // Ja -> nichts tun
+                        }
+
+                        // Nein -> Wahrscheinlich Windows-1252 (ANSI), also konvertieren
+                        return mb_convert_encoding($trimmed, 'UTF-8', 'Windows-1252');
+                    };
+
                     $isNotFiltered = true;
                     $untisId = trim($data[0]);
                     $dateString = trim($data[1]);
@@ -135,20 +154,20 @@ class UntisImportCrudController extends AbstractCrudController
                     $courseHour = (int)trim($data[2]);
                     $absenceId = (int)trim($data[3]);
                     $courseId = (int)trim($data[4]);
-                    $plannedTeacher = trim($data[5]);
-                    $updatedTeacher = trim($data[6]);
-                    $plannedSubject = trim($data[7]);
+                    $plannedTeacher = $toUtf8(trim($data[5]));
+                    $updatedTeacher = $toUtf8(trim($data[6]));
+                    $plannedSubject = $toUtf8(trim($data[7]));
                     $plannedSubjectComment = trim($data[8]);
-                    $updatedSubject = trim($data[9]);
+                    $updatedSubject = $toUtf8(trim($data[9]));
                     $updatedSubjectComment = trim($data[10]);
                     $plannedRoom = str_replace('~', ', ', trim($data[11]));
                     $updatedRoom = str_replace('~', ', ', trim($data[12]));
                     $statistics = trim($data[13]);
-                    $classes = str_replace('~', ', ', trim($data[14]));
-                    $absenceReason = trim($data[15]);
-                    $message = trim($data[16]);
+                    $classes = $toUtf8(str_replace('~', ', ', trim($data[14])));
+                    $absenceReason = $toUtf8(trim($data[15]));
+                    $message = $toUtf8(trim($data[16]));
                     $bit = trim($data[17]);
-                    $updatedClasses = str_replace('~', ', ', trim($data[18]));
+                    $updatedClasses = $toUtf8(str_replace('~', ', ', trim($data[18])));
                     $type = trim($data[19]);
 
                     foreach ($filters as $filter) {

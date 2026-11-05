@@ -40,7 +40,7 @@ class UntisImport
 
     public function setFilename(?string $filename): static
     {
-        $this->filename = $filename ? $filename : null;
+        $this->filename = $filename !== null ? strtolower($filename) : null;
 
         return $this;
     }
