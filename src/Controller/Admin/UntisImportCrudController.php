@@ -85,7 +85,7 @@ class UntisImportCrudController extends AbstractCrudController
                 ]
 
                 ])
-                ->setUploadedFileNamePattern('gpu014.txt') // TODO: soll immer "gpu014.txt" sein
+                ->setUploadedFileNamePattern('_empty.data') // TODO: soll immer "gpu014.txt" sein
                 ->setFileConstraints(new File([
                         'mimeTypes' => [
                             'text/plain',
