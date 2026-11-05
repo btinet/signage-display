@@ -40,11 +40,13 @@ class BlogPostCrudController extends AbstractCrudController
             TextField::new('title')->onlyOnIndex(),
             DateField::new('startDate')->onlyOnIndex(),
             DateField::new('endDate')->onlyOnIndex(),
-            AssociationField::new('template')->onlyOnIndex(),
+            AssociationField::new('template')->onlyOnIndex()
+            ,
 
             FormField::addTab('Allgemein')->onlyOnForms(),
             FormField::addPanel("Einstellungen"),
-            AssociationField::new('template')->setRequired(true)->setColumns(6)->onlyOnForms(),
+            AssociationField::new('template')->setRequired(true)->setColumns(6)->onlyOnForms()
+                ->setHelp("Vertretungsplan für <b>heute</b> muss nicht erstellt werden. Dieser ist immer aktiv im rechten Block."),
             DateField::new('startDate')->setColumns(2)->onlyOnForms()->setHelp("ohne Angabe dauerhaft gültig"),
             DateField::new('endDate')->setColumns(2)->onlyOnForms()->setHelp("frei lassen, wenn kein Zeitintervall benötigt"),
             IntegerField::new('duration')->setColumns(2)->onlyOnForms()
