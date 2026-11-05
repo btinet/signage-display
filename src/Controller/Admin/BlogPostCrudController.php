@@ -48,7 +48,7 @@ class BlogPostCrudController extends AbstractCrudController
             DateField::new('startDate')->setColumns(2)->onlyOnForms()->setHelp("ohne Angabe dauerhaft gültig"),
             DateField::new('endDate')->setColumns(2)->onlyOnForms()->setHelp("frei lassen, wenn kein Zeitintervall benötigt"),
             IntegerField::new('duration')->setColumns(2)->onlyOnForms()
-                ->setHelp("Beitragsdauer in Sekunden (Standard sind 10 Sekunden)."),
+                ->setHelp("Beitragsdauer in Sekunden (Standard sind 10 Sekunden).<br><br><b class='text-danger'>Achtung</b>: Bitte nicht weniger als 8 Sekunden benutzen, da bereits <b>1-2 Sekunden für die Übergänge</b> genutzt wird."),
             BooleanField::new('active')->setColumns(2)->onlyOnForms(),
             BooleanField::new('titleVisible')->onlyOnForms()->setColumns(2),
             BooleanField::new('contentVisible')->onlyOnForms()->setColumns(2),
