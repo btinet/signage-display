@@ -17,7 +17,7 @@
                         </div>
                         <div class="col-9 text-uppercase">
                             <span class="fa fa-fw fa-person-chalkboard me-2"></span>{{ entry.plannedTeacher }}
-                            {% if entry.updatedTeacher %}
+                            {% if entry.updatedTeacher and entry.plannedTeacher != entry.updatedTeacher  %}
                                 <span class="fa mx-1 fa-fw fa-angle-double-right"></span>
                                 <span class="fw-bold" style="color: {{ entry.scheduleType.color ~ "!important" }}">{{ entry.updatedTeacher }}</span>
                             {% endif %}
