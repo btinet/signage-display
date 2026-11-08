@@ -4,9 +4,11 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
+        "php": ">=8.4",
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-iconv": "*",
+        "btinet/untis-bundle": "^1.0",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
@@ -61,7 +63,12 @@
             "symfony/flex": true,
             "symfony/runtime": true
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "policy": {
+            "advisories": {
+                "block": false
+            }
+        }
     },
     "autoload": {
         "psr-4": {

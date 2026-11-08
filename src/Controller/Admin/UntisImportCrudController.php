@@ -8,6 +8,7 @@ use App\Entity\UntisImport;
 use App\Repository\CourseEntryFilterRepository;
 use App\Repository\CourseEntryRepository;
 use App\Repository\ScheduleTypeRepository;
+use Btinet\Untis\Model\UntisSubstitutionModel;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -105,114 +106,56 @@ class UntisImportCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-
         $filters = $this->filterRepository->findAll();
-
         foreach ($this->courseEntryRepository->findAll() as $courseEntry) {
             $entityManager->remove($courseEntry);
         }
-        $entityManager->flush();;
-
-        $fileTypes = [
-            'text/plain',
-            'text/x-csv',
-            'text/csv',
-            'application/vnd.ms-excel',
-            'application/csv',
-            'application/x-csv',
-        ];
-
+        $entityManager->flush();
         $file = $entityInstance->getFilename();
-        if ($isANSI = mb_detect_encoding($file, 'ANSI_X3.4-1986', true)) {
-            $this->addFlash("warning", "Datei ist nicht UTF-8-formatiert. Der Import wurde mit ISO-8859-1 versucht.");
-        }
 
         if (($handle = fopen($this->getParameter('upload_directory') . '/' . $file, "r")) !== FALSE) {
             try {
+                $model = new UntisSubstitutionModel();
                 while (($data = fgetcsv($handle, 10000, ",")) !== FALSE) {
-
-                    $toUtf8 = function (?string $value): string {
-                        if ($value === null || $value === '') {
-                            return '';
-                        }
-
-                        $trimmed = trim($value);
-
-                        // Prüfen: Ist der String bereits valides UTF-8?
-                        if (mb_check_encoding($trimmed, 'UTF-8')) {
-                            return $trimmed; // Ja -> nichts tun
-                        }
-
-                        // Nein -> Wahrscheinlich Windows-1252 (ANSI), also konvertieren
-                        return mb_convert_encoding($trimmed, 'UTF-8', 'Windows-1252');
-                    };
-
-                    $isNotFiltered = true;
-                    $untisId = trim($data[0]);
-                    $dateString = trim($data[1]);
-                    $date = new DateTimeImmutable($dateString);
-                    $courseHour = (int)trim($data[2]);
-                    $absenceId = (int)trim($data[3]);
-                    $courseId = (int)trim($data[4]);
-                    $plannedTeacher = $toUtf8(trim($data[5]));
-                    $updatedTeacher = $toUtf8(trim($data[6]));
-                    $plannedSubject = $toUtf8(trim($data[7]));
-                    $plannedSubjectComment = trim($data[8]);
-                    $updatedSubject = $toUtf8(trim($data[9]));
-                    $updatedSubjectComment = trim($data[10]);
-                    $plannedRoom = str_replace('~', ', ', trim($data[11]));
-                    $updatedRoom = str_replace('~', ', ', trim($data[12]));
-                    $statistics = trim($data[13]);
-                    $classes = $toUtf8(str_replace('~', ', ', trim($data[14])));
-                    $absenceReason = $toUtf8(trim($data[15]));
-                    $message = $toUtf8(trim($data[16]));
-                    $bit = trim($data[17]);
-                    $updatedClasses = $toUtf8(str_replace('~', ', ', trim($data[18])));
-                    $type = trim($data[19]);
+                    $model->setData($data);
 
                     foreach ($filters as $filter) {
-                        if (str_contains($classes, $filter->getKeyword()) || empty($classes)) {
-                            $isNotFiltered = false;
-                            break;
+                        if (in_array($filter->getKeyword(), $model->getClasses()) || empty($model->getPlannedSubject()) || empty($model->getClasses())) {
+                            continue 2;
                         }
                     }
-                    if ($isNotFiltered) {
-                        $entry = new CourseEntry();
-                        $entry->setCourse($classes);
-                        $entry->setUpdatedCourse($updatedClasses);
-                        $entry->setMessage($message);
-                        $entry->setPlannedTeacher($plannedTeacher);
-                        $entry->setUpdatedTeacher($updatedTeacher);
+                    $code = 1;
+                    $displayEntry = $model->getSplitter()->getDisplayEntry();
+                    $entry = new CourseEntry();
+                    $entry->setCourse(implode(", ", $model->getClasses()));
+                    $entry->setUpdatedCourse(implode(", ", $model->getUpdatedClasses()));
+                    $entry->setMessage($model->getMessage());
+                    $entry->setPlannedTeacher($model->getPlannedTeacher());
+                    $entry->setUpdatedTeacher($model->getUpdatedTeacher());
+
+                    if ($displayEntry->isSubstituted()) {
+                        $code = 0;
+                    }
+                    if ($displayEntry->isCancelled()) {
                         $code = 1;
-                        $isSubstitution = (trim($type) === 'S' || (trim($type) === '' and $updatedTeacher !== '') || trim($type) === '~') ||
-                            trim($type) === 'A' && ($plannedTeacher !== '' and $updatedTeacher !== '' and $plannedTeacher !== $updatedTeacher and $updatedSubject !== ''); // Substitution
-                        $isCancellation = trim($type) === 'C' || (trim($type) === '' and $updatedTeacher === '');; // Cancellation
-                        $isPropagation  = trim($type) === 'P';
-                        if ($isSubstitution || $isPropagation) {
-                            $code = 0;
-                        }
-                        if ($isCancellation) {
-                            $code = 1;
-                        }
-                        if (str_contains($entry->getMessage(), "usfall")) $code = 1;
-                        if (str_contains($entry->getMessage(), "entfall")) $code = 1;
-
-                        $type = $this->typeRepository->findOneBy(['code' => $code]);
-                        $entry->setScheduleType($type);
-
-                        if ($entry->getMessage())
-                            $entry->setShowComment(true);
-                        else
-                            $entry->setShowComment(false);
-                        $entry->setEntryDate($date);
-                        $entry->setEntryTime(Block::tryFrom($courseHour));
-                        $entry->setPlannedRoom($plannedRoom);
-                        $entry->setUpdatedRoom($updatedRoom);
-                        $entry->setPlannedSubject($plannedSubject);
-                        $entry->setUpdatedSubject($updatedSubject);
-                        $entityManager->persist($entry);
                     }
+                    if ($displayEntry->isMoved()) {
+                        $code = 302;
+                    }
+                    $type = $this->typeRepository->findOneBy(['code' => $code]);
+                    $entry->setScheduleType($type);
 
+                    if ($entry->getMessage())
+                        $entry->setShowComment(true);
+                    else
+                        $entry->setShowComment(false);
+                    $entry->setEntryDate($model->getDate());
+                    $entry->setEntryTime(Block::tryFrom($model->getCourseHour()));
+                    $entry->setPlannedRoom($model->getPlannedRoom());
+                    $entry->setUpdatedRoom($model->getUpdatedRoom());
+                    $entry->setPlannedSubject($model->getPlannedSubject());
+                    $entry->setUpdatedSubject($model->getUpdatedSubject());
+                    $entityManager->persist($entry);
                 }
                 $entityManager->flush();
                 $this->addFlash("success", "Die Stundenplanung wurde erfolgreich aktualisiert.");
