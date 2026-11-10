@@ -126,36 +126,44 @@ class UntisImportCrudController extends AbstractCrudController
                     }
                     $code = 1;
                     $displayEntry = $model->getSplitter()->getDisplayEntry();
-                    $entry = new CourseEntry();
-                    $entry->setCourse(implode(", ", $model->getClasses()));
-                    $entry->setUpdatedCourse(implode(", ", $model->getUpdatedClasses()));
-                    $entry->setMessage($model->getMessage());
-                    $entry->setPlannedTeacher($model->getPlannedTeacher());
-                    $entry->setUpdatedTeacher($model->getUpdatedTeacher());
+                    $plannedClasses = $model->getClasses();
 
-                    if ($displayEntry->isSubstituted()) {
-                        $code = 0;
-                    }
-                    if ($displayEntry->isCancelled()) {
-                        $code = 1;
-                    }
-                    if ($displayEntry->isMoved()) {
-                        $code = 302;
-                    }
-                    $type = $this->typeRepository->findOneBy(['code' => $code]);
-                    $entry->setScheduleType($type);
+                    foreach ($plannedClasses as $class) {
+                        $entry = new CourseEntry();
+                        $hasUpdatedClass = array_search($class, $model->getUpdatedClasses());
 
-                    if ($entry->getMessage())
-                        $entry->setShowComment(true);
-                    else
-                        $entry->setShowComment(false);
-                    $entry->setEntryDate($model->getDate());
-                    $entry->setEntryTime(Block::tryFrom($model->getCourseHour()));
-                    $entry->setPlannedRoom($model->getPlannedRoom());
-                    $entry->setUpdatedRoom($model->getUpdatedRoom());
-                    $entry->setPlannedSubject($model->getPlannedSubject());
-                    $entry->setUpdatedSubject($model->getUpdatedSubject());
-                    $entityManager->persist($entry);
+                        $entry->setCourse($class);
+                        $entry->setMessage($model->getMessage());
+                        $entry->setPlannedTeacher($model->getPlannedTeacher());
+                        $entry->setUpdatedTeacher($model->getUpdatedTeacher());
+
+                        if ($hasUpdatedClass) {
+                            $entry->setUpdatedCourse($model->getUpdatedClasses()[$hasUpdatedClass]);
+                        }
+                        if ($displayEntry->isSubstituted()) {
+                            $code = 0;
+                        }
+                        if ($displayEntry->isCancelled()) {
+                            $code = 1;
+                        }
+                        if ($displayEntry->isMoved()) {
+                            $code = 302;
+                        }
+                        $type = $this->typeRepository->findOneBy(['code' => $code]);
+                        $entry->setScheduleType($type);
+
+                        if ($entry->getMessage())
+                            $entry->setShowComment(true);
+                        else
+                            $entry->setShowComment(false);
+                        $entry->setEntryDate($model->getDate());
+                        $entry->setEntryTime(Block::tryFrom($model->getCourseHour()));
+                        $entry->setPlannedRoom($model->getPlannedRoom());
+                        $entry->setUpdatedRoom($model->getUpdatedRoom());
+                        $entry->setPlannedSubject($model->getPlannedSubject());
+                        $entry->setUpdatedSubject($model->getUpdatedSubject());
+                        $entityManager->persist($entry);
+                    }
                 }
                 $entityManager->flush();
                 $this->addFlash("success", "Die Stundenplanung wurde erfolgreich aktualisiert.");
