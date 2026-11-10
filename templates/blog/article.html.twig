@@ -27,38 +27,28 @@
     </div>
     {% endif %}
 
-    {% if article.featuredImageVisible and article.contentVisible %}
-<div class="p-3 my-auto">
-        <div class="row g-3">
-            <div class="col-6">
-                <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid img-thumbnail" alt="{{ article.title }}" style="max-height: 800px">
-            </div>
-            <div class="col-6">
-                {#
-                {% if article.titleVisible %}
-                <div class="col">
-                    <div class="fw-bold display-4">{{ article.title }}</div>
-                </div>
-            {% endif %}
-                #}
-
-
-
-                <div class="col fs-4" style="text-align: justify!important;">
-                    {{ article.content|raw }}
-                </div>
-
-            </div>
-        </div>
-</div>
-    {% else %}
 
         {% if article.contentVisible %}
-            <div class="mx-auto my-auto p-3 pt-0">
-                <div class="fs-4">
+            <div class="article-wrapper my-auto without-image d-flex align-items-start justify-content-start">
+            {% if article.featuredImageVisible %}
+                <div class="content-filler h-100"></div>
+                <div class="content-image">
+                    <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid" alt="{{ article.title }}" style="max-height: 1000px">
+                </div>
+            {% else %}
+                <div class="content-filler h-100"></div>
+                <div class="content-image image-svg d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon img-fluid icon-tabler icons-tabler-outline icon-tabler-info-circle" style="max-height: 600px">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                        <path d="M12 9h.01" />
+                        <path d="M11 12h1v4h1" />
+                    </svg>
+                </div>
+            {% endif %}
+                <div class="fs-4 content p-5 w-100 h-100">
                     {{ article.content|raw }}
                 </div>
             </div>
         {% endif %}
-    {% endif %}
 

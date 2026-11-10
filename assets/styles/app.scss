@@ -113,9 +113,15 @@ body{
   border-color: #000000;
 }
 
-.carousel-item { // oder .carousel-item bei Bootstrap
+.carousel .slide .carousel-item { // oder .carousel-item bei Bootstrap
   transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
   opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.carousel .slide .carousel-item {
+  will-change: transform, opacity;
+  // oder der klassische Hack:
+  // transform: translateZ(0);
 }
 
 .main-carousel{
@@ -146,4 +152,44 @@ body{
   line-height: 200px;
   font-size: 80px;
   color: white;
+}
+
+.article-wrapper {
+  // Basis-Container
+  // Variante 1: Mit Bild (row-Layout)
+  &.with-image {
+    width: 100%;
+    .row {
+      align-items: flex-start;
+
+      // Bild-Styling
+
+    }
+  }
+
+  // Variante 2: Ohne Bild (zentriert)
+  &.without-image {
+    width: 100%;
+    margin: 0 0;
+  }
+  .content {
+    background-color: darken($blue, 14%);
+  }
+
+  .content-image {
+    //border: .25rem solid darken($blue, 30%);
+    margin: 0 .5rem;
+  }
+
+  .content-filler {
+    width: 1rem;
+    content: "";
+    background-color: darken($blue, 14%);
+  }
+
+  .image-svg {
+    color: darken($blue, 10%);
+    background-color: darken($blue, 14%);
+    height: 100%;
+  }
 }
