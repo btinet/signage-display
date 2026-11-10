@@ -1,13 +1,27 @@
 {% for course, entries in courseEntries %}
     {% set main_loop = loop.index0 %}
-    {% for chunk in entries|batch(8) %}
+    {% for chunk in entries|batch(7) %}
         <div class="carousel-item h-100 {{ main_loop == 0 and loop.first ? 'active' : '' }}" data-bs-interval="10000">
             <div class="list-group-item border-0 border-bottom border-dark fw-bold fs-5 text-bg-primary text-warning text-uppercase">
                 <span class="text-white">Klasse</span> {{ course }}
             </div>
 
+            {% set i = 1 %}
+            {% set last_color = null %}
             {% for entry in chunk %}
-                <div class="list-group-item border-0 border-bottom border-dark small text-bg-primary" style="background-color: {{ entry.scheduleType.color ~ "20!important" }}">
+                {% if last_color == entry.scheduleType.color %}
+                    {% set i = 2 %}
+                {% else %}
+                    {% set i = 1 %}
+                {% endif %}
+                {% if i % 2 == 0  %}
+                    {% set color_b = entry.scheduleType.color ~ "15"  %}
+                {% else %}
+                    {% set color_b = entry.scheduleType.color ~ "30"  %}
+                {% endif %}
+                <div class="list-group-item border-0 border-bottom border-dark small text-bg-primary" style="
+                        background-color: {{ color_b ~ "!important" }};
+                        ">
                     <div class="row g-1">
                         <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.entryTime.name|trans }}</div>
                         <div class="col-5 text-uppercase fw-bold fs-6"><span class="fa fa-fw fa-book me-1"></span>{{ entry.plannedSubject }}</div>
@@ -47,6 +61,7 @@
                         </div>
                     </div>
                 </div>
+                {% set last_color = entry.scheduleType.color %}
             {% endfor %}
         </div>
     {% endfor %}

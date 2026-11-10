@@ -1,7 +1,7 @@
 {% for course, entries in courseEntries %}
     {% set sub_loop = loop.index0 %}
     {# batch(8) teilt die Einträge automatisch in Gruppen von maximal 8 auf #}
-    {% for chunk in entries|batch(8) %}
+    {% for chunk in entries|batch(7) %}
         {# Das "active" wird nur beim allerersten Element aller Schleifen gesetzt #}
         <div class="carousel-item slide-horizontal h-100 {{ main_loop is defined and main_loop == 0 and sub_loop == 0 ? 'active' : '' }}" data-bs-interval="{{ article.duration ?? 10 }}000">
 
@@ -34,8 +34,22 @@
             </div>
 
             {# Die eigentlichen Einträge (max 8 pro Seite) #}
+            {% set i = 1 %}
+            {% set last_color = null %}
             {% for entry in chunk %}
-                <div class="list-group-item px-3 py-2 border-0 border-bottom border-dark small text-bg-primary" style="background-color: {{ entry.scheduleType.color ~ "20!important" }}">
+                {% if last_color == entry.scheduleType.color %}
+                    {% set i = 2 %}
+                {% else %}
+                    {% set i = 1 %}
+                {% endif %}
+                {% if i % 2 == 0  %}
+                    {% set color_b = entry.scheduleType.color ~ "15"  %}
+                {% else %}
+                    {% set color_b = entry.scheduleType.color ~ "30"  %}
+                {% endif %}
+                <div class="list-group-item px-3 py-2 border-0 border-bottom border-dark small text-bg-primary" style="
+                        background-color: {{ color_b ~ "!important" }};
+                        ">
                     <div class="row g-1">
                         <div class="col-3 text-uppercase fw-bold fs-6">{{ entry.entryTime.name|trans }}</div>
                         <div class="col-5 text-uppercase fw-bold fs-6"><span class="fa fa-fw fa-book me-1"></span>{{ entry.plannedSubject }}</div>
@@ -75,6 +89,7 @@
                         </div>
                     </div>
                 </div>
+                {% set last_color = entry.scheduleType.color %}
             {% endfor %}
         </div>
     {% endfor %}
