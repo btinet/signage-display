@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Form\SettingsType;
 use App\Service\InfoScreenSettings;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider; // <--- WICHTIG
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class SettingsAdminController extends AbstractController
     public function index(
         Request $request,
         InfoScreenSettings $settings,
-        AdminContextProvider $adminContextProvider // <--- INJEKTION
+        AdminContext $adminContextProvider // <--- INJEKTION
     ): Response {
 
         // 1. Aktuelle Daten aus dem Service holen
@@ -42,7 +43,7 @@ class SettingsAdminController extends AbstractController
         // 4. Template rendern MIT dem EasyAdmin-Kontext
         return $this->render('admin/settings.html.twig', [
             'form' => $form->createView(),
-            'ea' => $adminContextProvider->getContext(), // <--- HIER ÜBERGEBEN
+            'ea' => $adminContextProvider, // <--- HIER ÜBERGEBEN
         ]);
     }
 }
