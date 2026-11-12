@@ -31,13 +31,14 @@ class DisplayMacroRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?DisplayMacro
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findCurrentMacro(): ?DisplayMacro
+    {
+        $today = new \DateTimeImmutable("now")->format("Y-m-d");
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.validFrom = :val')
+            ->setParameter('val', $today)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

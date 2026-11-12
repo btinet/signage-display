@@ -60,7 +60,7 @@ class BlogPostRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.active = true')
             ->andWhere('b.startDate IS NULL')
-            ->setMaxResults(20)
+            ->setMaxResults(50)
             ->orderBy('b.template', 'ASC')
             ->getQuery()
             ->getResult()
