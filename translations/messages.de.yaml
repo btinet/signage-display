@@ -5,6 +5,12 @@
 4: Donnerstag
 5: Freitag
 6: Samstag
+DisplayMakro: Makros
+DisplayMacro: Makro
+Display Macro: Makro
+Running DisplayMakro: Laufende Makros
+RunningDisplayMacro: Aktive Prozesse
+Show Schedule Column: Rechte Spalte anzeigen?
 ScheduleType: Ereignistyp
 Is Landscape: Querformat?
 Label: Bezeichnung

@@ -9,6 +9,7 @@ use App\Entity\Course;
 use App\Entity\CourseEntry;
 use App\Entity\CourseEntryFilter;
 use App\Entity\CourseEvent;
+use App\Entity\DisplayMacro;
 use App\Entity\Image;
 use App\Entity\ImageGallery;
 use App\Entity\ListEntry;
@@ -66,27 +67,31 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('Display zeigen','fa fa-display',$this->generateUrl('app_index'));
 
         yield MenuItem::section('Stundenplan');
-        yield MenuItem::linkToCrud('GPU Upload','fa fa-file',UntisImport::class)->setAction('new');
-        yield MenuItem::linkToRoute('WebUntis',"fa fa-clock",'admin_untis_index')->setBadge("dev","danger");
-        yield MenuItem::linkToCrud('Course Entries','fa fa-list',CourseEntry::class);
+        yield MenuItem::linkTo(UntisImportCrudController::class, 'GPU Upload', 'fa fa-file')->setAction('new');
+        yield MenuItem::linkToRoute('WebUntis', 'fa fa-clock', 'admin_untis_index')->setBadge("dev", "danger");
+        yield MenuItem::linkTo(CourseEntryCrudController::class, 'Course Entries', 'fa fa-list');
 
         yield MenuItem::section('Aushang');
-        yield MenuItem::linkToCrud('BlogPosts','fa fa-pen-nib',BlogPost::class);
-        yield MenuItem::linkToCrud('ShoutOuts','fa fa-bullhorn',ShoutOut::class);
-        yield MenuItem::linkToCrud('Galleries','fa fa-images',ImageGallery::class);
-        yield MenuItem::linkToCrud('Images','fa fa-image',Image::class);
+        yield MenuItem::linkTo(BlogPostCrudController::class, 'BlogPosts', 'fa fa-pen-nib');
+        yield MenuItem::linkTo(ShoutOutCrudController::class, 'ShoutOuts', 'fa fa-bullhorn');
+        yield MenuItem::linkTo(ImageGalleryCrudController::class, 'Galleries', 'fa fa-images');
+        yield MenuItem::linkTo(ImageGalleryCrudController::class, 'Images', 'fa fa-image');
+
+        yield MenuItem::section('Automatisieren')->setBadge("neu", "info");;
+        yield MenuItem::linkTo(DisplayMacroCrudController::class, 'DisplayMakro', 'fa fa-robot'); // bereits neu
+        yield MenuItem::linkTo(RunningDisplayMacroCrudController::class, 'Running DisplayMakro', 'fa fa-list'); // bereits neu
 
         yield MenuItem::section('Setup');
         yield MenuItem::linkToRoute('Infoscreen-Einstellungen', 'fa fa-tv', 'admin_infoscreen_settings');
-        yield MenuItem::linkToCrud('Course Keywords','fa fa-list',CourseEntryFilter::class);
-        yield MenuItem::linkToCrud('Types All','fa fa-fire',ScheduleType::class);
-        yield MenuItem::linkToCrud('MessageTypes','fa fa-bullhorn',MessageType::class);
-        yield MenuItem::linkToCrud('BlogPostTemplates','fa fa-swatchbook',BlogPostTemplate::class);
-        yield MenuItem::linkToCrud('Users','fa fa-users',User::class);
-        yield MenuItem::linkToCrud('Schedule Grid','fa fa-table-cells-large',ScheduleGrid::class);
-        yield MenuItem::linkToCrud('UntisUsers','fa fa-users',WebUntisServer::class);
+        yield MenuItem::linkTo(CourseEntryFilterCrudController::class, 'Course Keywords', 'fa fa-list');
+        yield MenuItem::linkTo(ScheduleTypeCrudController::class, 'Types All', 'fa fa-fire');
+        yield MenuItem::linkTo(MessageTypeCrudController::class, 'MessageTypes', 'fa fa-bullhorn');
+        yield MenuItem::linkTo(BlogPostTemplateCrudController::class, 'BlogPostTemplates', 'fa fa-swatchbook');
+        yield MenuItem::linkTo(UserCrudController::class, 'Users', 'fa fa-users');
+        yield MenuItem::linkTo(ScheduleGridCrudController::class, 'Schedule Grid', 'fa fa-table-cells-large');
+        yield MenuItem::linkTo(WebUntisServerCrudController::class, 'UntisUsers', 'fa fa-users');
 
 
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        // yield MenuItem::linkTo('The Label', 'fas fa-list', EntityClass::class);
     }
 }

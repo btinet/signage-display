@@ -43,10 +43,9 @@ class ShoutOutCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('message'),
-            AssociationField::new('type'),
-            ColorField::new('cssClass'),
-            BooleanField::new('disabled'),
+            TextField::new('message')->setHelp('Maximal 5 bis 6 Wörter, bitte.')->setColumns('col-5'),
+            AssociationField::new('type')->setRequired(true)->setColumns('col-3'),
+            BooleanField::new('disabled')->setColumns('col-12'),
         ];
     }
 

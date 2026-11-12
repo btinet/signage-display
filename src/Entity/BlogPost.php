@@ -72,9 +72,16 @@ class BlogPost
     #[ORM\Column(nullable: true)]
     private ?bool $isLandscape = null;
 
+    /**
+     * @var Collection<int, DisplayMacro>
+     */
+    #[ORM\ManyToMany(targetEntity: DisplayMacro::class, mappedBy: 'displayBlogPosts')]
+    private Collection $displayMacros;
+
     public function __construct()
     {
         $this->list = new ArrayCollection();
+        $this->displayMacros = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -303,6 +310,33 @@ class BlogPost
     public function setIsLandscape(?bool $isLandscape): static
     {
         $this->isLandscape = $isLandscape;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DisplayMacro>
+     */
+    public function getDisplayMacros(): Collection
+    {
+        return $this->displayMacros;
+    }
+
+    public function addDisplayMacro(DisplayMacro $displayMacro): static
+    {
+        if (!$this->displayMacros->contains($displayMacro)) {
+            $this->displayMacros->add($displayMacro);
+            $displayMacro->addDisplayBlogPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisplayMacro(DisplayMacro $displayMacro): static
+    {
+        if ($this->displayMacros->removeElement($displayMacro)) {
+            $displayMacro->removeDisplayBlogPost($this);
+        }
 
         return $this;
     }
