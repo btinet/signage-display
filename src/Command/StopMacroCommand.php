@@ -64,8 +64,7 @@ class StopMacroCommand extends Command
             ]);
             $this->entityManager->remove($currentRunningMacro);
             $this->entityManager->flush();
-        } catch (Exception $exception) {
-            $output->writeln("<error>{$exception->getMessage()}</error>");
+        } catch (Exception) {
         }
         return Command::SUCCESS;
     }

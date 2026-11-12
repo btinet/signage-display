@@ -36,7 +36,9 @@ class DisplayMacroRepository extends ServiceEntityRepository
         $today = new \DateTimeImmutable("now")->format("Y-m-d");
         return $this->createQueryBuilder('d')
             ->andWhere('d.validFrom = :val')
+            ->andWhere('d.active = :active')
             ->setParameter('val', $today)
+            ->setParameter('active', true)
             ->getQuery()
             ->getOneOrNullResult()
         ;
