@@ -33,7 +33,7 @@
             {% if article.featuredImageVisible %}
                 <div class="content-filler h-100"></div>
                 <div class="content-image">
-                    <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid" alt="{{ article.title }}" style="max-height: 1000px">
+                    <img src="{{ asset(article.featuredImageUrl)|imagine_filter('sample_image') }}" class="img-fluid" alt="{{ article.title }}" style="max-height: 1000px; min-width: 400px">
                 </div>
             {% else %}
                 <div class="content-filler h-100"></div>
