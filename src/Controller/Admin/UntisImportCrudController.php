@@ -24,6 +24,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DomCrawler\Field\FileFormField;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints\File;
@@ -34,12 +35,14 @@ class UntisImportCrudController extends AbstractCrudController
     private ScheduleTypeRepository $typeRepository;
     private CourseEntryRepository $courseEntryRepository;
     private CourseEntryFilterRepository $filterRepository;
+    private LoggerInterface $logger;
 
-    public function __construct(ScheduleTypeRepository $typeRepository, CourseEntryRepository $courseEntryRepository, CourseEntryFilterRepository $filterRepository)
+    public function __construct(ScheduleTypeRepository $typeRepository, CourseEntryRepository $courseEntryRepository, CourseEntryFilterRepository $filterRepository, LoggerInterface $logger)
     {
         $this->typeRepository = $typeRepository;
         $this->courseEntryRepository = $courseEntryRepository;
         $this->filterRepository = $filterRepository;
+        $this->logger = $logger;
     }
 
     public static function getEntityFqcn(): string
@@ -75,7 +78,7 @@ class UntisImportCrudController extends AbstractCrudController
         DATA;
 
         return [
-            ImageField::new('filename', 'GPUxxx.txt aus DIF-Export') // TODO: soll vor der Weiterverarbeitung in lowerCases() sein. also: gpu014.txt
+            ImageField::new('filename', 'GPUxxx.txt aus DIF-Export') //
                 ->setFormType(FileUploadType::class)
                 ->setFormTypeOptions([
                 ])
@@ -86,7 +89,7 @@ class UntisImportCrudController extends AbstractCrudController
                 ]
 
                 ])
-                ->setUploadedFileNamePattern('_empty.data') // TODO: soll immer "gpu014.txt" sein
+                ->setUploadedFileNamePattern('_empty.data')
                 ->setFileConstraints(new File([
                         'mimeTypes' => [
                             'text/plain',
@@ -116,7 +119,7 @@ class UntisImportCrudController extends AbstractCrudController
         if (($handle = fopen($this->getParameter('upload_directory') . '/' . $file, "r")) !== FALSE) {
             try {
                 $model = new UntisSubstitutionModel();
-                while (($data = fgetcsv($handle, 10000, ",")) !== FALSE) {
+                while (($data = fgetcsv($handle, 10000, ",", '"')) !== FALSE) {
                     $model->setData($data);
 
                     foreach ($filters as $filter) {
@@ -126,6 +129,15 @@ class UntisImportCrudController extends AbstractCrudController
                     }
                     $code = 1;
                     $displayEntry = $model->getSplitter()->getDisplayEntry();
+
+                    if (null == $displayEntry) {
+                        $this->logger->warning('Eintrag wird nicht angezeigt, da $displayEntry null ist.', [
+                            'untis_id' => $model->getUntisId(),
+                            'datum' => $model->getDate(),
+                        ]);
+                        continue;
+                    }
+
                     $plannedClasses = $model->getClasses();
 
                     foreach ($plannedClasses as $class) {
