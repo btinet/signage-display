@@ -91,8 +91,8 @@ class BlogPostCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->onlyOnIndex(),
-            IntegerField::new('position', 'POS')->onlyOnIndex(),
+            //IdField::new('id')->onlyOnIndex(),
+            //IntegerField::new('position', 'POS')->onlyOnIndex(),
             BooleanField::new('active')->onlyOnIndex(),
             TextField::new('title')->onlyOnIndex(),
             DateField::new('startDate')->onlyOnIndex(),
