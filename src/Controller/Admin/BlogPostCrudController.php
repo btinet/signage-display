@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\BlogPost;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -15,6 +16,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Gedmo\Sortable\Entity\Repository\SortableRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Image as ImageConstraint;
 
 class BlogPostCrudController extends AbstractCrudController
@@ -29,13 +33,66 @@ class BlogPostCrudController extends AbstractCrudController
         return $crud
             // ...
             ->showEntityActionsInlined()
-            ;
+            ->setDefaultSort([
+                'position' => 'ASC',
+            ])
+            ->overrideTemplates([
+                'crud/index' => 'blog_post/index.html.twig'
+            ]);
+    }
+
+    public function updatePosition(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+
+
+        $data = json_decode($request->getContent(), true);
+
+        if (!$data) {
+            error_log('JSON konnte nicht geparst werden');
+            return new JsonResponse(['success' => false, 'error' => 'Invalid JSON'], 400);
+        }
+
+        error_log('Parsed data: ' . print_r($data, true));
+
+        if (!isset($data['id']) || !isset($data['position'])) {
+            error_log('Fehlende Felder: ' . json_encode($data));
+            return new JsonResponse(['success' => false, 'error' => 'Missing id or position'], 400);
+        }
+
+        try {
+            /** @var SortableRepository $repository */
+            $repository = $entityManager->getRepository(BlogPost::class);
+            $blogPost = $repository->find($data['id']);
+
+            if (!$blogPost) {
+                error_log('BlogPost nicht gefunden: ' . $data['id']);
+                return new JsonResponse(['success' => false, 'error' => 'Not found'], 404);
+            }
+
+            error_log('BlogPost gefunden, alte Position: ' . $blogPost->getPosition());
+
+            // Gedmo Sortable: Einfach Position setzen und flushen
+            $blogPost->setPosition((int) $data['position']);
+            $entityManager->persist($blogPost);
+            $entityManager->flush();
+
+            error_log('Position erfolgreich gespeichert');
+
+            return new JsonResponse(['success' => true]);
+
+        } catch (\Exception $e) {
+            error_log('Fehler: ' . $e->getMessage());
+            error_log('Stack trace: ' . $e->getTraceAsString());
+            return new JsonResponse(['success' => false, 'error' => $e->getMessage()], 500);
+        }
     }
 
 
     public function configureFields(string $pageName): iterable
     {
         return [
+            IdField::new('id')->onlyOnIndex(),
+            IntegerField::new('position', 'POS')->onlyOnIndex(),
             BooleanField::new('active')->onlyOnIndex(),
             TextField::new('title')->onlyOnIndex(),
             DateField::new('startDate')->onlyOnIndex(),

@@ -28,7 +28,7 @@ class BlogPostRepository extends ServiceEntityRepository
            ->andWhere('b.endDate >= :now')
            ->setParameter("now", $now)
            ->setMaxResults(20)
-           ->orderBy('b.template', 'ASC')
+           ->orderBy('b.position', 'ASC')
            ->getQuery()
            ->getResult()
        ;
@@ -46,7 +46,7 @@ class BlogPostRepository extends ServiceEntityRepository
             ->andWhere('b.endDate IS NULL')
             ->setParameter("now", $now)
             ->setMaxResults(20)
-            ->orderBy('b.template', 'ASC')
+            ->orderBy('b.position', 'ASC')
             ->getQuery()
             ->getResult()
             ;
@@ -61,7 +61,7 @@ class BlogPostRepository extends ServiceEntityRepository
             ->andWhere('b.active = true')
             ->andWhere('b.startDate IS NULL')
             ->setMaxResults(50)
-            ->orderBy('b.template', 'ASC')
+            ->orderBy('b.position', 'ASC')
             ->getQuery()
             ->getResult()
             ;

@@ -8,8 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Sortable\Entity\Repository\SortableRepository;
 
-#[ORM\Entity(repositoryClass: BlogPostRepository::class)]
+#[ORM\Entity(repositoryClass: SortableRepository::class)]
 class BlogPost
 {
     #[ORM\Id]
@@ -77,6 +78,10 @@ class BlogPost
      */
     #[ORM\ManyToMany(targetEntity: DisplayMacro::class, mappedBy: 'displayBlogPosts')]
     private Collection $displayMacros;
+
+    #[ORM\Column(nullable: true)]
+    #[Gedmo\SortablePosition]
+    private ?int $position = null;
 
     public function __construct()
     {
@@ -337,6 +342,18 @@ class BlogPost
         if ($this->displayMacros->removeElement($displayMacro)) {
             $displayMacro->removeDisplayBlogPost($this);
         }
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): static
+    {
+        $this->position = $position;
 
         return $this;
     }

@@ -171,4 +171,7 @@ return [
     'lodash' => [
         'version' => '4.17.21',
     ],
+    'sortablejs' => [
+        'version' => '1.15.7',
+    ],
 ];
