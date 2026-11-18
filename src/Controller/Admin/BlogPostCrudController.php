@@ -94,6 +94,7 @@ class BlogPostCrudController extends AbstractCrudController
             //IdField::new('id')->onlyOnIndex(),
             //IntegerField::new('position', 'POS')->onlyOnIndex(),
             BooleanField::new('active')->onlyOnIndex(),
+            TextField::new('internalLabel')->onlyOnIndex(),
             TextField::new('title')->onlyOnIndex(),
             DateField::new('startDate')->onlyOnIndex(),
             DateField::new('endDate')->onlyOnIndex(),
@@ -115,6 +116,7 @@ class BlogPostCrudController extends AbstractCrudController
 
             FormField::addPanel("Beitragsinhalt"),
             TextField::new('title')->setColumns(9)->onlyOnForms(),
+            TextField::new('internalLabel')->setColumns(9)->onlyOnForms(),
 
             TextEditorField::new('content')->onlyOnForms()
                 ->setColumns(12),

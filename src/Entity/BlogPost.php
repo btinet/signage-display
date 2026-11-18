@@ -83,6 +83,9 @@ class BlogPost
     #[Gedmo\SortablePosition]
     private ?int $position = null;
 
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
+    private ?string $internalLabel = null;
+
     public function __construct()
     {
         $this->list = new ArrayCollection();
@@ -91,7 +94,7 @@ class BlogPost
 
     public function __toString(): string
     {
-        return $this->title;
+        return $this->internalLabel ?? $this->title;
     }
 
     public function getId(): ?int
@@ -354,6 +357,18 @@ class BlogPost
     public function setPosition(?int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getInternalLabel(): ?string
+    {
+        return $this->internalLabel;
+    }
+
+    public function setInternalLabel(?string $internalLabel): static
+    {
+        $this->internalLabel = $internalLabel;
 
         return $this;
     }
